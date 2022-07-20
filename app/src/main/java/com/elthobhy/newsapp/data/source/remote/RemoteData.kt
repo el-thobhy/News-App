@@ -144,6 +144,36 @@ class RemoteData private constructor(){
             })
     }
 
+    fun getSuaraNews(
+        callback: LoadSuaraNewsCallback
+    ){
+        EspressoIdlingResource.increment()
+        ApiConfig.getApiServeice().getDomainNews("suara.com")
+            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+                override fun onResponse(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.articles?.let { articleItem->
+                            callback.onAllSuaraReceived(articleItem)
+                        }
+                    }
+                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    t: Throwable
+                ) {
+                    Log.e("debug", "onFailure: ${t.message}" )
+                    callback.onAllSuaraReceived(emptyList())
+                    EspressoIdlingResource.decrement()
+                }
+
+            })
+    }
+
     interface LoadTopHeadlinesCallback{
         fun onAllTopHeadlinesReceived(topResponse: List<ArticlesItem?>)
     }
@@ -156,5 +186,8 @@ class RemoteData private constructor(){
     }
     interface LoadKapanlagiCallback{
         fun onAllKapanlagiReceived(kapanlagiResponse: List<ArticlesItem?>)
+    }
+    interface LoadSuaraNewsCallback{
+        fun onAllSuaraReceived(suaraResponse: List<ArticlesItem?>)
     }
 }

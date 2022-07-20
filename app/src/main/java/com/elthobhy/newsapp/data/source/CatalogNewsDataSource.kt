@@ -8,4 +8,5 @@ interface CatalogNewsDataSource {
     fun getDetikNews(): LiveData<List<Article>>
     fun getVivaNews(): LiveData<List<Article>>
     fun getKapanlagiNews(): LiveData<List<Article>>
+    fun getSuaraNews(): LiveData<List<Article>>
 }

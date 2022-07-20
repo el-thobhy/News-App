@@ -18,7 +18,7 @@
             android:name=".ui.explore.kapanlagi.KapanLagiActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.explore.okezone.OkezoneActivity"
+            android:name=".ui.explore.suara.SuaraActivity"
             android:exported="false" />
         <activity
             android:name=".ui.explore.detik.DetikActivity"

@@ -33,6 +33,9 @@ ViewModelProvider.NewInstanceFactory(){
             modelClass.isAssignableFrom(KapanlagiViewModel::class.java) ->{
                 KapanlagiViewModel(catalogRepo) as T
             }
+            modelClass.isAssignableFrom(SuaraViewModel::class.java) ->{
+                SuaraViewModel(catalogRepo) as T
+            }
             else->{
                 throw Throwable("Uknown ViewModel class: "+ modelClass.name)
             }

@@ -126,5 +126,32 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
         return listNews
     }
 
+    override fun getSuaraNews(): LiveData<List<Article>> {
+        val listNews = MutableLiveData<List<Article>>()
+        remoteData.getSuaraNews(object :RemoteData.LoadSuaraNewsCallback{
+            override fun onAllSuaraReceived(suaraResponse: List<ArticlesItem?>) {
+                val suaraNews = ArrayList<Article>()
+                if(suaraResponse.isNotEmpty()){
+                    for(response in suaraResponse){
+                        if(response != null){
+                            val articleNews = Article(
+                                source = Source(name=response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            suaraNews.add(articleNews)
+                        }
+                    }
+                    listNews.postValue(suaraNews)
+                }else{
+                    listNews.postValue(suaraNews)
+                }
+            }
+
+        })
+        return listNews
+    }
+
 
 }

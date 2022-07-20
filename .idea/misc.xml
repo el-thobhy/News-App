@@ -8,10 +8,22 @@
         <entry key="..\:/Users/Hp/AndroidStudioProjects/NewsApp2/app/src/main/res/layout/fragment_explore.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/NewsApp2/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/NewsApp2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/content_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/item_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/navigation_view_colored.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/shimmer_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/item_everything.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_top_headlines.xml" value="0.13" />
+        <entry key="app/src/main/res/layout/shimmer_everything.xml" value="0.1375556655121227" />
+        <entry key="app/src/main/res/layout/shimmer_list.xml" value="0.19322916666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

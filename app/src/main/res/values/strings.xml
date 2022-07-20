@@ -5,4 +5,20 @@
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="explore">Explore</string>
+    <string name="top_headlines">Top Headlines</string>
+    <string name="item_top_headlines">Item Top Headlines</string>
+    <string name="source">Source</string>
+    <string name="item_top_headline">Item Top Headline</string>
+    <string name="welcome">Welcome</string>
+    <string name="explore_news">Explore News</string>
+    <string name="detik_dotcom">Detik dotcom</string>
+    <string name="gambar_everything">gambar everything</string>
+    <string name="business">Business</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="general">General</string>
+    <string name="health">Health</string>
+    <string name="science">Science</string>
+    <string name="sport">Sport</string>
+    <string name="technology">Technology</string>
+    <string name="image_shimmer_everything">Image Shimmer Everything</string>
 </resources>

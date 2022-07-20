@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/shimmer_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/shimmer_bg"
+            android:alpha="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipToOutline="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/item_top_headline"
+            tools:targetApi="s" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_title_show_shimmer"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:maxLines="2"
+        android:background="@drawable/content_bg"
+        android:alpha="0.4"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintTop_toTopOf="@id/card_image"
+        app:layout_constraintStart_toEndOf="@id/card_image"
+        app:layout_constraintBottom_toTopOf="@id/tv_date_show_shimmer"/>
+    <TextView
+        android:id="@+id/tv_date_show_title_shimmer"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:textColor="@color/white"
+        android:background="@drawable/content_bg"
+        android:alpha="0.4"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_show_shimmer"
+        app:layout_constraintStart_toStartOf="@id/tv_title_show_shimmer"
+        app:layout_constraintBottom_toTopOf="@id/tv_source"/>
+    <TextView
+        android:id="@+id/tv_date_show_shimmer"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/poppins_medium"
+        android:background="@drawable/content_bg"
+        android:alpha="0.4"
+        app:layout_constraintTop_toTopOf="@id/tv_date_show_title_shimmer"
+        app:layout_constraintStart_toEndOf="@id/tv_date_show_title_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/tv_date_show_title_shimmer"
+        />
+    <TextView
+        android:id="@+id/tv_source"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:background="@drawable/content_bg"
+        android:alpha="0.4"
+        app:layout_constraintTop_toBottomOf="@id/tv_date_show_title_shimmer"
+        app:layout_constraintStart_toStartOf="@id/tv_date_show_title_shimmer"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

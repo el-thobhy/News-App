@@ -11,5 +11,5 @@ data class Source(
 	val name: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null
+	val id: String? = null
 ) : Parcelable

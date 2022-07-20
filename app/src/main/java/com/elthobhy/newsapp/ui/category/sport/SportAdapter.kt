@@ -1,6 +1,5 @@
-package com.elthobhy.newsapp.ui.category
+package com.elthobhy.newsapp.ui.category.sport
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,16 @@ import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ExploreViewHolder>() {
+class SportAdapter: RecyclerView.Adapter<SportAdapter.SportViewHolder>() {
     private var list = ArrayList<Article>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CategoryAdapter.ExploreViewHolder {
+    ): SportViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_everything, parent, false)
-        return ExploreViewHolder(view)
+        return SportViewHolder(view)
     }
 
     fun setOnClickCallback(onItemClickCallback: OnItemClickCallback){
@@ -31,7 +30,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ExploreViewHolder>(
         fun onClicked(data: Article)
     }
 
-    inner class ExploreViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class SportViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(article: Article) {
             val binding = ItemEverythingBinding.bind(itemView)
             binding.apply {
@@ -51,7 +50,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ExploreViewHolder>(
 
     }
 
-    override fun onBindViewHolder(holder: CategoryAdapter.ExploreViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SportViewHolder, position: Int) {
         holder.bind(list[position])
     }
 
@@ -61,7 +60,6 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ExploreViewHolder>(
 
     fun setList(article: List<Article>){
         list.addAll(article)
-        Log.e("debug", "setList: $list", )
         notifyDataSetChanged()
     }
 }

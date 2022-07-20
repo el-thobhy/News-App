@@ -6,78 +6,257 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.GeneratedAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
+import com.elthobhy.newsapp.ui.category.business.BusinessAdapter
+import com.elthobhy.newsapp.ui.category.entertainment.EntertainmentAdapter
+import com.elthobhy.newsapp.ui.category.general.GeneralAdapter
+import com.elthobhy.newsapp.ui.category.health.HealthAdapter
+import com.elthobhy.newsapp.ui.category.science.ScienceAdapter
+import com.elthobhy.newsapp.ui.category.sport.SportAdapter
+import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.utils.loadingExtension
-import com.elthobhy.newsapp.viewmodel.ExploreViewModel
+import com.elthobhy.newsapp.viewmodel.*
+import com.facebook.shimmer.ShimmerFrameLayout
 
 class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding as FragmentCategoryBinding
-    private lateinit var adapterCategory: CategoryAdapter
-    private lateinit var exploreViewModel: ExploreViewModel
+    private lateinit var adapterBusiness: BusinessAdapter
+    private lateinit var entertainmentAdapter: EntertainmentAdapter
+    private lateinit var generalAdapter: GeneralAdapter
+    private lateinit var healthAdapter: HealthAdapter
+    private lateinit var scienceAdapter: ScienceAdapter
+    private lateinit var sportAdapter: SportAdapter
+    private lateinit var technologyAdapter: TechnologyAdapter
+    private lateinit var businessViewModel: BusinessViewModel
+    private lateinit var entertainmentViewModel: EntertainmentViewModel
+    private lateinit var generalViewModel: GeneralViewModel
+    private lateinit var healthViewModel: HealthViewModel
+    private lateinit var scienceViewModel: ScienceViewModel
+    private lateinit var sportsViewModel: SportViewModel
+    private lateinit var technologyViewModel: TechnologyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        adapterCategory = CategoryAdapter()
-        exploreViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
-        binding.apply {
-            val listRv = arrayListOf(
-                rvBusiness,
-                rvEntertainment,
-                rvGeneral,
-                rvHealth,
-                rvScience,
-                rvSport,
-                rvTechnology
-            )
-            val listShimmer = arrayListOf(
-                shimmerBusiness,
-                shimmerEntertainment,
-                shimmerGeneral,
-                shimmerHealth,
-                shimmerScience,
-                shimmerSport,
-                shimmerTechnology
-            )
-            for(i in listShimmer){
-                for (j in listRv) {
-                    false.loadingExtension(i,j)
-                    showRv(j)
-                }
-            }
+        val factory = ViewModelFactory.getInstance()
+        businessViewModel = ViewModelProvider(this,factory)[BusinessViewModel::class.java]
+        entertainmentViewModel = ViewModelProvider(this,factory)[EntertainmentViewModel::class.java]
+        generalViewModel = ViewModelProvider(this,factory)[GeneralViewModel::class.java]
+        healthViewModel = ViewModelProvider(this,factory)[HealthViewModel::class.java]
+        scienceViewModel = ViewModelProvider(this,factory)[ScienceViewModel::class.java]
+        sportsViewModel = ViewModelProvider(this,factory)[SportViewModel::class.java]
+        technologyViewModel = ViewModelProvider(this,factory)[TechnologyViewModel::class.java]
 
+        binding.apply {
+            showRvBusiness(rvBusiness,shimmerBusiness)
+            showRvEntertainment(rvEntertainment,shimmerEntertainment)
+            showRvGeneral(rvGeneral,shimmerGeneral)
+            showRvHealth(rvHealth,shimmerHealth)
+            showRvScience(rvScience,shimmerScience)
+            showRvSports(rvSport,shimmerSport)
+            showRvTechnology(rvTechnology,shimmerTechnology)
         }
 
         return binding.root
     }
 
-    private fun showRv(recyclerView: RecyclerView) {
-        adapterCategory.notifyDataSetChanged()
+    private fun showRvBusiness(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        adapterBusiness = BusinessAdapter()
+        adapterBusiness.notifyDataSetChanged()
         binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
-                adapter = adapterCategory
+                adapter = adapterBusiness
             }
-            val explore = exploreViewModel.getExplore()
-            adapterCategory.setList(explore)
-
-            adapterCategory.setOnClickCallback(object : CategoryAdapter.OnItemClickCallback {
+            businessViewModel.getBusinessNews().observe(viewLifecycleOwner){ listArticle->
+                        if(listArticle.isNotEmpty()){
+                            false.loadingExtension(shimmer,recyclerView)
+                            adapterBusiness.setList(listArticle)
+                        }else{
+                            true.loadingExtension(shimmer,recyclerView)
+                        }
+                    }
+                }
+            adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
                 override fun onClicked(data: Article) {
                     Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
                 }
 
             })
         }
+    private fun showRvEntertainment(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        entertainmentAdapter = EntertainmentAdapter()
+        entertainmentAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = entertainmentAdapter
+            }
+            entertainmentViewModel.getEntertainment().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    entertainmentAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        entertainmentAdapter.setOnClickCallback(object : EntertainmentAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    private fun showRvGeneral(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        generalAdapter = GeneralAdapter()
+        generalAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = generalAdapter
+            }
+            generalViewModel.getGeneralNews().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    generalAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        generalAdapter.setOnClickCallback(object : GeneralAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    private fun showRvHealth(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        healthAdapter = HealthAdapter()
+        healthAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = healthAdapter
+            }
+            healthViewModel.getHealthNews().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    healthAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        healthAdapter.setOnClickCallback(object : HealthAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    private fun showRvScience(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        scienceAdapter = ScienceAdapter()
+        scienceAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = scienceAdapter
+            }
+            scienceViewModel.getScienceNews().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    scienceAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        scienceAdapter.setOnClickCallback(object : ScienceAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    private fun showRvSports(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        sportAdapter = SportAdapter()
+        sportAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = sportAdapter
+            }
+            sportsViewModel.getSportsNews().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    sportAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        sportAdapter.setOnClickCallback(object : SportAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    private fun showRvTechnology(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+        technologyAdapter = TechnologyAdapter()
+        technologyAdapter.notifyDataSetChanged()
+        binding.apply {
+            true.loadingExtension(shimmer,recyclerView)
+            recyclerView.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = technologyAdapter
+            }
+            technologyViewModel.getTechnologyNews().observe(viewLifecycleOwner){ listArticle->
+                if(listArticle.isNotEmpty()){
+                    false.loadingExtension(shimmer,recyclerView)
+                    technologyAdapter.setList(listArticle)
+                }else{
+                    true.loadingExtension(shimmer,recyclerView)
+                }
+            }
+        }
+        technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {
+            override fun onClicked(data: Article) {
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     override fun onDestroy() {

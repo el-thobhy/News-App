@@ -18,4 +18,9 @@ interface ApiService {
     fun getDomainNews(
         @Query("domains") domains: String
     ): Call<ResponseTopHeadlines<ArticlesItem>>
+
+    @GET("top-headlines?country=id&apiKey=${BuildConfig.API_KEY}")
+    fun getCategoryNews(
+        @Query("category") category: String
+    ): Call<ResponseTopHeadlines<ArticlesItem>>
 }

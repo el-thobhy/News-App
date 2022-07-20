@@ -9,4 +9,11 @@ interface CatalogNewsDataSource {
     fun getVivaNews(): LiveData<List<Article>>
     fun getKapanlagiNews(): LiveData<List<Article>>
     fun getSuaraNews(): LiveData<List<Article>>
+    fun getBusinessNews(): LiveData<List<Article>>
+    fun getEntertainmentNews(): LiveData<List<Article>>
+    fun getGeneralNews(): LiveData<List<Article>>
+    fun getHealthNews(): LiveData<List<Article>>
+    fun getScienceNews(): LiveData<List<Article>>
+    fun getSportsNews(): LiveData<List<Article>>
+    fun getTechnologyNews(): LiveData<List<Article>>
 }

@@ -153,5 +153,188 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
         return listNews
     }
 
+    override fun getBusinessNews(): LiveData<List<Article>> {
+        val listBusiness = MutableLiveData<List<Article>>()
+        remoteData.getBusinessNews(object : RemoteData.LoadBusinessCallback{
+            override fun onAllBusinessReceived(businessResponse: List<ArticlesItem?>) {
+                val businessNews = ArrayList<Article>()
+                if(businessResponse.isNotEmpty()){
+                    for(response in businessResponse){
+                        if(response != null){
+                            val businessArticle = Article(
+                                source = Source(name=response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            businessNews.add(businessArticle)
+                        }
+                    }
+                    listBusiness.postValue(businessNews)
+                }else{
+                    listBusiness.postValue(businessNews)
+                }
+            }
+
+        })
+        return  listBusiness
+    }
+
+    override fun getEntertainmentNews(): LiveData<List<Article>> {
+        val listEntertainment = MutableLiveData<List<Article>>()
+        remoteData.getEntertainmentNews(object : RemoteData.LoadEntertainmentCallback {
+            override fun onAllEntertainmentReceived(entertainmentResponse: List<ArticlesItem?>) {
+                val entertainmentNews = ArrayList<Article>()
+                if (entertainmentResponse.isNotEmpty()) {
+                    for (response in entertainmentResponse) {
+                        if (response != null) {
+                            val entertainmentArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            entertainmentNews.add(entertainmentArticle)
+                        }
+                    }
+                    listEntertainment.postValue(entertainmentNews)
+                } else {
+                    listEntertainment.postValue(entertainmentNews)
+                }
+            }
+        })
+        return listEntertainment
+    }
+
+    override fun getGeneralNews(): LiveData<List<Article>> {
+        val listGeneral = MutableLiveData<List<Article>>()
+        remoteData.getGeneralNews(object : RemoteData.LoadGeneralCallback {
+            override fun onAllGeneralReceived(generalResponse: List<ArticlesItem?>) {
+                val generalNews = ArrayList<Article>()
+                if (generalResponse.isNotEmpty()) {
+                    for (response in generalResponse) {
+                        if (response != null) {
+                            val generalArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            generalNews.add(generalArticle)
+                        }
+                    }
+                    listGeneral.postValue(generalNews)
+                } else {
+                    listGeneral.postValue(generalNews)
+                }
+            }
+        })
+        return listGeneral
+    }
+
+    override fun getHealthNews(): LiveData<List<Article>> {
+        val listHealth = MutableLiveData<List<Article>>()
+        remoteData.getHealthNews(object : RemoteData.LoadHealthCallback {
+            override fun onAllHealthReceived(healthResponse: List<ArticlesItem?>) {
+                val healthNews = ArrayList<Article>()
+                if (healthResponse.isNotEmpty()) {
+                    for (response in healthResponse) {
+                        if (response != null) {
+                            val healthArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            healthNews.add(healthArticle)
+                        }
+                    }
+                    listHealth.postValue(healthNews)
+                } else {
+                    listHealth.postValue(healthNews)
+                }
+            }
+        })
+        return listHealth
+    }
+
+    override fun getScienceNews(): LiveData<List<Article>> {
+        val listScience = MutableLiveData<List<Article>>()
+        remoteData.getScienceNews(object : RemoteData.LoadScienceCallback {
+            override fun onAllScienceReceived(scienceResponse: List<ArticlesItem?>) {
+                val scienceNews = ArrayList<Article>()
+                if (scienceResponse.isNotEmpty()) {
+                    for (response in scienceResponse) {
+                        if (response != null) {
+                            val scienceArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            scienceNews.add(scienceArticle)
+                        }
+                    }
+                    listScience.postValue(scienceNews)
+                } else {
+                    listScience.postValue(scienceNews)
+                }
+            }
+        })
+        return listScience
+    }
+
+    override fun getSportsNews(): LiveData<List<Article>> {
+        val listSports = MutableLiveData<List<Article>>()
+        remoteData.getSportsNews(object : RemoteData.LoadSportsCallback {
+            override fun onAllSportsReceived(sportsResponse: List<ArticlesItem?>) {
+                val sportsNews = ArrayList<Article>()
+                if (sportsResponse.isNotEmpty()) {
+                    for (response in sportsResponse) {
+                        if (response != null) {
+                            val sportsArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            sportsNews.add(sportsArticle)
+                        }
+                    }
+                    listSports.postValue(sportsNews)
+                } else {
+                    listSports.postValue(sportsNews)
+                }
+            }
+        })
+        return listSports
+    }
+
+    override fun getTechnologyNews(): LiveData<List<Article>> {
+        val listTechnology = MutableLiveData<List<Article>>()
+        remoteData.getTechnologyNews(object : RemoteData.LoadTechnologyCallback {
+            override fun onAllTechnologyReceived(technologyResponse: List<ArticlesItem?>) {
+                val technologyNews = ArrayList<Article>()
+                if (technologyResponse.isNotEmpty()) {
+                    for (response in technologyResponse) {
+                        if (response != null) {
+                            val technologyArticle = Article(
+                                source = Source(name = response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            technologyNews.add(technologyArticle)
+                        }
+                    }
+                    listTechnology.postValue(technologyNews)
+                } else {
+                    listTechnology.postValue(technologyNews)
+                }
+            }
+        })
+        return listTechnology
+    }
+
 
 }

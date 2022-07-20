@@ -6,6 +6,6 @@ import android.os.Parcelable
 
 @Parcelize
 data class Source(
-    val id: Int? = null,
+    val id: String? = null,
     val name: String?=null,
 ) : Parcelable

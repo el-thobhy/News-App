@@ -36,6 +36,27 @@ ViewModelProvider.NewInstanceFactory(){
             modelClass.isAssignableFrom(SuaraViewModel::class.java) ->{
                 SuaraViewModel(catalogRepo) as T
             }
+            modelClass.isAssignableFrom(BusinessViewModel::class.java) ->{
+                BusinessViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(EntertainmentViewModel::class.java) ->{
+                EntertainmentViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(GeneralViewModel::class.java) ->{
+                GeneralViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(HealthViewModel::class.java) ->{
+                HealthViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(ScienceViewModel::class.java) ->{
+                ScienceViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(SportViewModel::class.java) ->{
+                SportViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(TechnologyViewModel::class.java) ->{
+                TechnologyViewModel(catalogRepo) as T
+            }
             else->{
                 throw Throwable("Uknown ViewModel class: "+ modelClass.name)
             }

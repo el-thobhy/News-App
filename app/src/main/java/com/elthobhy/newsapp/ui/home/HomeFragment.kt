@@ -17,6 +17,7 @@ import com.elthobhy.newsapp.databinding.FragmentHomeBinding
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.EverythingViewModel
 import com.elthobhy.newsapp.viewmodel.HeadlineViewModel
+import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -31,9 +32,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        headlineViewModel = ViewModelProvider(this).get(HeadlineViewModel::class.java)
         everythingViewModel = ViewModelProvider(this).get(EverythingViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
+        val factory = ViewModelFactory.getInstance()
+        headlineViewModel = ViewModelProvider(this,factory)[HeadlineViewModel::class.java]
         adapterHeadline = HeadlineAdapter()
         adapterEverything  = EverythingAdapter()
         showRvHeadline()
@@ -63,15 +65,23 @@ class HomeFragment : Fragment() {
 
     private fun showRvHeadline() {
         adapterHeadline.notifyDataSetChanged()
+        true.loadingExtension(binding.shimmerEverything, binding.rvTopHeadlines)
+
         binding.rvTopHeadlines.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             setHasFixedSize(true)
             adapter = adapterHeadline
         }
-        val headline = headlineViewModel.getHeadline()
-        false.loadingExtension(binding.shimmerHeadline,binding.rvTopHeadlines)
-        adapterHeadline.setList(headline)
-        Log.e("debug", "showRvHeadline: $headline", )
+
+        headlineViewModel.getHeadline().observe(viewLifecycleOwner) { listArticle ->
+            if (listArticle.isNotEmpty()) {
+                false.loadingExtension(binding.shimmerHeadline, binding.rvTopHeadlines)
+                adapterHeadline.setList(listArticle)
+            } else {
+                true.loadingExtension(binding.shimmerHeadline, binding.rvTopHeadlines)
+            }
+            Log.e("debug", "showRvHeadline: $listArticle",)
+        }
 
         adapterHeadline.setOnItemClickCallback(object : HeadlineAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Article) {

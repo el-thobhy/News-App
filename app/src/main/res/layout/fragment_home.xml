@@ -81,39 +81,91 @@
                     style="@style/FontColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="20dp"/>
-                <TextView
-                    android:id="@+id/tv_everything"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_discover"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/detik_dotcom"
-                    android:textSize="24sp"
-                    style="@style/FontColor"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_business"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_everything"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    tools:listitem="@layout/item_everything"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:weightSum="100"
+                    android:padding="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_everything"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_everything"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_height="wrap_content">
-                    <include layout="@layout/shimmer_everything"/>
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp">
+                    <LinearLayout
+                        android:id="@+id/detik_com"
+                        android:orientation="vertical"
+                        android:layout_weight="25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/detik_png"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:text="@string/detik"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/tv_one"
+                        android:orientation="vertical"
+                        android:layout_weight="25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/tvone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:text="@string/tvone"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/viva_co"
+                        android:orientation="vertical"
+                        android:layout_weight="25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/viva"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:gravity="center"
+                            android:text="@string/viva"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/okezone_com"
+                        android:orientation="vertical"
+                        android:layout_weight="25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/okezone"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingTop="5dp"
+                            android:text="@string/okezone"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

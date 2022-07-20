@@ -1,4 +1,4 @@
-package com.elthobhy.newsapp.ui.explore
+package com.elthobhy.newsapp.ui.category
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,14 +11,14 @@ import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
-class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() {
+class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.ExploreViewHolder>() {
     private var list = ArrayList<Article>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ExploreAdapter.ExploreViewHolder {
+    ): CategoryAdapter.ExploreViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_everything, parent, false)
         return ExploreViewHolder(view)
     }
@@ -51,7 +51,7 @@ class ExploreAdapter : RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>() 
 
     }
 
-    override fun onBindViewHolder(holder: ExploreAdapter.ExploreViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryAdapter.ExploreViewHolder, position: Int) {
         holder.bind(list[position])
     }
 

@@ -1,8 +1,7 @@
 package com.elthobhy.newsapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
+import com.elthobhy.newsapp.ui.explore.detik.DetikActivity
+import com.elthobhy.newsapp.ui.explore.okezone.OkezoneActivity
+import com.elthobhy.newsapp.ui.explore.tvone.TvoneActivity
+import com.elthobhy.newsapp.ui.explore.viva.VivaActivity
 import com.elthobhy.newsapp.utils.loadingExtension
-import com.elthobhy.newsapp.viewmodel.EverythingViewModel
 import com.elthobhy.newsapp.viewmodel.HeadlineViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
@@ -24,49 +25,41 @@ class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding as FragmentHomeBinding
     private lateinit var adapterHeadline: HeadlineAdapter
-    private lateinit var adapterEverything: EverythingAdapter
     private lateinit var headlineViewModel: HeadlineViewModel
-    private lateinit var everythingViewModel: EverythingViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        everythingViewModel = ViewModelProvider(this).get(EverythingViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
         val factory = ViewModelFactory.getInstance()
         headlineViewModel = ViewModelProvider(this,factory)[HeadlineViewModel::class.java]
         adapterHeadline = HeadlineAdapter()
-        adapterEverything  = EverythingAdapter()
         showRvHeadline()
-        showRvEverything()
+        onClick()
         return binding.root
     }
 
-    private fun showRvEverything() {
-        adapterEverything.notifyDataSetChanged()
-        binding.rvBusiness.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
-            setHasFixedSize(true)
-            adapter = adapterEverything
-        }
-        val everything = everythingViewModel.getEverything()
-        false.loadingExtension(binding.shimmerEverything,binding.rvBusiness)
-        adapterEverything.setList(everything)
-        Log.e("debug", "showRvEverything: $everything", )
-
-        adapterEverything.setOnClickCallback(object :EverythingAdapter.OnItemClickCallback{
-            override fun onClicked(data: Article) {
-                Toast.makeText(context,"cliked",Toast.LENGTH_SHORT).show()
+    private fun onClick() {
+        binding.apply {
+            detikCom.setOnClickListener {
+                startActivity(Intent(context,DetikActivity::class.java))
             }
-
-        })
+            tvOne.setOnClickListener {
+                startActivity(Intent(context,TvoneActivity::class.java))
+            }
+            vivaCo.setOnClickListener {
+                startActivity(Intent(context,VivaActivity::class.java))
+            }
+            okezoneCom.setOnClickListener {
+                startActivity(Intent(context,OkezoneActivity::class.java))
+            }
+        }
     }
 
     private fun showRvHeadline() {
         adapterHeadline.notifyDataSetChanged()
-        true.loadingExtension(binding.shimmerEverything, binding.rvTopHeadlines)
-
+        true.loadingExtension(binding.shimmerHeadline, binding.rvTopHeadlines)
         binding.rvTopHeadlines.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             setHasFixedSize(true)

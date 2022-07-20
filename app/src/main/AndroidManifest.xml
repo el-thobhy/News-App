@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elthobhy.newsapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
+        <activity
+            android:name=".ui.explore.viva.VivaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.explore.tvone.TvoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.explore.okezone.OkezoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.explore.detik.DetikActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

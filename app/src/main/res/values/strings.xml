@@ -21,4 +21,9 @@
     <string name="sport">Sport</string>
     <string name="technology">Technology</string>
     <string name="image_shimmer_everything">Image Shimmer Everything</string>
+    <string name="detik">Detik</string>
+    <string name="tvone">TvOne</string>
+    <string name="viva">Viva</string>
+    <string name="okezone">Okezone</string>
+    <string name="kategori">Kategori</string>
 </resources>

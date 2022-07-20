@@ -1,7 +1,6 @@
-package com.elthobhy.newsapp.ui.explore
+package com.elthobhy.newsapp.ui.category
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,23 +10,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.elthobhy.newsapp.data.source.local.entity.Article
-import com.elthobhy.newsapp.databinding.FragmentExploreBinding
+import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.ExploreViewModel
 
-class ExploreFragment : Fragment() {
+class CategoryFragment : Fragment() {
 
-    private var _binding: FragmentExploreBinding? = null
-    private val binding get() = _binding as FragmentExploreBinding
-    private lateinit var adapterExplore: ExploreAdapter
+    private var _binding: FragmentCategoryBinding? = null
+    private val binding get() = _binding as FragmentCategoryBinding
+    private lateinit var adapterCategory: CategoryAdapter
     private lateinit var exploreViewModel: ExploreViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentExploreBinding.inflate(inflater, container, false)
-        adapterExplore = ExploreAdapter()
+        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
+        adapterCategory = CategoryAdapter()
         exploreViewModel = ViewModelProvider(this).get(ExploreViewModel::class.java)
         binding.apply {
             val listRv = arrayListOf(
@@ -61,18 +60,18 @@ class ExploreFragment : Fragment() {
     }
 
     private fun showRv(recyclerView: RecyclerView) {
-        adapterExplore.notifyDataSetChanged()
+        adapterCategory.notifyDataSetChanged()
         binding.apply {
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
-                adapter = adapterExplore
+                adapter = adapterCategory
             }
             val explore = exploreViewModel.getExplore()
-            adapterExplore.setList(explore)
+            adapterCategory.setList(explore)
 
-            adapterExplore.setOnClickCallback(object : ExploreAdapter.OnItemClickCallback {
+            adapterCategory.setOnClickCallback(object : CategoryAdapter.OnItemClickCallback {
                 override fun onClicked(data: Article) {
                     Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
                 }

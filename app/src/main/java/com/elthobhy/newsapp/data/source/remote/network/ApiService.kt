@@ -15,7 +15,7 @@ interface ApiService {
     ): Call<ResponseTopHeadlines<ArticlesItem>>
 
     @GET("everything?apiKey=${BuildConfig.API_KEY}")
-    fun getDetikNews(
+    fun getDomainNews(
         @Query("domains") domains: String
     ): Call<ResponseTopHeadlines<ArticlesItem>>
 }

@@ -26,7 +26,11 @@ ViewModelProvider.NewInstanceFactory(){
             }
             modelClass.isAssignableFrom(DetikViewModel::class.java) ->{
                 DetikViewModel(catalogRepo) as T
-            }else->{
+            }
+            modelClass.isAssignableFrom(VivaViewModel::class.java) ->{
+                VivaViewModel(catalogRepo) as T
+            }
+            else->{
                 throw Throwable("Uknown ViewModel class: "+ modelClass.name)
             }
         }

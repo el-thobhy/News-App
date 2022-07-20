@@ -57,7 +57,7 @@ class RemoteData private constructor(){
         callback: LoadDetikNewsCallback
     ){
         EspressoIdlingResource.increment()
-        ApiConfig.getApiServeice().getDetikNews("detik.com")
+        ApiConfig.getApiServeice().getDomainNews("detik.com")
             .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
                 override fun onResponse(
                     call: Call<ResponseTopHeadlines<ArticlesItem>>,
@@ -83,11 +83,44 @@ class RemoteData private constructor(){
             })
     }
 
+    fun getVivaNews(
+        callback: LoadVivaNewsCallback
+    ){
+        EspressoIdlingResource.increment()
+        ApiConfig.getApiServeice().getDomainNews("viva.co.id")
+            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+                override fun onResponse(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.articles?.let { articleItem->
+                            callback.onAllVivaReceived(articleItem)
+                        }
+                    }
+                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    t: Throwable
+                ) {
+                    Log.e("debug", "onFailure: ${t.message}" )
+                    callback.onAllVivaReceived(emptyList())
+                    EspressoIdlingResource.decrement()
+                }
+
+            })
+    }
+
     interface LoadTopHeadlinesCallback{
         fun onAllTopHeadlinesReceived(topResponse: List<ArticlesItem?>)
     }
 
     interface LoadDetikNewsCallback{
         fun onAllDetikReceived(detikResponse: List<ArticlesItem?>)
+    }
+    interface LoadVivaNewsCallback{
+        fun onAllVivaReceived(vivaResponse: List<ArticlesItem?>)
     }
 }

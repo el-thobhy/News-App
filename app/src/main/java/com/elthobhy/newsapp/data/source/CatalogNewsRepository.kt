@@ -73,5 +73,32 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
         return listNews
     }
 
+    override fun getVivaNews(): LiveData<List<Article>> {
+        val listNews = MutableLiveData<List<Article>>()
+        remoteData.getVivaNews(object : RemoteData.LoadVivaNewsCallback{
+            override fun onAllVivaReceived(vivaResponse: List<ArticlesItem?>) {
+                val vivaNews = ArrayList<Article>()
+                if(vivaResponse.isNotEmpty()){
+                    for(response in vivaResponse){
+                        if(response!=null){
+                            val articleNews = Article(
+                                source = Source(name=response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            vivaNews.add(articleNews)
+                        }
+                    }
+                    listNews.postValue(vivaNews)
+                }else{
+                    listNews.postValue(vivaNews)
+                }
+            }
+
+        })
+        return listNews
+    }
+
 
 }

@@ -13,4 +13,9 @@ interface ApiService {
     fun getTopHeadlines(
         @Query("country") country: String
     ): Call<ResponseTopHeadlines<ArticlesItem>>
+
+    @GET("everything?apiKey=${BuildConfig.API_KEY}")
+    fun getDetikNews(
+        @Query("domains") domains: String
+    ): Call<ResponseTopHeadlines<ArticlesItem>>
 }

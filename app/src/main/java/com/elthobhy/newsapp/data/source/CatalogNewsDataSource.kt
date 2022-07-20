@@ -5,4 +5,5 @@ import com.elthobhy.newsapp.data.source.local.entity.Article
 
 interface CatalogNewsDataSource {
     fun getTopHeadlines(): LiveData<List<Article>>
+    fun getDetikNews(): LiveData<List<Article>>
 }

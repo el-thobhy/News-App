@@ -47,5 +47,31 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
         return listNews
     }
 
+    override fun getDetikNews(): LiveData<List<Article>> {
+        val listNews = MutableLiveData<List<Article>>()
+        remoteData.getDetikNews(object : RemoteData.LoadDetikNewsCallback{
+            override fun onAllDetikReceived(detikResponse: List<ArticlesItem?>) {
+                val detikNews = ArrayList<Article>()
+                if(detikResponse.isNotEmpty()){
+                    for(response in detikResponse){
+                        if(response != null){
+                            val articleNews = Article(
+                                source = Source(name=response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            detikNews.add(articleNews)
+                        }
+                    }
+                    listNews.postValue(detikNews)
+                }else{
+                    listNews.postValue(detikNews)
+                }
+            }
+        })
+        return listNews
+    }
+
 
 }

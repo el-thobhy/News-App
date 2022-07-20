@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/navigation_view_colored.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shimmer_bg.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_detik.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/activity_kapan_lagi.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_okezone.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_tvone.xml" value="0.19583333333333333" />
@@ -21,7 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_category.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_everything.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_top_headlines.xml" value="0.13" />
         <entry key="app/src/main/res/layout/shimmer_everything.xml" value="0.1375556655121227" />

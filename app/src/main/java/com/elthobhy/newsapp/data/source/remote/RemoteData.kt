@@ -1,6 +1,7 @@
 package com.elthobhy.newsapp.data.source.remote
 
 import android.util.Log
+import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.data.source.remote.network.ApiConfig
 import com.elthobhy.newsapp.data.source.remote.response.ArticlesItem
 import com.elthobhy.newsapp.data.source.remote.response.ResponseTopHeadlines
@@ -113,6 +114,36 @@ class RemoteData private constructor(){
             })
     }
 
+    fun getKapanlagiNews(
+        callback: LoadKapanlagiCallback
+    ){
+        EspressoIdlingResource.increment()
+        ApiConfig.getApiServeice().getDomainNews("kapanlagi.com")
+            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+                override fun onResponse(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                ) {
+                    if(response.isSuccessful){
+                        response.body()?.articles?.let { articleItem->
+                            callback.onAllKapanlagiReceived(articleItem)
+                        }
+                    }
+                    EspressoIdlingResource.decrement()
+                }
+
+                override fun onFailure(
+                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    t: Throwable
+                ) {
+                    Log.e("debug", "onFailure: ${t.message}" )
+                    callback.onAllKapanlagiReceived(emptyList())
+                    EspressoIdlingResource.decrement()
+                }
+
+            })
+    }
+
     interface LoadTopHeadlinesCallback{
         fun onAllTopHeadlinesReceived(topResponse: List<ArticlesItem?>)
     }
@@ -122,5 +153,8 @@ class RemoteData private constructor(){
     }
     interface LoadVivaNewsCallback{
         fun onAllVivaReceived(vivaResponse: List<ArticlesItem?>)
+    }
+    interface LoadKapanlagiCallback{
+        fun onAllKapanlagiReceived(kapanlagiResponse: List<ArticlesItem?>)
     }
 }

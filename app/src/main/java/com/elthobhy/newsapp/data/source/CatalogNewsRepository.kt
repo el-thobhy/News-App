@@ -100,5 +100,31 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
         return listNews
     }
 
+    override fun getKapanlagiNews(): LiveData<List<Article>> {
+        val listNews = MutableLiveData<List<Article>>()
+        remoteData.getKapanlagiNews(object :RemoteData.LoadKapanlagiCallback{
+            override fun onAllKapanlagiReceived(kapanlagiResponse: List<ArticlesItem?>) {
+                val kapanlagiNews = ArrayList<Article>()
+                if(kapanlagiResponse.isNotEmpty()){
+                    for(response in kapanlagiResponse){
+                        if(response != null){
+                            val articleNews = Article(
+                                source = Source(name=response.source?.name),
+                                title = response.title,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt
+                            )
+                            kapanlagiNews.add(articleNews)
+                        }
+                    }
+                    listNews.postValue(kapanlagiNews)
+                }else{
+                    listNews.postValue(kapanlagiNews)
+                }
+            }
+        })
+        return listNews
+    }
+
 
 }

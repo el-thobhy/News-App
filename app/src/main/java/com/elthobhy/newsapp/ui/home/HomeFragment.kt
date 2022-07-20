@@ -14,7 +14,7 @@ import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
 import com.elthobhy.newsapp.ui.explore.detik.DetikActivity
 import com.elthobhy.newsapp.ui.explore.okezone.OkezoneActivity
-import com.elthobhy.newsapp.ui.explore.tvone.TvoneActivity
+import com.elthobhy.newsapp.ui.explore.kapanlagi.KapanLagiActivity
 import com.elthobhy.newsapp.ui.explore.viva.VivaActivity
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.HeadlineViewModel
@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
                 startActivity(Intent(context,DetikActivity::class.java))
             }
             tvOne.setOnClickListener {
-                startActivity(Intent(context,TvoneActivity::class.java))
+                startActivity(Intent(context,KapanLagiActivity::class.java))
             }
             vivaCo.setOnClickListener {
                 startActivity(Intent(context,VivaActivity::class.java))

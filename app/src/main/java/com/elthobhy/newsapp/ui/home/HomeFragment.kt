@@ -12,10 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
+import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.ui.explore.detik.DetikActivity
 import com.elthobhy.newsapp.ui.explore.suara.SuaraActivity
 import com.elthobhy.newsapp.ui.explore.kapanlagi.KapanLagiActivity
 import com.elthobhy.newsapp.ui.explore.viva.VivaActivity
+import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.HeadlineViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
@@ -78,10 +80,16 @@ class HomeFragment : Fragment() {
 
         adapterHeadline.setOnItemClickCallback(object : HeadlineAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Article) {
-                Toast.makeText(context, "clicked",Toast.LENGTH_SHORT).show()
+                showDetailData(data)
             }
 
         })
+    }
+
+    private fun showDetailData(data: Article) {
+        val intentDetail = Intent(activity,DetailActivity::class.java)
+        intentDetail.putExtra(Constants.TOP_HEADLINE,data)
+        startActivity(intentDetail)
     }
 
 

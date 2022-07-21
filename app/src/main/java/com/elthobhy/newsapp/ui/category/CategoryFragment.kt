@@ -1,12 +1,13 @@
 package com.elthobhy.newsapp.ui.category
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.GeneratedAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ import com.elthobhy.newsapp.ui.category.health.HealthAdapter
 import com.elthobhy.newsapp.ui.category.science.ScienceAdapter
 import com.elthobhy.newsapp.ui.category.sport.SportAdapter
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
+import com.elthobhy.newsapp.ui.detail.DetailActivity
+import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.*
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -91,11 +94,55 @@ class CategoryFragment : Fragment() {
                 }
             adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
                 override fun onClicked(data: Article) {
-                    Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                    showDetailData(data,Constants.BUSINESS)
                 }
 
             })
         }
+
+    private fun showDetailData(data: Article, key: String) {
+        when (key){
+            Constants.BUSINESS->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.BUSINESS,data)
+                startActivity(intentDetail)
+            }
+            Constants.ENTERTAINMENT->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.ENTERTAINMENT,data)
+                startActivity(intentDetail)
+            }
+            Constants.GENERAL->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.GENERAL,data)
+                startActivity(intentDetail)
+            }
+            Constants.HEALTH->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.HEALTH,data)
+                startActivity(intentDetail)
+            }
+            Constants.SCIENCE->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.SCIENCE,data)
+                startActivity(intentDetail)
+            }
+            Constants.SPORTS->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.SPORTS,data)
+                startActivity(intentDetail)
+            }
+            Constants.TECHNOLOGY->{
+                val intentDetail = Intent(activity, DetailActivity::class.java)
+                intentDetail.putExtra(Constants.TECHNOLOGY,data)
+                startActivity(intentDetail)
+            }
+            else->{
+                Log.e("else", "showDetailData: ", )
+            }
+        }
+    }
+
     private fun showRvEntertainment(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         entertainmentAdapter = EntertainmentAdapter()
         entertainmentAdapter.notifyDataSetChanged()
@@ -118,7 +165,7 @@ class CategoryFragment : Fragment() {
         }
         entertainmentAdapter.setOnClickCallback(object : EntertainmentAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data, Constants.ENTERTAINMENT)
             }
 
         })
@@ -145,7 +192,7 @@ class CategoryFragment : Fragment() {
         }
         generalAdapter.setOnClickCallback(object : GeneralAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data,Constants.GENERAL)
             }
 
         })
@@ -172,7 +219,7 @@ class CategoryFragment : Fragment() {
         }
         healthAdapter.setOnClickCallback(object : HealthAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data,Constants.HEALTH)
             }
 
         })
@@ -199,7 +246,7 @@ class CategoryFragment : Fragment() {
         }
         scienceAdapter.setOnClickCallback(object : ScienceAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data,Constants.SCIENCE)
             }
 
         })
@@ -226,7 +273,7 @@ class CategoryFragment : Fragment() {
         }
         sportAdapter.setOnClickCallback(object : SportAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data,Constants.SPORTS)
             }
 
         })
@@ -253,7 +300,7 @@ class CategoryFragment : Fragment() {
         }
         technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {
             override fun onClicked(data: Article) {
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data,Constants.TECHNOLOGY)
             }
 
         })

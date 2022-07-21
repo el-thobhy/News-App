@@ -32,7 +32,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             topNews.add(articleNews)
                         }
@@ -59,7 +61,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             detikNews.add(articleNews)
                         }
@@ -85,7 +89,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             vivaNews.add(articleNews)
                         }
@@ -112,7 +118,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             kapanlagiNews.add(articleNews)
                         }
@@ -138,7 +146,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             suaraNews.add(articleNews)
                         }
@@ -165,7 +175,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name=response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             businessNews.add(businessArticle)
                         }
@@ -192,7 +204,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             entertainmentNews.add(entertainmentArticle)
                         }
@@ -218,7 +232,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             generalNews.add(generalArticle)
                         }
@@ -244,7 +260,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             healthNews.add(healthArticle)
                         }
@@ -270,7 +288,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             scienceNews.add(scienceArticle)
                         }
@@ -296,7 +316,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             sportsNews.add(sportsArticle)
                         }
@@ -322,7 +344,9 @@ class CatalogNewsRepository private constructor(private val remoteData: RemoteDa
                                 source = Source(name = response.source?.name),
                                 title = response.title,
                                 urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
                             )
                             technologyNews.add(technologyArticle)
                         }

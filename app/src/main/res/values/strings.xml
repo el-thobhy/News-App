@@ -32,4 +32,5 @@
     <string name="title_news">Title News</string>
     <string name="source_news">Source News</string>
     <string name="date_news">Date News</string>
+    <string name="go_to_official_website">Go To Website</string>
 </resources>

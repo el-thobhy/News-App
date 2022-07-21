@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/item_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/navigation_view_colored.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/shimmer_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/layout/activity_detik.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_kapan_lagi.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />

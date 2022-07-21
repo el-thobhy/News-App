@@ -79,7 +79,6 @@ class RemoteData private constructor(){
                     callback.onAllDetikReceived(emptyList())
                     EspressoIdlingResource.decrement()
                 }
-
             })
     }
 

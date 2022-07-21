@@ -1,5 +1,6 @@
 package com.elthobhy.newsapp.ui.explore.detik
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.ActivityDetikBinding
+import com.elthobhy.newsapp.ui.detail.DetailActivity
+import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.DetikViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
@@ -49,10 +52,16 @@ class DetikActivity : AppCompatActivity() {
         }
         detikAdapter.setOnItemClickCallback(object :DetikAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Article) {
-                Toast.makeText(this@DetikActivity,"clicked",Toast.LENGTH_SHORT).show()
+                showDetailData(data)
             }
 
         })
+    }
+
+    private fun showDetailData(data: Article) {
+        val intentDetail = Intent(applicationContext, DetailActivity::class.java)
+        intentDetail.putExtra(Constants.DETIK,data)
+        startActivity(intentDetail)
     }
 
     private fun initActionBar() {

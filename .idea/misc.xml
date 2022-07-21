@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_everything.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_top_headlines.xml" value="0.13" />
+        <entry key="app/src/main/res/layout/layout_dialog_error.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/shimmer_everything.xml" value="0.1375556655121227" />
         <entry key="app/src/main/res/layout/shimmer_list.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.19583333333333333" />

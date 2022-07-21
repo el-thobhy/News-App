@@ -21,7 +21,6 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        showDetailHeadline()
         val listKey = arrayListOf(
             Constants.BUSINESS,
             Constants.ENTERTAINMENT,
@@ -30,9 +29,14 @@ class DetailActivity : AppCompatActivity() {
             Constants.SCIENCE,
             Constants.SPORTS,
             Constants.TECHNOLOGY,
+            Constants.TOP_HEADLINE,
+            Constants.DETIK,
+            Constants.VIVA,
+            Constants.KAPAN_LAGI,
+            Constants.SUARA
         )
         for(key in listKey){
-            showCategory(key)
+            showDetail(key)
         }
     }
 
@@ -44,7 +48,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showCategory(key: String) {
+    private fun showDetail(key: String) {
         when (key){
             Constants.BUSINESS->{
                 val data = intent?.getParcelableExtra<Article>(Constants.BUSINESS)
@@ -74,12 +78,27 @@ class DetailActivity : AppCompatActivity() {
                 val data = intent?.getParcelableExtra<Article>(Constants.TECHNOLOGY)
                 displayDetail(data)
             }
+            Constants.VIVA->{
+                val data = intent?.getParcelableExtra<Article>(Constants.VIVA)
+                displayDetail(data)
+            }
+            Constants.SUARA->{
+                val data = intent?.getParcelableExtra<Article>(Constants.SUARA)
+                displayDetail(data)
+            }
+            Constants.DETIK->{
+                val data = intent?.getParcelableExtra<Article>(Constants.DETIK)
+                displayDetail(data)
+            }
+            Constants.KAPAN_LAGI->{
+                val data = intent?.getParcelableExtra<Article>(Constants.KAPAN_LAGI)
+                displayDetail(data)
+            }
+            Constants.TOP_HEADLINE->{
+                val data = intent?.getParcelableExtra<Article>(Constants.TOP_HEADLINE)
+                displayDetail(data)
+            }
         }
-    }
-
-    private fun showDetailHeadline() {
-        val headlineData = intent?.getParcelableExtra<Article>(Constants.TOP_HEADLINE)
-        displayDetail(headlineData)
     }
 
     private fun displayDetail(article: Article?) {

@@ -1,5 +1,6 @@
 package com.elthobhy.newsapp.ui.explore.suara
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.Article
 import com.elthobhy.newsapp.databinding.ActivitySuaraBinding
+import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.ui.explore.kapanlagi.KapanlagiAdapter
+import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.SuaraViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
@@ -46,16 +49,23 @@ class SuaraActivity : AppCompatActivity() {
                     suaraAdapter.setList(listArticle)
                 }else{
                     true.loadingExtension(shimmerSuara,rvSuara)
+
                 }
                 Log.e("debug", "showRvKapanlagi: $listArticle", )
             }
         }
         suaraAdapter.setOnItemClickCallback(object : SuaraAdapter.OnItemClickCallback{
             override fun onItemClicked(data: Article) {
-                Toast.makeText(this@SuaraActivity, "Clicked", Toast.LENGTH_SHORT).show()
+                showDetailData(data)
             }
 
         })
+    }
+
+    private fun showDetailData(data: Article) {
+        val intentDetail = Intent(applicationContext, DetailActivity::class.java)
+        intentDetail.putExtra(Constants.SUARA,data)
+        startActivity(intentDetail)
     }
 
     private fun initActionBar() {

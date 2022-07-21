@@ -1,6 +1,5 @@
 package com.elthobhy.newsapp.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
 
 class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(){
-    private val list = ArrayList<Article>()
+    private val list = ArrayList<ArticleHeadline>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,12 +26,12 @@ class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(data: Article)
+        fun onItemClicked(data: ArticleHeadline)
     }
 
     inner class HeadlineViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(headlineEntity: Article) {
+        fun bind(headlineEntity: ArticleHeadline) {
             binding.apply {
                 Glide.with(itemView)
                     .load(headlineEntity.urlToImage)
@@ -56,9 +55,8 @@ class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(
     override fun getItemCount(): Int {
         return  list.size
     }
-    fun setList(headlineEntity: List<Article>){
+    fun setList(headlineEntity: List<ArticleHeadline>){
         list.addAll(headlineEntity)
-        Log.e("debug", "setList: $list", )
         notifyDataSetChanged()
     }
 }

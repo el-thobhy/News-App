@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleTechnology
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
 class TechnologyAdapter: RecyclerView.Adapter<TechnologyAdapter.TechnologyViewHolder>() {
-    private var list = ArrayList<Article>()
+    private var list = ArrayList<ArticleTechnology>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     override fun onCreateViewHolder(
@@ -27,11 +28,11 @@ class TechnologyAdapter: RecyclerView.Adapter<TechnologyAdapter.TechnologyViewHo
     }
 
     interface OnItemClickCallback{
-        fun onClicked(data: Article)
+        fun onClicked(data: ArticleTechnology)
     }
 
     inner class TechnologyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun bind(article: Article) {
+        fun bind(article: ArticleTechnology) {
             val binding = ItemEverythingBinding.bind(itemView)
             binding.apply {
                 Glide.with(itemView)
@@ -58,7 +59,7 @@ class TechnologyAdapter: RecyclerView.Adapter<TechnologyAdapter.TechnologyViewHo
         return  list.size
     }
 
-    fun setList(article: List<Article>){
+    fun setList(article: List<ArticleTechnology>){
         list.addAll(article)
         notifyDataSetChanged()
     }

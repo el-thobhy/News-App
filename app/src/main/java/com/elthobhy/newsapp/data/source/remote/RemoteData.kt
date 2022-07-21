@@ -1,9 +1,12 @@
 package com.elthobhy.newsapp.data.source.remote
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.elthobhy.newsapp.data.source.remote.network.ApiConfig
 import com.elthobhy.newsapp.data.source.remote.response.ArticlesItem
-import com.elthobhy.newsapp.data.source.remote.response.ResponseTopHeadlines
+import com.elthobhy.newsapp.data.source.remote.response.ResponseCatalog
+import com.elthobhy.newsapp.data.source.remote.response.vo.ApiResponse
 import com.elthobhy.newsapp.utils.EspressoIdlingResource
 import retrofit2.Callback
 import retrofit2.Call
@@ -22,394 +25,393 @@ class RemoteData private constructor(){
             }
         }
     }
-    fun getTopHeadlines(
-        callback: LoadTopHeadlinesCallback
-    ){
+    fun getTopHeadlines(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val headlineResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getTopHeadlines("id")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllTopHeadlinesReceived(articleItem)
-                        }
+                        headlineResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
+                        Log.d("tesdebug", "onResponse: $")
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllTopHeadlinesReceived(emptyList())
+                    headlineResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
-
             })
-
+        return headlineResponse
     }
 
-    fun getDetikNews(
-        callback: LoadDetikNewsCallback
-    ){
+    fun getDetikNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val detikResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getDomainNews("detik.com")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllDetikReceived(articleItem)
-                        }
+                        detikResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
+                        Log.d("tesdebug", "onResponse: $detikResponse")
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllDetikReceived(emptyList())
+                    detikResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
             })
+        return detikResponse
     }
 
-    fun getVivaNews(
-        callback: LoadVivaNewsCallback
-    ){
+    fun getVivaNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val vivaResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getDomainNews("viva.co.id")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllVivaReceived(articleItem)
-                        }
+                        vivaResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllVivaReceived(emptyList())
+                    vivaResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return vivaResponse
     }
 
-    fun getKapanlagiNews(
-        callback: LoadKapanlagiCallback
-    ){
+    fun getKapanlagiNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val kapanlagiResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getDomainNews("kapanlagi.com")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllKapanlagiReceived(articleItem)
-                        }
+                        kapanlagiResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllKapanlagiReceived(emptyList())
+                    kapanlagiResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return kapanlagiResponse
     }
 
-    fun getSuaraNews(
-        callback: LoadSuaraNewsCallback
-    ){
+    fun getSuaraNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val suaraResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getDomainNews("suara.com")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllSuaraReceived(articleItem)
-                        }
+                        suaraResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllSuaraReceived(emptyList())
+                    suaraResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return suaraResponse
     }
 
-    fun getBusinessNews(
-        callback: LoadBusinessCallback
-    ){
+    fun getBusinessNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
+        val businessResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("business")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllBusinessReceived(articleItem)
-                        }
+                        businessResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllBusinessReceived(emptyList())
+                    businessResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return businessResponse
     }
-    fun getEntertainmentNews(
-        callback: LoadEntertainmentCallback
-    ) {
+    fun getEntertainmentNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val entertainmentResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("entertainment")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllEntertainmentReceived(articleItem)
-                        }
+                        entertainmentResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllEntertainmentReceived(emptyList())
+                    entertainmentResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return entertainmentResponse
     }
-    fun getGeneralNews(
-        callback: LoadGeneralCallback
-    ) {
+    fun getGeneralNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val generalResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("general")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllGeneralReceived(articleItem)
-                        }
+                        generalResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllGeneralReceived(emptyList())
+                    generalResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return generalResponse
     }
-    fun getHealthNews(
-        callback: LoadHealthCallback
-    ) {
+    fun getHealthNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val healthResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("health")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllHealthReceived(articleItem)
-                        }
+                        healthResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllHealthReceived(emptyList())
+                    healthResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return healthResponse
     }
-    fun getScienceNews(
-        callback: LoadScienceCallback
-    ) {
+    fun getScienceNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val scienceResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("science")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllScienceReceived(articleItem)
-                        }
+                        scienceResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllScienceReceived(emptyList())
+                    scienceResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return scienceResponse
     }
-    fun getSportsNews(
-        callback: LoadSportsCallback
-    ) {
+    fun getSportsNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val sportsResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("sports")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllSportsReceived(articleItem)
-                        }
+                        sportsResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllSportsReceived(emptyList())
+                    sportsResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
+        return sportsResponse
     }
-    fun getTechnologyNews(
-        callback: LoadTechnologyCallback
-    ) {
+    fun getTechnologyNews(): LiveData<ApiResponse<List<ArticlesItem>>> {
         EspressoIdlingResource.increment()
+        val techResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
         ApiConfig.getApiServeice().getCategoryNews("technology")
-            .enqueue(object : Callback<ResponseTopHeadlines<ArticlesItem>>{
+            .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
-                    response: Response<ResponseTopHeadlines<ArticlesItem>>
+                    call: Call<ResponseCatalog<ArticlesItem>>,
+                    response: Response<ResponseCatalog<ArticlesItem>>
                 ) {
                     if(response.isSuccessful){
-                        response.body()?.articles?.let { articleItem->
-                            callback.onAllTechnologyReceived(articleItem)
-                        }
+                        techResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
                     }
                     EspressoIdlingResource.decrement()
                 }
 
                 override fun onFailure(
-                    call: Call<ResponseTopHeadlines<ArticlesItem>>,
+                    call: Call<ResponseCatalog<ArticlesItem>>,
                     t: Throwable
                 ) {
                     Log.e("debug", "onFailure: ${t.message}" )
-                    callback.onAllTechnologyReceived(emptyList())
+                    techResponse.postValue(
+                        ApiResponse.error(
+                            msg = t.message.toString(),
+                            mutableListOf()
+                        )
+                    )
                     EspressoIdlingResource.decrement()
                 }
 
             })
-    }
-
-    interface LoadTopHeadlinesCallback{
-        fun onAllTopHeadlinesReceived(topResponse: List<ArticlesItem?>)
-    }
-    interface LoadDetikNewsCallback{
-        fun onAllDetikReceived(detikResponse: List<ArticlesItem?>)
-    }
-    interface LoadVivaNewsCallback{
-        fun onAllVivaReceived(vivaResponse: List<ArticlesItem?>)
-    }
-    interface LoadKapanlagiCallback{
-        fun onAllKapanlagiReceived(kapanlagiResponse: List<ArticlesItem?>)
-    }
-    interface LoadSuaraNewsCallback{
-        fun onAllSuaraReceived(suaraResponse: List<ArticlesItem?>)
-    }
-    interface LoadBusinessCallback{
-        fun onAllBusinessReceived(businessResponse: List<ArticlesItem?>)
-    }
-    interface LoadEntertainmentCallback{
-        fun onAllEntertainmentReceived(entertainmentResponse: List<ArticlesItem?>)
-    }
-    interface LoadGeneralCallback{
-        fun onAllGeneralReceived(generalResponse: List<ArticlesItem?>)
-    }
-    interface LoadHealthCallback{
-        fun onAllHealthReceived(healthResponse: List<ArticlesItem?>)
-    }
-    interface LoadScienceCallback{
-        fun onAllScienceReceived(scienceResponse: List<ArticlesItem?>)
-    }
-    interface LoadSportsCallback{
-        fun onAllSportsReceived(sportsResponse: List<ArticlesItem?>)
-    }
-    interface LoadTechnologyCallback{
-        fun onAllTechnologyReceived(technologyResponse: List<ArticlesItem?>)
+        return techResponse
     }
 }

@@ -2,16 +2,16 @@ package com.elthobhy.newsapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.*
 import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
 import com.elthobhy.newsapp.ui.category.business.BusinessAdapter
 import com.elthobhy.newsapp.ui.category.entertainment.EntertainmentAdapter
@@ -23,6 +23,7 @@ import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
+import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.*
 import com.facebook.shimmer.ShimmerFrameLayout
 
@@ -50,23 +51,24 @@ class CategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        val factory = ViewModelFactory.getInstance()
-        businessViewModel = ViewModelProvider(this,factory)[BusinessViewModel::class.java]
-        entertainmentViewModel = ViewModelProvider(this,factory)[EntertainmentViewModel::class.java]
-        generalViewModel = ViewModelProvider(this,factory)[GeneralViewModel::class.java]
-        healthViewModel = ViewModelProvider(this,factory)[HealthViewModel::class.java]
-        scienceViewModel = ViewModelProvider(this,factory)[ScienceViewModel::class.java]
-        sportsViewModel = ViewModelProvider(this,factory)[SportViewModel::class.java]
-        technologyViewModel = ViewModelProvider(this,factory)[TechnologyViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        businessViewModel = ViewModelProvider(this, factory)[BusinessViewModel::class.java]
+        entertainmentViewModel =
+            ViewModelProvider(this, factory)[EntertainmentViewModel::class.java]
+        generalViewModel = ViewModelProvider(this, factory)[GeneralViewModel::class.java]
+        healthViewModel = ViewModelProvider(this, factory)[HealthViewModel::class.java]
+        scienceViewModel = ViewModelProvider(this, factory)[ScienceViewModel::class.java]
+        sportsViewModel = ViewModelProvider(this, factory)[SportViewModel::class.java]
+        technologyViewModel = ViewModelProvider(this, factory)[TechnologyViewModel::class.java]
 
         binding.apply {
-            showRvBusiness(rvBusiness,shimmerBusiness)
-            showRvEntertainment(rvEntertainment,shimmerEntertainment)
-            showRvGeneral(rvGeneral,shimmerGeneral)
-            showRvHealth(rvHealth,shimmerHealth)
-            showRvScience(rvScience,shimmerScience)
-            showRvSports(rvSport,shimmerSport)
-            showRvTechnology(rvTechnology,shimmerTechnology)
+            showRvBusiness(rvBusiness, shimmerBusiness)
+            showRvEntertainment(rvEntertainment, shimmerEntertainment)
+            showRvGeneral(rvGeneral, shimmerGeneral)
+            showRvHealth(rvHealth, shimmerHealth)
+            showRvScience(rvScience, shimmerScience)
+            showRvSports(rvSport, shimmerSport)
+            showRvTechnology(rvTechnology, shimmerTechnology)
         }
 
         return binding.root
@@ -76,69 +78,78 @@ class CategoryFragment : Fragment() {
         adapterBusiness = BusinessAdapter()
         adapterBusiness.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = adapterBusiness
             }
-            businessViewModel.getBusinessNews().observe(viewLifecycleOwner){ listArticle->
-                        if(listArticle.isNotEmpty()){
-                            false.loadingExtension(shimmer,recyclerView)
-                            adapterBusiness.setList(listArticle)
-                        }else{
-                            true.loadingExtension(shimmer,recyclerView)
+            businessViewModel.getBusinessNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerBusiness,rvBusiness)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { adapterBusiness.setList(it) }
+                            adapterBusiness.notifyDataSetChanged()
+                            Log.e("business", "showRvHeadline: ${listArticle.data}",)
+                            false.loadingExtension(shimmerBusiness,rvBusiness)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerBusiness,rvBusiness)
                         }
                     }
                 }
-            adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
-                override fun onClicked(data: Article) {
-                    showDetailData(data,Constants.BUSINESS)
-                }
-
-            })
+                false.loadingExtension(shimmerBusiness, rvBusiness)
+            }
         }
+        adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
+            override fun onClicked(data: ArticleBusiness) {
+                showDetailData(data, Constants.BUSINESS)
+            }
 
-    private fun showDetailData(data: Article, key: String) {
-        when (key){
-            Constants.BUSINESS->{
+        })
+    }
+
+    private fun showDetailData(data: Parcelable, key: String) {
+        when (key) {
+            Constants.BUSINESS -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.BUSINESS,data)
+                intentDetail.putExtra(Constants.BUSINESS, data)
                 startActivity(intentDetail)
             }
-            Constants.ENTERTAINMENT->{
+            Constants.ENTERTAINMENT -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.ENTERTAINMENT,data)
+                intentDetail.putExtra(Constants.ENTERTAINMENT, data)
                 startActivity(intentDetail)
             }
-            Constants.GENERAL->{
+            Constants.GENERAL -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.GENERAL,data)
+                intentDetail.putExtra(Constants.GENERAL, data)
                 startActivity(intentDetail)
             }
-            Constants.HEALTH->{
+            Constants.HEALTH -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.HEALTH,data)
+                intentDetail.putExtra(Constants.HEALTH, data)
                 startActivity(intentDetail)
             }
-            Constants.SCIENCE->{
+            Constants.SCIENCE -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.SCIENCE,data)
+                intentDetail.putExtra(Constants.SCIENCE, data)
                 startActivity(intentDetail)
             }
-            Constants.SPORTS->{
+            Constants.SPORTS -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.SPORTS,data)
+                intentDetail.putExtra(Constants.SPORTS, data)
                 startActivity(intentDetail)
             }
-            Constants.TECHNOLOGY->{
+            Constants.TECHNOLOGY -> {
                 val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.TECHNOLOGY,data)
+                intentDetail.putExtra(Constants.TECHNOLOGY, data)
                 startActivity(intentDetail)
             }
-            else->{
-                Log.e("else", "showDetailData: ", )
+            else -> {
+                Log.e("else", "showDetailData: ")
             }
         }
     }
@@ -147,160 +158,219 @@ class CategoryFragment : Fragment() {
         entertainmentAdapter = EntertainmentAdapter()
         entertainmentAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = entertainmentAdapter
             }
-            entertainmentViewModel.getEntertainment().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    entertainmentAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            entertainmentViewModel.getEntertainment().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerEntertainment,rvEntertainment)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { entertainmentAdapter.setList(it) }
+                            entertainmentAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerEntertainment,rvEntertainment)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerEntertainment,rvEntertainment)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerEntertainment, rvEntertainment)
             }
         }
         entertainmentAdapter.setOnClickCallback(object : EntertainmentAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
+            override fun onClicked(data: ArticleEntertainment) {
                 showDetailData(data, Constants.ENTERTAINMENT)
             }
 
         })
     }
+
     private fun showRvGeneral(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         generalAdapter = GeneralAdapter()
         generalAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = generalAdapter
             }
-            generalViewModel.getGeneralNews().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    generalAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            generalViewModel.getGeneralNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerGeneral,rvGeneral)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { generalAdapter.setList(it) }
+                            generalAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerGeneral,rvGeneral)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerGeneral,rvGeneral)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerGeneral, rvGeneral)
             }
         }
         generalAdapter.setOnClickCallback(object : GeneralAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
-                showDetailData(data,Constants.GENERAL)
+            override fun onClicked(data: ArticleGeneral) {
+                showDetailData(data, Constants.GENERAL)
             }
 
         })
     }
+
     private fun showRvHealth(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         healthAdapter = HealthAdapter()
         healthAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = healthAdapter
             }
-            healthViewModel.getHealthNews().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    healthAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            healthViewModel.getHealthNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerHealth,rvHealth)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { healthAdapter.setList(it) }
+                            healthAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerHealth,rvHealth)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerHealth,rvHealth)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerHealth, rvHealth)
             }
         }
         healthAdapter.setOnClickCallback(object : HealthAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
-                showDetailData(data,Constants.HEALTH)
+            override fun onClicked(data: ArticleHealth) {
+                showDetailData(data, Constants.HEALTH)
             }
 
         })
     }
+
     private fun showRvScience(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         scienceAdapter = ScienceAdapter()
         scienceAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = scienceAdapter
             }
-            scienceViewModel.getScienceNews().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    scienceAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            scienceViewModel.getScienceNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerScience,rvScience)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { scienceAdapter.setList(it) }
+                            scienceAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerScience,rvScience)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerScience,rvScience)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerScience, rvScience)
             }
         }
         scienceAdapter.setOnClickCallback(object : ScienceAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
-                showDetailData(data,Constants.SCIENCE)
+            override fun onClicked(data: ArticleScience) {
+                showDetailData(data, Constants.SCIENCE)
             }
 
         })
     }
+
     private fun showRvSports(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         sportAdapter = SportAdapter()
         sportAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = sportAdapter
             }
-            sportsViewModel.getSportsNews().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    sportAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            sportsViewModel.getSportsNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerSport,rvSport)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { sportAdapter.setList(it) }
+                            sportAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerSport,rvSport)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerSport,rvSport)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerSport, rvSport)
             }
         }
         sportAdapter.setOnClickCallback(object : SportAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
-                showDetailData(data,Constants.SPORTS)
+            override fun onClicked(data: ArticleSports) {
+                showDetailData(data, Constants.SPORTS)
             }
 
         })
     }
+
     private fun showRvTechnology(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
         technologyAdapter = TechnologyAdapter()
         technologyAdapter.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmer,recyclerView)
+            true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
                 adapter = technologyAdapter
             }
-            technologyViewModel.getTechnologyNews().observe(viewLifecycleOwner){ listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmer,recyclerView)
-                    technologyAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmer,recyclerView)
+            technologyViewModel.getTechnologyNews().observe(viewLifecycleOwner) { listArticle ->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerTechnology,rvTechnology)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { technologyAdapter.setList(it) }
+                            technologyAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerTechnology,rvTechnology)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerTechnology,rvTechnology)
+                        }
+                    }
                 }
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerTechnology, rvTechnology)
             }
         }
         technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {
-            override fun onClicked(data: Article) {
-                showDetailData(data,Constants.TECHNOLOGY)
+            override fun onClicked(data: ArticleTechnology) {
+                showDetailData(data, Constants.TECHNOLOGY)
             }
 
         })

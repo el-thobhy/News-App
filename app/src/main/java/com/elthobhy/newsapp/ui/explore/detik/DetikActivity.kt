@@ -1,18 +1,18 @@
 package com.elthobhy.newsapp.ui.explore.detik
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleDetik
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
 import com.elthobhy.newsapp.databinding.ActivityDetikBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
+import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.DetikViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
@@ -25,7 +25,7 @@ class DetikActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetikBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         detikViewModel = ViewModelProvider(this, factory)[DetikViewModel::class.java]
         detikAdapter = DetikAdapter()
         setContentView(binding.root)
@@ -35,30 +35,40 @@ class DetikActivity : AppCompatActivity() {
 
     private fun showRvDetik() {
         detikAdapter.notifyDataSetChanged()
-        true.loadingExtension(binding.shimmerDetik,binding.rvDetik)
-        binding.rvDetik.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-            setHasFixedSize(true)
-            adapter = detikAdapter
-        }
-        detikViewModel.getDetikNews().observe(this){listArticle->
-            if(listArticle.isNotEmpty()){
-                false.loadingExtension(binding.shimmerDetik,binding.rvDetik)
-                detikAdapter.setList(listArticle)
-            }else{
-                true.loadingExtension(binding.shimmerDetik,binding.rvDetik)
+        binding.apply {
+            true.loadingExtension(shimmerDetik,rvDetik)
+            rvDetik.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
+                setHasFixedSize(true)
+                adapter = detikAdapter
             }
-            Log.e("debug", "showRvDetik: $listArticle", )
+            detikViewModel.getDetikNews().observe(this@DetikActivity){listArticle->
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerDetik,rvDetik)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { detikAdapter.setList(it) }
+                            detikAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerDetik,rvDetik)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerDetik,rvDetik)
+                        }
+                    }
+                }
+                false.loadingExtension(shimmerDetik, rvDetik)
+            }
         }
+
         detikAdapter.setOnItemClickCallback(object :DetikAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: Article) {
+            override fun onItemClicked(data: ArticleDetik) {
                 showDetailData(data)
             }
 
         })
     }
 
-    private fun showDetailData(data: Article) {
+    private fun showDetailData(data: ArticleDetik) {
         val intentDetail = Intent(applicationContext, DetailActivity::class.java)
         intentDetail.putExtra(Constants.DETIK,data)
         startActivity(intentDetail)

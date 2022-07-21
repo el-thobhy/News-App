@@ -4,16 +4,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleSuara
 import com.elthobhy.newsapp.databinding.ActivitySuaraBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
-import com.elthobhy.newsapp.ui.explore.kapanlagi.KapanlagiAdapter
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
+import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.SuaraViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
@@ -26,7 +26,7 @@ class SuaraActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySuaraBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         suaraViewModel = ViewModelProvider(this,factory)[SuaraViewModel::class.java]
         suaraAdapter = SuaraAdapter()
         setContentView(binding.root)
@@ -44,25 +44,32 @@ class SuaraActivity : AppCompatActivity() {
                 adapter = suaraAdapter
             }
             suaraViewModel.getSuaraNews().observe(this@SuaraActivity){listArticle->
-                if(listArticle.isNotEmpty()){
-                    false.loadingExtension(shimmerSuara,rvSuara)
-                    suaraAdapter.setList(listArticle)
-                }else{
-                    true.loadingExtension(shimmerSuara,rvSuara)
-
+                if (listArticle != null) {
+                    when(listArticle.status){
+                        Status.LOADING -> true.loadingExtension(shimmerSuara,rvSuara)
+                        Status.SUCCESS->{
+                            listArticle.data?.let { suaraAdapter.setList(it) }
+                            suaraAdapter.notifyDataSetChanged()
+                            false.loadingExtension(shimmerSuara,rvSuara)
+                        }
+                        Status.ERROR->{
+                            false.loadingExtension(shimmerSuara,rvSuara)
+                        }
+                    }
                 }
-                Log.e("debug", "showRvKapanlagi: $listArticle", )
+                Log.e("debug", "showRvHeadline: $listArticle",)
+                false.loadingExtension(shimmerSuara, rvSuara)
             }
         }
         suaraAdapter.setOnItemClickCallback(object : SuaraAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: Article) {
+            override fun onItemClicked(data: ArticleSuara) {
                 showDetailData(data)
             }
 
         })
     }
 
-    private fun showDetailData(data: Article) {
+    private fun showDetailData(data: ArticleSuara) {
         val intentDetail = Intent(applicationContext, DetailActivity::class.java)
         intentDetail.putExtra(Constants.SUARA,data)
         startActivity(intentDetail)

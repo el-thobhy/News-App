@@ -1,6 +1,5 @@
 package com.elthobhy.newsapp.ui.explore.detik
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleDetik
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
-import com.elthobhy.newsapp.ui.home.HeadlineAdapter
 
 class DetikAdapter:RecyclerView.Adapter<DetikAdapter.DetikViewHolder>() {
-    private val list = ArrayList<Article>()
+    private val list = ArrayList<ArticleDetik>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,12 +28,12 @@ class DetikAdapter:RecyclerView.Adapter<DetikAdapter.DetikViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Article)
+        fun onItemClicked(data: ArticleDetik)
     }
 
     inner class DetikViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(detikEntity: Article) {
+        fun bind(detikEntity: ArticleDetik) {
             binding.apply {
                 Glide.with(itemView)
                     .load(detikEntity.urlToImage)
@@ -59,9 +58,8 @@ class DetikAdapter:RecyclerView.Adapter<DetikAdapter.DetikViewHolder>() {
         return list.size
     }
 
-    fun setList(detikEntity: List<Article>) {
+    fun setList(detikEntity: List<ArticleDetik>) {
         list.addAll(detikEntity)
-        Log.e("debug", "setList: $list",)
         notifyDataSetChanged()
     }
 }

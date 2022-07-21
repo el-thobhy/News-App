@@ -1,363 +1,506 @@
 package com.elthobhy.newsapp.data.source
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.elthobhy.newsapp.data.source.local.entity.Article
-import com.elthobhy.newsapp.data.source.local.entity.Source
+import com.elthobhy.newsapp.data.source.local.LocalData
+import com.elthobhy.newsapp.data.source.local.entity.*
 import com.elthobhy.newsapp.data.source.remote.RemoteData
 import com.elthobhy.newsapp.data.source.remote.response.ArticlesItem
+import com.elthobhy.newsapp.data.source.remote.response.vo.ApiResponse
+import com.elthobhy.newsapp.utils.AppExecutors
+import com.elthobhy.newsapp.utils.vo.Resource
 
-class CatalogNewsRepository private constructor(private val remoteData: RemoteData):
+class CatalogNewsRepository private constructor(
+    private val remoteData: RemoteData,
+    private val localData: LocalData,
+    private val appExecutors: AppExecutors
+):
     CatalogNewsDataSource {
         companion object{
             @Volatile
             private var instance : CatalogNewsRepository? = null
-            fun getInstance(remoteData: RemoteData): CatalogNewsRepository =
+            fun getInstance(
+                remoteData: RemoteData,
+                localData: LocalData,
+                appExecutors: AppExecutors
+            ): CatalogNewsRepository =
                 instance ?: synchronized(this) {
-                    instance ?: CatalogNewsRepository(remoteData).apply {
+                    instance ?: CatalogNewsRepository(
+                        remoteData,
+                        localData,
+                        appExecutors
+                    ).apply {
                         instance = this
                     }
                 }
         }
 
-    override fun getTopHeadlines(): LiveData<List<Article>> {
-        val listNews = MutableLiveData<List<Article>>()
-        remoteData.getTopHeadlines(object : RemoteData.LoadTopHeadlinesCallback{
-            override fun onAllTopHeadlinesReceived(topResponse: List<ArticlesItem?>) {
-                val topNews = ArrayList<Article>()
-                if(topResponse.isNotEmpty()){
-                    for(response in topResponse){
-                        if(response != null){
-                            val articleNews = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            topNews.add(articleNews)
+    override fun getTopHeadlines(): LiveData<Resource<List<ArticleHeadline>>> {
+        return object : NetworkBoundResource<List<ArticleHeadline>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleHeadline>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleHeadline>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleHeadline(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listNews.postValue(topNews)
-                } else{
-                    listNews.postValue(topNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesHeadline(listNews)
             }
 
-        })
-        return listNews
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getTopHeadlines()
+
+            public override fun loadFromDB(): LiveData<List<ArticleHeadline>> =
+                localData.getAllArticleHeadline()
+
+        }.asLiveData()
     }
 
-    override fun getDetikNews(): LiveData<List<Article>> {
-        val listNews = MutableLiveData<List<Article>>()
-        remoteData.getDetikNews(object : RemoteData.LoadDetikNewsCallback{
-            override fun onAllDetikReceived(detikResponse: List<ArticlesItem?>) {
-                val detikNews = ArrayList<Article>()
-                if(detikResponse.isNotEmpty()){
-                    for(response in detikResponse){
-                        if(response != null){
-                            val articleNews = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            detikNews.add(articleNews)
+    override fun getDetikNews(): LiveData<Resource<List<ArticleDetik>>> {
+        return object : NetworkBoundResource<List<ArticleDetik>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleDetik>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleDetik>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleDetik(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listNews.postValue(detikNews)
-                }else{
-                    listNews.postValue(detikNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesDetik(listNews)
             }
-        })
-        return listNews
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getDetikNews()
+
+
+            public override fun loadFromDB(): LiveData<List<ArticleDetik>> =
+                localData.getAllArticleDetik()
+
+        }.asLiveData()
     }
 
-    override fun getVivaNews(): LiveData<List<Article>> {
-        val listNews = MutableLiveData<List<Article>>()
-        remoteData.getVivaNews(object : RemoteData.LoadVivaNewsCallback{
-            override fun onAllVivaReceived(vivaResponse: List<ArticlesItem?>) {
-                val vivaNews = ArrayList<Article>()
-                if(vivaResponse.isNotEmpty()){
-                    for(response in vivaResponse){
-                        if(response!=null){
-                            val articleNews = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            vivaNews.add(articleNews)
+    override fun getVivaNews(): LiveData<Resource<List<ArticleViva>>> {
+        return object : NetworkBoundResource<List<ArticleViva>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleViva>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleViva>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleViva(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listNews.postValue(vivaNews)
-                }else{
-                    listNews.postValue(vivaNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesViva(listNews)
             }
 
-        })
-        return listNews
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getVivaNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleViva>> =
+                localData.getAllArticleViva()
+
+        }.asLiveData()
     }
 
-    override fun getKapanlagiNews(): LiveData<List<Article>> {
-        val listNews = MutableLiveData<List<Article>>()
-        remoteData.getKapanlagiNews(object :RemoteData.LoadKapanlagiCallback{
-            override fun onAllKapanlagiReceived(kapanlagiResponse: List<ArticlesItem?>) {
-                val kapanlagiNews = ArrayList<Article>()
-                if(kapanlagiResponse.isNotEmpty()){
-                    for(response in kapanlagiResponse){
-                        if(response != null){
-                            val articleNews = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            kapanlagiNews.add(articleNews)
+    override fun getKapanlagiNews(): LiveData<Resource<List<ArticleKapanlagi>>> {
+        return object : NetworkBoundResource<List<ArticleKapanlagi>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleKapanlagi>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleKapanlagi>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleKapanlagi(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listNews.postValue(kapanlagiNews)
-                }else{
-                    listNews.postValue(kapanlagiNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesKapanlagi(listNews)
             }
-        })
-        return listNews
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getKapanlagiNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleKapanlagi>> =
+                localData.getAllArticleKapanlagi()
+
+        }.asLiveData()
     }
 
-    override fun getSuaraNews(): LiveData<List<Article>> {
-        val listNews = MutableLiveData<List<Article>>()
-        remoteData.getSuaraNews(object :RemoteData.LoadSuaraNewsCallback{
-            override fun onAllSuaraReceived(suaraResponse: List<ArticlesItem?>) {
-                val suaraNews = ArrayList<Article>()
-                if(suaraResponse.isNotEmpty()){
-                    for(response in suaraResponse){
-                        if(response != null){
-                            val articleNews = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            suaraNews.add(articleNews)
+    override fun getSuaraNews(): LiveData<Resource<List<ArticleSuara>>> {
+        return object : NetworkBoundResource<List<ArticleSuara>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleSuara>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleSuara>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleSuara(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listNews.postValue(suaraNews)
-                }else{
-                    listNews.postValue(suaraNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesSuara(listNews)
             }
 
-        })
-        return listNews
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getSuaraNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleSuara>> =
+                localData.getAllArticleSuara()
+
+        }.asLiveData()
     }
 
-    override fun getBusinessNews(): LiveData<List<Article>> {
-        val listBusiness = MutableLiveData<List<Article>>()
-        remoteData.getBusinessNews(object : RemoteData.LoadBusinessCallback{
-            override fun onAllBusinessReceived(businessResponse: List<ArticlesItem?>) {
-                val businessNews = ArrayList<Article>()
-                if(businessResponse.isNotEmpty()){
-                    for(response in businessResponse){
-                        if(response != null){
-                            val businessArticle = Article(
-                                source = Source(name=response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            businessNews.add(businessArticle)
+    override fun getBusinessNews(): LiveData<Resource<List<ArticleBusiness>>> {
+        return object : NetworkBoundResource<List<ArticleBusiness>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleBusiness>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleBusiness>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleBusiness(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listBusiness.postValue(businessNews)
-                }else{
-                    listBusiness.postValue(businessNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesBusiness(listNews)
             }
 
-        })
-        return  listBusiness
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getBusinessNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleBusiness>> =
+                localData.getAllArticleBusiness()
+
+        }.asLiveData()
     }
 
-    override fun getEntertainmentNews(): LiveData<List<Article>> {
-        val listEntertainment = MutableLiveData<List<Article>>()
-        remoteData.getEntertainmentNews(object : RemoteData.LoadEntertainmentCallback {
-            override fun onAllEntertainmentReceived(entertainmentResponse: List<ArticlesItem?>) {
-                val entertainmentNews = ArrayList<Article>()
-                if (entertainmentResponse.isNotEmpty()) {
-                    for (response in entertainmentResponse) {
-                        if (response != null) {
-                            val entertainmentArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            entertainmentNews.add(entertainmentArticle)
+    override fun getEntertainmentNews(): LiveData<Resource<List<ArticleEntertainment>>> {
+        return object : NetworkBoundResource<List<ArticleEntertainment>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleEntertainment>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleEntertainment>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleEntertainment(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listEntertainment.postValue(entertainmentNews)
-                } else {
-                    listEntertainment.postValue(entertainmentNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesEntertainment(listNews)
             }
-        })
-        return listEntertainment
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getEntertainmentNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleEntertainment>> =
+                localData.getAllArticleEntertainment()
+
+        }.asLiveData()
     }
 
-    override fun getGeneralNews(): LiveData<List<Article>> {
-        val listGeneral = MutableLiveData<List<Article>>()
-        remoteData.getGeneralNews(object : RemoteData.LoadGeneralCallback {
-            override fun onAllGeneralReceived(generalResponse: List<ArticlesItem?>) {
-                val generalNews = ArrayList<Article>()
-                if (generalResponse.isNotEmpty()) {
-                    for (response in generalResponse) {
-                        if (response != null) {
-                            val generalArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            generalNews.add(generalArticle)
+    override fun getGeneralNews(): LiveData<Resource<List<ArticleGeneral>>> {
+        return object : NetworkBoundResource<List<ArticleGeneral>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleGeneral>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleGeneral>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleGeneral(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listGeneral.postValue(generalNews)
-                } else {
-                    listGeneral.postValue(generalNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesGeneral(listNews)
             }
-        })
-        return listGeneral
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getGeneralNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleGeneral>> =
+                localData.getAllArticleGeneral()
+
+        }.asLiveData()
     }
 
-    override fun getHealthNews(): LiveData<List<Article>> {
-        val listHealth = MutableLiveData<List<Article>>()
-        remoteData.getHealthNews(object : RemoteData.LoadHealthCallback {
-            override fun onAllHealthReceived(healthResponse: List<ArticlesItem?>) {
-                val healthNews = ArrayList<Article>()
-                if (healthResponse.isNotEmpty()) {
-                    for (response in healthResponse) {
-                        if (response != null) {
-                            val healthArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            healthNews.add(healthArticle)
+    override fun getHealthNews(): LiveData<Resource<List<ArticleHealth>>> {
+        return object : NetworkBoundResource<List<ArticleHealth>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleHealth>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleHealth>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleHealth(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listHealth.postValue(healthNews)
-                } else {
-                    listHealth.postValue(healthNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesHealth(listNews)
             }
-        })
-        return listHealth
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getHealthNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleHealth>> =
+                localData.getAllArticleHealth()
+
+        }.asLiveData()
     }
 
-    override fun getScienceNews(): LiveData<List<Article>> {
-        val listScience = MutableLiveData<List<Article>>()
-        remoteData.getScienceNews(object : RemoteData.LoadScienceCallback {
-            override fun onAllScienceReceived(scienceResponse: List<ArticlesItem?>) {
-                val scienceNews = ArrayList<Article>()
-                if (scienceResponse.isNotEmpty()) {
-                    for (response in scienceResponse) {
-                        if (response != null) {
-                            val scienceArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            scienceNews.add(scienceArticle)
+    override fun getScienceNews(): LiveData<Resource<List<ArticleScience>>> {
+        return object : NetworkBoundResource<List<ArticleScience>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleScience>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleScience>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleScience(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listScience.postValue(scienceNews)
-                } else {
-                    listScience.postValue(scienceNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesScience(listNews)
             }
-        })
-        return listScience
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getScienceNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleScience>> =
+                localData.getAllArticleScience()
+
+        }.asLiveData()
     }
 
-    override fun getSportsNews(): LiveData<List<Article>> {
-        val listSports = MutableLiveData<List<Article>>()
-        remoteData.getSportsNews(object : RemoteData.LoadSportsCallback {
-            override fun onAllSportsReceived(sportsResponse: List<ArticlesItem?>) {
-                val sportsNews = ArrayList<Article>()
-                if (sportsResponse.isNotEmpty()) {
-                    for (response in sportsResponse) {
-                        if (response != null) {
-                            val sportsArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            sportsNews.add(sportsArticle)
+    override fun getSportsNews(): LiveData<Resource<List<ArticleSports>>> {
+        return object : NetworkBoundResource<List<ArticleSports>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleSports>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleSports>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleSports(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listSports.postValue(sportsNews)
-                } else {
-                    listSports.postValue(sportsNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesSports(listNews)
             }
-        })
-        return listSports
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getSportsNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleSports>> =
+                localData.getAllArticleSports()
+
+        }.asLiveData()
     }
 
-    override fun getTechnologyNews(): LiveData<List<Article>> {
-        val listTechnology = MutableLiveData<List<Article>>()
-        remoteData.getTechnologyNews(object : RemoteData.LoadTechnologyCallback {
-            override fun onAllTechnologyReceived(technologyResponse: List<ArticlesItem?>) {
-                val technologyNews = ArrayList<Article>()
-                if (technologyResponse.isNotEmpty()) {
-                    for (response in technologyResponse) {
-                        if (response != null) {
-                            val technologyArticle = Article(
-                                source = Source(name = response.source?.name),
-                                title = response.title,
-                                urlToImage = response.urlToImage,
-                                publishedAt = response.publishedAt,
-                                content = response.content,
-                                url = response.url
-                            )
-                            technologyNews.add(technologyArticle)
+    override fun getTechnologyNews(): LiveData<Resource<List<ArticleTechnology>>> {
+        return object : NetworkBoundResource<List<ArticleTechnology>, List<ArticlesItem>>(appExecutors){
+            override fun shouldFetch(data: List<ArticleTechnology>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun saveCallResult(data: List<ArticlesItem>) {
+                val listNews = ArrayList<ArticleTechnology>()
+                for(response in data){
+                    val article = response.author?.let {
+                        response.publishedAt?.let { it1 ->
+                            response.content?.let { it2 ->
+                                ArticleTechnology(
+                                    author = it,
+                                    source = Source(name=response.source?.name),
+                                    title = response.title,
+                                    urlToImage = response.urlToImage,
+                                    publishedAt = it1,
+                                    content = it2,
+                                    url = response.url
+                                )
+                            }
                         }
                     }
-                    listTechnology.postValue(technologyNews)
-                } else {
-                    listTechnology.postValue(technologyNews)
+                    if(article!=null){
+                        listNews.add(article)
+                    }
                 }
+                localData.insertArticlesTechnology(listNews)
             }
-        })
-        return listTechnology
+
+            public override fun createCall(): LiveData<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getTechnologyNews()
+
+            public override fun loadFromDB(): LiveData<List<ArticleTechnology>> =
+                localData.getAllArticleTechnology()
+
+        }.asLiveData()
     }
 
 

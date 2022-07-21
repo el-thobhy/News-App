@@ -1,5 +1,6 @@
 package com.elthobhy.newsapp.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.elthobhy.newsapp.data.source.CatalogNewsRepository
@@ -11,9 +12,9 @@ ViewModelProvider.NewInstanceFactory(){
         @Volatile
         private var instance : ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context:Context): ViewModelFactory =
             instance ?: synchronized(this){
-                instance ?: ViewModelFactory(Injection.provideCatalogRepository()).apply {
+                instance ?: ViewModelFactory(Injection.provideCatalogRepository(context)).apply {
                     instance = this
                 }
             }

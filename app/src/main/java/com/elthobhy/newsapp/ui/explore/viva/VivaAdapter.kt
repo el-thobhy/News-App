@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleViva
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
 
 class VivaAdapter: RecyclerView.Adapter<VivaAdapter.VivaViewHolder>() {
-    private val list = ArrayList<Article>()
+    private val list = ArrayList<ArticleViva>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,12 +29,12 @@ class VivaAdapter: RecyclerView.Adapter<VivaAdapter.VivaViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Article)
+        fun onItemClicked(data: ArticleViva)
     }
 
     inner class VivaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(detikEntity: Article) {
+        fun bind(detikEntity: ArticleViva) {
             binding.apply {
                 Glide.with(itemView)
                     .load(detikEntity.urlToImage)
@@ -58,7 +59,7 @@ class VivaAdapter: RecyclerView.Adapter<VivaAdapter.VivaViewHolder>() {
         return list.size
     }
 
-    fun setList(detikEntity: List<Article>) {
+    fun setList(detikEntity: List<ArticleViva>) {
         list.addAll(detikEntity)
         Log.e("debug", "setList: $list",)
         notifyDataSetChanged()

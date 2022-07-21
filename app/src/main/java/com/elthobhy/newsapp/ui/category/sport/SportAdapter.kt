@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleSports
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
 class SportAdapter: RecyclerView.Adapter<SportAdapter.SportViewHolder>() {
-    private var list = ArrayList<Article>()
+    private var list = ArrayList<ArticleSports>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     override fun onCreateViewHolder(
@@ -27,11 +28,11 @@ class SportAdapter: RecyclerView.Adapter<SportAdapter.SportViewHolder>() {
     }
 
     interface OnItemClickCallback{
-        fun onClicked(data: Article)
+        fun onClicked(data: ArticleSports)
     }
 
     inner class SportViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun bind(article: Article) {
+        fun bind(article: ArticleSports) {
             val binding = ItemEverythingBinding.bind(itemView)
             binding.apply {
                 Glide.with(itemView)
@@ -58,7 +59,7 @@ class SportAdapter: RecyclerView.Adapter<SportAdapter.SportViewHolder>() {
         return  list.size
     }
 
-    fun setList(article: List<Article>){
+    fun setList(article: List<ArticleSports>){
         list.addAll(article)
         notifyDataSetChanged()
     }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleKapanlagi
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
-import com.elthobhy.newsapp.ui.home.HeadlineAdapter
 
 class KapanlagiAdapter: RecyclerView.Adapter<KapanlagiAdapter.KapanlagiViewHolder>(){
-    private val list = ArrayList<Article>()
+    private val list = ArrayList<ArticleKapanlagi>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -28,12 +28,12 @@ class KapanlagiAdapter: RecyclerView.Adapter<KapanlagiAdapter.KapanlagiViewHolde
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(data: Article)
+        fun onItemClicked(data: ArticleKapanlagi)
     }
 
     inner class KapanlagiViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(kapanlagiEntity: Article) {
+        fun bind(kapanlagiEntity: ArticleKapanlagi) {
             binding.apply {
                 Glide.with(itemView)
                     .load(kapanlagiEntity.urlToImage)
@@ -57,7 +57,7 @@ class KapanlagiAdapter: RecyclerView.Adapter<KapanlagiAdapter.KapanlagiViewHolde
     override fun getItemCount(): Int {
         return  list.size
     }
-    fun setList(kapanlagiEntity: List<Article>){
+    fun setList(kapanlagiEntity: List<ArticleKapanlagi>){
         list.addAll(kapanlagiEntity)
         Log.e("debug", "setList: $list", )
         notifyDataSetChanged()

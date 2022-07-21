@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.Article
+import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.ArticleSuara
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
 
 class SuaraAdapter: RecyclerView.Adapter<SuaraAdapter.SuaraViewHolder>(){
-    private val list = ArrayList<Article>()
+    private val list = ArrayList<ArticleSuara>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,12 +28,12 @@ class SuaraAdapter: RecyclerView.Adapter<SuaraAdapter.SuaraViewHolder>(){
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(data: Article)
+        fun onItemClicked(data: ArticleSuara)
     }
 
     inner class SuaraViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(suaraEntity: Article) {
+        fun bind(suaraEntity: ArticleSuara) {
             binding.apply {
                 Glide.with(itemView)
                     .load(suaraEntity.urlToImage)
@@ -56,7 +57,7 @@ class SuaraAdapter: RecyclerView.Adapter<SuaraAdapter.SuaraViewHolder>(){
     override fun getItemCount(): Int {
         return  list.size
     }
-    fun setList(suaraEntity: List<Article>){
+    fun setList(suaraEntity: List<ArticleSuara>){
         list.addAll(suaraEntity)
         Log.e("debug", "setList: $list", )
         notifyDataSetChanged()

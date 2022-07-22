@@ -1,6 +1,6 @@
 package com.elthobhy.newsapp.utils
 
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
 import com.elthobhy.newsapp.data.source.local.entity.Source
 
 object DataDummy {

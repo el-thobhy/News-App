@@ -3,6 +3,18 @@ package com.elthobhy.newsapp.data.source.local.room
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.elthobhy.newsapp.data.source.local.entity.*
+import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
+import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
+import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment
+import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.health.ArticleHealth
+import com.elthobhy.newsapp.data.source.local.entity.kapanlagi.ArticleKapanlagi
+import com.elthobhy.newsapp.data.source.local.entity.science.ArticleScience
+import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
+import com.elthobhy.newsapp.data.source.local.entity.suara.ArticleSuara
+import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnology
+import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 
 @Dao
 interface ArticleDao {

@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.ArticleDetik
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
 import com.elthobhy.newsapp.databinding.ActivityDetikBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
-import com.elthobhy.newsapp.viewmodel.DetikViewModel
+import com.elthobhy.newsapp.viewmodel.detik.DetikViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
 class DetikActivity : AppCompatActivity() {

@@ -3,7 +3,6 @@ package com.elthobhy.newsapp.ui.favorite
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,16 +10,36 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.elthobhy.newsapp.data.source.local.entity.*
+import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
+import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
+import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment
+import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.health.ArticleHealth
+import com.elthobhy.newsapp.data.source.local.entity.kapanlagi.ArticleKapanlagi
+import com.elthobhy.newsapp.data.source.local.entity.science.ArticleScience
+import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
+import com.elthobhy.newsapp.data.source.local.entity.suara.ArticleSuara
+import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnology
+import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 import com.elthobhy.newsapp.databinding.FragmentFavoriteBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
-import com.elthobhy.newsapp.ui.favorite.adapter.*
-import com.elthobhy.newsapp.ui.home.HeadlineAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.business.FavoriteBusinessAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.detik.FavoriteDetikAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.entertainment.FavoriteEntertainmentAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.general.FavoriteGeneralAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.headline.FavoriteHeadlineAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.health.FavoriteHealthAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.kapanlagi.FavoriteKapanlagiAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.science.FavoriteScienceAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.sports.FavoriteSportsAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.suara.FavoriteSuaraAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.technology.FavoriteTechnologyAdapter
+import com.elthobhy.newsapp.ui.favorite.adapter.viva.FavoriteVivaAdapter
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
+import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class FavoriteFragment : Fragment() {
 

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.ArticleGeneral
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
 class GeneralAdapter: RecyclerView.Adapter<GeneralAdapter.GeneralViewHolder>() {

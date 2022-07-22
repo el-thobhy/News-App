@@ -5,7 +5,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.elthobhy.newsapp.data.source.CatalogNewsRepository
 import com.elthobhy.newsapp.di.Injection
-import com.elthobhy.newsapp.ui.favorite.FavoriteViewModel
+import com.elthobhy.newsapp.viewmodel.business.BusinessViewModel
+import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
+import com.elthobhy.newsapp.viewmodel.detik.DetikViewModel
+import com.elthobhy.newsapp.viewmodel.entertainment.EntertainmentViewModel
+import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
+import com.elthobhy.newsapp.viewmodel.general.GeneralViewModel
+import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
+import com.elthobhy.newsapp.viewmodel.health.HealthViewModel
+import com.elthobhy.newsapp.viewmodel.kapanlagi.KapanlagiViewModel
+import com.elthobhy.newsapp.viewmodel.science.ScienceViewModel
+import com.elthobhy.newsapp.viewmodel.sports.SportViewModel
+import com.elthobhy.newsapp.viewmodel.suara.SuaraViewModel
+import com.elthobhy.newsapp.viewmodel.technology.TechnologyViewModel
+import com.elthobhy.newsapp.viewmodel.viva.VivaViewModel
 
 class ViewModelFactory private constructor(private val catalogRepo: CatalogNewsRepository):
 ViewModelProvider.NewInstanceFactory(){

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.ui.explore.detik.DetikActivity
@@ -18,7 +18,7 @@ import com.elthobhy.newsapp.ui.explore.viva.VivaActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
-import com.elthobhy.newsapp.viewmodel.HeadlineViewModel
+import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
 class HomeFragment : Fragment() {

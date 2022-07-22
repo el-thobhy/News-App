@@ -7,15 +7,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
-import com.elthobhy.newsapp.data.source.local.entity.ArticleViva
+import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 import com.elthobhy.newsapp.databinding.ActivityVivaBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
-import com.elthobhy.newsapp.viewmodel.VivaViewModel
+import com.elthobhy.newsapp.viewmodel.viva.VivaViewModel
 
 class VivaActivity : AppCompatActivity() {
 

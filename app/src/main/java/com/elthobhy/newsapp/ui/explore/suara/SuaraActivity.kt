@@ -7,14 +7,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.ArticleHeadline
-import com.elthobhy.newsapp.data.source.local.entity.ArticleSuara
+import com.elthobhy.newsapp.data.source.local.entity.suara.ArticleSuara
 import com.elthobhy.newsapp.databinding.ActivitySuaraBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
-import com.elthobhy.newsapp.viewmodel.SuaraViewModel
+import com.elthobhy.newsapp.viewmodel.suara.SuaraViewModel
 import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 
 class SuaraActivity : AppCompatActivity() {

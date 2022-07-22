@@ -10,10 +10,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.*
+import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
+import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
+import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment
+import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
+import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
+import com.elthobhy.newsapp.data.source.local.entity.health.ArticleHealth
+import com.elthobhy.newsapp.data.source.local.entity.kapanlagi.ArticleKapanlagi
+import com.elthobhy.newsapp.data.source.local.entity.science.ArticleScience
+import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
+import com.elthobhy.newsapp.data.source.local.entity.suara.ArticleSuara
+import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnology
+import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 import com.elthobhy.newsapp.databinding.ActivityDetailBinding
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.viewmodel.*
+import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class DetailActivity : AppCompatActivity() {

@@ -11,7 +11,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.elthobhy.newsapp.data.source.local.entity.*
+import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
+import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment
+import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
+import com.elthobhy.newsapp.data.source.local.entity.health.ArticleHealth
+import com.elthobhy.newsapp.data.source.local.entity.science.ArticleScience
+import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
+import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnology
 import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
 import com.elthobhy.newsapp.ui.category.business.BusinessAdapter
 import com.elthobhy.newsapp.ui.category.entertainment.EntertainmentAdapter
@@ -25,6 +31,13 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.*
+import com.elthobhy.newsapp.viewmodel.business.BusinessViewModel
+import com.elthobhy.newsapp.viewmodel.entertainment.EntertainmentViewModel
+import com.elthobhy.newsapp.viewmodel.general.GeneralViewModel
+import com.elthobhy.newsapp.viewmodel.health.HealthViewModel
+import com.elthobhy.newsapp.viewmodel.science.ScienceViewModel
+import com.elthobhy.newsapp.viewmodel.sports.SportViewModel
+import com.elthobhy.newsapp.viewmodel.technology.TechnologyViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
 
 class CategoryFragment : Fragment() {

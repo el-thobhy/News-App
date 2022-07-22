@@ -503,5 +503,113 @@ class CatalogNewsRepository private constructor(
         }.asLiveData()
     }
 
+    override fun setFavoriteTechnology(article: ArticleTechnology, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteTechnology(article, state) }
+    }
+
+    override fun getFavoritesTechnology(): LiveData<List<ArticleTechnology>> = localData.getAllFavoritesTechnology()
+
+    override fun setFavoriteSports(article: ArticleSports, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteSports(article, state) }
+    }
+
+    override fun getFavoritesSports(): LiveData<List<ArticleSports>> = localData.getAllFavoritesSports()
+
+    override fun setFavoriteScience(article: ArticleScience, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteScience(article, state) }
+    }
+
+    override fun getFavoritesScience(): LiveData<List<ArticleScience>> = localData.getAllFavoritesScience()
+
+    override fun setFavoriteHealth(article: ArticleHealth, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteHealth(article, state) }
+    }
+
+    override fun getFavoritesHealth(): LiveData<List<ArticleHealth>> = localData.getAllFavoritesHealth()
+
+    override fun setFavoriteGeneral(article: ArticleGeneral, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteGeneral(article, state) }
+    }
+
+    override fun getFavoritesGeneral(): LiveData<List<ArticleGeneral>> = localData.getAllFavoritesGeneral()
+
+    override fun setFavoriteEntertainment(article: ArticleEntertainment, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteEntertainment(article, state) }
+    }
+
+    override fun getFavoritesEntertainment(): LiveData<List<ArticleEntertainment>> = localData.getAllFavoritesEntertainment()
+
+    override fun setFavoriteBusiness(article: ArticleBusiness, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteBusiness(article, state) }
+    }
+
+    override fun getFavoritesBusiness(): LiveData<List<ArticleBusiness>> = localData.getAllFavoritesBusiness()
+
+    override fun setFavoriteSuara(article: ArticleSuara, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteSuara(article, state) }
+    }
+
+    override fun getFavoritesSuara(): LiveData<List<ArticleSuara>> = localData.getAllFavoritesSuara()
+
+    override fun setFavoriteKapanlagi(article: ArticleKapanlagi, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteKapanlagi(article, state) }
+    }
+
+    override fun getFavoritesKapanlagi(): LiveData<List<ArticleKapanlagi>> = localData.getAllFavoritesKapanlagi()
+
+    override fun setFavoriteViva(article: ArticleViva, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteViva(article, state) }
+    }
+
+    override fun getFavoritesViva(): LiveData<List<ArticleViva>> = localData.getAllFavoritesViva()
+
+    override fun setFavoriteDetik(article: ArticleDetik, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteDetik(article, state) }
+    }
+
+    override fun getFavoritesDetik(): LiveData<List<ArticleDetik>> = localData.getAllFavoritesDetik()
+
+    override fun setFavoriteHeadline(article: ArticleHeadline, state: Boolean) {
+        appExecutors.diskIO().execute { localData.setFavoriteHeadline(article, state) }
+    }
+
+    override fun getFavoritesHeadline(): LiveData<List<ArticleHeadline>> = localData.getAllFavoritesHeadline()
+
+    override fun getDetailTopHeadlines(content: String): LiveData<ArticleHeadline> =
+        localData.getDetailHeadline(content)
+
+    override fun getDetailDetikNews(content: String): LiveData<ArticleDetik> =
+        localData.getDetailDetik(content)
+
+    override fun getDetailVivaNews(content: String): LiveData<ArticleViva> =
+        localData.getDetailViva(content)
+
+    override fun getDetailKapanlagiNews(content: String): LiveData<ArticleKapanlagi> =
+        localData.getDetailKapanlagi(content)
+
+    override fun getDetailSuaraNews(content: String): LiveData<ArticleSuara> =
+        localData.getDetailSuara(content)
+
+    override fun getDetailBusinessNews(content: String): LiveData<ArticleBusiness> =
+        localData.getDetailBusiness(content)
+
+    override fun getDetailEntertainmentNews(content: String): LiveData<ArticleEntertainment> =
+        localData.getDetailEntertainment(content)
+
+    override fun getDetailGeneralNews(content: String): LiveData<ArticleGeneral> =
+        localData.getDetailGeneral(content)
+
+    override fun getDetailHealthNews(content: String): LiveData<ArticleHealth> =
+        localData.getDetailHealth(content)
+
+    override fun getDetailScienceNews(content: String): LiveData<ArticleScience> =
+        localData.getDetailScience(content)
+
+    override fun getDetailSportsNews(content: String): LiveData<ArticleSports> =
+        localData.getDetailSports(content)
+
+    override fun getDetailTechnologyNews(content: String): LiveData<ArticleTechnology> =
+        localData.getDetailTechnology(content)
+
 
 }

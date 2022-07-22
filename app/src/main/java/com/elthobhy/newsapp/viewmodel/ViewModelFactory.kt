@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.elthobhy.newsapp.data.source.CatalogNewsRepository
 import com.elthobhy.newsapp.di.Injection
+import com.elthobhy.newsapp.ui.favorite.FavoriteViewModel
 
 class ViewModelFactory private constructor(private val catalogRepo: CatalogNewsRepository):
 ViewModelProvider.NewInstanceFactory(){
@@ -57,6 +58,12 @@ ViewModelProvider.NewInstanceFactory(){
             }
             modelClass.isAssignableFrom(TechnologyViewModel::class.java) ->{
                 TechnologyViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) ->{
+                FavoriteViewModel(catalogRepo) as T
+            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) ->{
+                DetailViewModel(catalogRepo) as T
             }
             else->{
                 throw Throwable("Uknown ViewModel class: "+ modelClass.name)

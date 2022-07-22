@@ -33,4 +33,6 @@
     <string name="source_news">Source News</string>
     <string name="date_news">Date News</string>
     <string name="go_to_official_website">Go To Website</string>
+    <string name="favorite_business">Favorite Business</string>
+    <string name="anda_belum_punya_favorite">Anda Belum Punya Favorite</string>
 </resources>

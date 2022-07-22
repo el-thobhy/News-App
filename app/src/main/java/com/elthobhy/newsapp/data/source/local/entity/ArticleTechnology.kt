@@ -38,5 +38,5 @@ class ArticleTechnology (
     val urlToImage: String? =null,
 
     @ColumnInfo(name = "bookmarked")
-    var bookmarked: Boolean? = false,
+    var bookmarked: Boolean  = false,
 ): Parcelable

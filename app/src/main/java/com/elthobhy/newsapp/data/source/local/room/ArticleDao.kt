@@ -172,4 +172,43 @@ interface ArticleDao {
     @Query("SELECT * FROM suara_entities WHERE bookmarked = 1")
     fun getBookmarkedSuara(): LiveData<List<ArticleSuara>>
 
+
+
+
+    @Query("SELECT * FROM article_entities WHERE content = :content")
+    fun getDetailHeadline(content: String): LiveData<ArticleHeadline>
+
+    @Query("SELECT * FROM detik_entities WHERE content = :content")
+    fun getDetailDetik(content: String): LiveData<ArticleDetik>
+
+    @Query("SELECT * FROM viva_entities WHERE content = :content")
+    fun getDetailViva(content: String): LiveData<ArticleViva>
+
+    @Query("SELECT * FROM suara_entities WHERE content = :content")
+    fun getDetailSuara(content: String): LiveData<ArticleSuara>
+
+    @Query("SELECT * FROM business_entities WHERE content = :content")
+    fun getDetailBusiness(content: String): LiveData<ArticleBusiness>
+
+    @Query("SELECT * FROM entertainment_entities WHERE content = :content")
+    fun getDetailEntertainment(content: String): LiveData<ArticleEntertainment>
+
+    @Query("SELECT * FROM general_entities WHERE content = :content")
+    fun getDetailGeneral(content: String): LiveData<ArticleGeneral>
+
+    @Query("SELECT * FROM health_entities WHERE content = :content")
+    fun getDetailHealth(content: String): LiveData<ArticleHealth>
+
+    @Query("SELECT * FROM science_entities WHERE content = :content")
+    fun getDetailScience(content: String): LiveData<ArticleScience>
+
+    @Query("SELECT * FROM sports_entities WHERE content = :content")
+    fun getDetailSports(content: String): LiveData<ArticleSports>
+
+    @Query("SELECT * FROM technology_entities WHERE content = :content")
+    fun getDetailTechnology(content: String): LiveData<ArticleTechnology>
+
+    @Query("SELECT * FROM kapanlagi_entities WHERE content = :content")
+    fun getDetailKapanlagi(content: String): LiveData<ArticleKapanlagi>
+
 }

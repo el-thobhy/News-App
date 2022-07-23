@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.elthobhy.newsapp.data.source.local.entity.*
 import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
 import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
 import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment

@@ -3,7 +3,6 @@ package com.elthobhy.newsapp.viewmodel.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.elthobhy.newsapp.data.source.CatalogNewsRepository
-import com.elthobhy.newsapp.data.source.local.entity.*
 import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
 import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
 import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment

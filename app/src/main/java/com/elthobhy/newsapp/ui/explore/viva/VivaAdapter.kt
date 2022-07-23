@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
 import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
 

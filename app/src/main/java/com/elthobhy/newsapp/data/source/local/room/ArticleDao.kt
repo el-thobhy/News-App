@@ -2,7 +2,6 @@ package com.elthobhy.newsapp.data.source.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.elthobhy.newsapp.data.source.local.entity.*
 import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
 import com.elthobhy.newsapp.data.source.local.entity.detik.ArticleDetik
 import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment

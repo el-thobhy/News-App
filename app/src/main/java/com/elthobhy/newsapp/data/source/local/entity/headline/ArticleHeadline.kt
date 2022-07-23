@@ -3,11 +3,9 @@ package com.elthobhy.newsapp.data.source.local.entity.headline
 
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.room.*
 import com.elthobhy.newsapp.data.source.local.entity.Source
-import kotlinx.parcelize.IgnoredOnParcel
 
 @Parcelize
 @Entity(tableName = "article_entities")

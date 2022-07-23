@@ -24,7 +24,7 @@ import com.elthobhy.newsapp.ui.category.entertainment.EntertainmentAdapter
 import com.elthobhy.newsapp.ui.category.general.GeneralAdapter
 import com.elthobhy.newsapp.ui.category.health.HealthAdapter
 import com.elthobhy.newsapp.ui.category.science.ScienceAdapter
-import com.elthobhy.newsapp.ui.category.sport.SportAdapter
+import com.elthobhy.newsapp.ui.category.sport.SportsAdapter
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
@@ -39,40 +39,32 @@ import com.elthobhy.newsapp.viewmodel.science.ScienceViewModel
 import com.elthobhy.newsapp.viewmodel.sports.SportViewModel
 import com.elthobhy.newsapp.viewmodel.technology.TechnologyViewModel
 import com.facebook.shimmer.ShimmerFrameLayout
+import org.koin.android.ext.android.inject
 
 class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding as FragmentCategoryBinding
-    private lateinit var adapterBusiness: BusinessAdapter
-    private lateinit var entertainmentAdapter: EntertainmentAdapter
-    private lateinit var generalAdapter: GeneralAdapter
-    private lateinit var healthAdapter: HealthAdapter
-    private lateinit var scienceAdapter: ScienceAdapter
-    private lateinit var sportAdapter: SportAdapter
-    private lateinit var technologyAdapter: TechnologyAdapter
-    private lateinit var businessViewModel: BusinessViewModel
-    private lateinit var entertainmentViewModel: EntertainmentViewModel
-    private lateinit var generalViewModel: GeneralViewModel
-    private lateinit var healthViewModel: HealthViewModel
-    private lateinit var scienceViewModel: ScienceViewModel
-    private lateinit var sportsViewModel: SportViewModel
-    private lateinit var technologyViewModel: TechnologyViewModel
+    private val adapterBusiness by inject<BusinessAdapter>()
+    private val entertainmentAdapter by inject<EntertainmentAdapter>()
+    private val generalAdapter by inject<GeneralAdapter>()
+    private val healthAdapter by inject<HealthAdapter>()
+    private val scienceAdapter by inject<ScienceAdapter>()
+    private val sportsAdapter by inject<SportsAdapter>()
+    private val technologyAdapter by inject<TechnologyAdapter>()
+    private val businessViewModel by inject<BusinessViewModel>()
+    private val entertainmentViewModel by inject<EntertainmentViewModel>()
+    private val generalViewModel by inject<GeneralViewModel>()
+    private val healthViewModel by inject<HealthViewModel>()
+    private val scienceViewModel by inject<ScienceViewModel>()
+    private val sportsViewModel by inject<SportViewModel>()
+    private val technologyViewModel by inject<TechnologyViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        businessViewModel = ViewModelProvider(this, factory)[BusinessViewModel::class.java]
-        entertainmentViewModel =
-            ViewModelProvider(this, factory)[EntertainmentViewModel::class.java]
-        generalViewModel = ViewModelProvider(this, factory)[GeneralViewModel::class.java]
-        healthViewModel = ViewModelProvider(this, factory)[HealthViewModel::class.java]
-        scienceViewModel = ViewModelProvider(this, factory)[ScienceViewModel::class.java]
-        sportsViewModel = ViewModelProvider(this, factory)[SportViewModel::class.java]
-        technologyViewModel = ViewModelProvider(this, factory)[TechnologyViewModel::class.java]
 
         binding.apply {
             showRvBusiness(rvBusiness, shimmerBusiness)
@@ -88,8 +80,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvBusiness(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        adapterBusiness = BusinessAdapter()
-        adapterBusiness.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -168,8 +158,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvEntertainment(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        entertainmentAdapter = EntertainmentAdapter()
-        entertainmentAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -184,7 +172,6 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerEntertainment,rvEntertainment)
                         Status.SUCCESS->{
                             listArticle.data?.let { entertainmentAdapter.setList(it) }
-                            entertainmentAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerEntertainment,rvEntertainment)
                         }
                         Status.ERROR->{
@@ -205,8 +192,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvGeneral(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        generalAdapter = GeneralAdapter()
-        generalAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -221,7 +206,6 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerGeneral,rvGeneral)
                         Status.SUCCESS->{
                             listArticle.data?.let { generalAdapter.setList(it) }
-                            generalAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerGeneral,rvGeneral)
                         }
                         Status.ERROR->{
@@ -242,8 +226,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvHealth(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        healthAdapter = HealthAdapter()
-        healthAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -258,7 +240,6 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerHealth,rvHealth)
                         Status.SUCCESS->{
                             listArticle.data?.let { healthAdapter.setList(it) }
-                            healthAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerHealth,rvHealth)
                         }
                         Status.ERROR->{
@@ -279,8 +260,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvScience(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        scienceAdapter = ScienceAdapter()
-        scienceAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -295,7 +274,6 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerScience,rvScience)
                         Status.SUCCESS->{
                             listArticle.data?.let { scienceAdapter.setList(it) }
-                            scienceAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerScience,rvScience)
                         }
                         Status.ERROR->{
@@ -316,23 +294,20 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvSports(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        sportAdapter = SportAdapter()
-        sportAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 setHasFixedSize(true)
-                adapter = sportAdapter
+                adapter = sportsAdapter
             }
             sportsViewModel.getSportsNews().observe(viewLifecycleOwner) { listArticle ->
                 if (listArticle != null) {
                     when(listArticle.status){
                         Status.LOADING -> true.loadingExtension(shimmerSport,rvSport)
                         Status.SUCCESS->{
-                            listArticle.data?.let { sportAdapter.setList(it) }
-                            sportAdapter.notifyDataSetChanged()
+                            listArticle.data?.let { sportsAdapter.setList(it) }
                             false.loadingExtension(shimmerSport,rvSport)
                         }
                         Status.ERROR->{
@@ -344,7 +319,7 @@ class CategoryFragment : Fragment() {
                 false.loadingExtension(shimmerSport, rvSport)
             }
         }
-        sportAdapter.setOnClickCallback(object : SportAdapter.OnItemClickCallback {
+        sportsAdapter.setOnClickCallback(object : SportsAdapter.OnItemClickCallback {
             override fun onClicked(data: ArticleSports) {
                 showDetailData(data, Constants.SPORTS)
             }
@@ -353,8 +328,6 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showRvTechnology(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        technologyAdapter = TechnologyAdapter()
-        technologyAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmer, recyclerView)
             recyclerView.apply {
@@ -369,7 +342,6 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerTechnology,rvTechnology)
                         Status.SUCCESS->{
                             listArticle.data?.let { technologyAdapter.setList(it) }
-                            technologyAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerTechnology,rvTechnology)
                         }
                         Status.ERROR->{

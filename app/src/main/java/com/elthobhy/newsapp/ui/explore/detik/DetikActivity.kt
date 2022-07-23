@@ -13,27 +13,23 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.detik.DetikViewModel
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 class DetikActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetikBinding
-    private lateinit var detikAdapter: DetikAdapter
-    private lateinit var detikViewModel: DetikViewModel
+    private val detikAdapter by inject<DetikAdapter>()
+    private val detikViewModel by inject<DetikViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetikBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance(this)
-        detikViewModel = ViewModelProvider(this, factory)[DetikViewModel::class.java]
-        detikAdapter = DetikAdapter()
         setContentView(binding.root)
         initActionBar()
         showRvDetik()
     }
 
     private fun showRvDetik() {
-        detikAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmerDetik,rvDetik)
             rvDetik.apply {
@@ -47,7 +43,6 @@ class DetikActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerDetik,rvDetik)
                         Status.SUCCESS->{
                             listArticle.data?.let { detikAdapter.setList(it) }
-                            detikAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerDetik,rvDetik)
                         }
                         Status.ERROR->{

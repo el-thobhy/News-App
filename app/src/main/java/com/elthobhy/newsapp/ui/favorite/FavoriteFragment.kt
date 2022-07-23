@@ -39,25 +39,25 @@ import com.elthobhy.newsapp.ui.favorite.adapter.viva.FavoriteVivaAdapter
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding as FragmentFavoriteBinding
-    private lateinit var favoriteHeadlineAdapter: FavoriteHeadlineAdapter
-    private lateinit var favoriteBusinessAdapter: FavoriteBusinessAdapter
-    private lateinit var favoriteDetikAdapter: FavoriteDetikAdapter
-    private lateinit var favoriteEntertainmentAdapter: FavoriteEntertainmentAdapter
-    private lateinit var favoriteGeneralAdapter: FavoriteGeneralAdapter
-    private lateinit var favoriteHealthAdapter: FavoriteHealthAdapter
-    private lateinit var favoriteKapanlagiAdapter: FavoriteKapanlagiAdapter
-    private lateinit var favoriteScienceAdapter: FavoriteScienceAdapter
-    private lateinit var favoriteSportsAdapter: FavoriteSportsAdapter
-    private lateinit var favoriteSuaraAdapter: FavoriteSuaraAdapter
-    private lateinit var favoriteTechnologyAdapter: FavoriteTechnologyAdapter
-    private lateinit var favoriteVivaAdapter: FavoriteVivaAdapter
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private val favoriteHeadlineAdapter by inject<FavoriteHeadlineAdapter>()
+    private val favoriteBusinessAdapter by inject<FavoriteBusinessAdapter>()
+    private val favoriteDetikAdapter by inject<FavoriteDetikAdapter>()
+    private val favoriteEntertainmentAdapter by inject<FavoriteEntertainmentAdapter>()
+    private val favoriteGeneralAdapter by inject<FavoriteGeneralAdapter>()
+    private val favoriteHealthAdapter by inject<FavoriteHealthAdapter>()
+    private val favoriteKapanlagiAdapter by inject<FavoriteKapanlagiAdapter>()
+    private val favoriteScienceAdapter by inject<FavoriteScienceAdapter>()
+    private val favoriteSportsAdapter by inject<FavoriteSportsAdapter>()
+    private val favoriteSuaraAdapter by inject<FavoriteSuaraAdapter>()
+    private val favoriteTechnologyAdapter by inject<FavoriteTechnologyAdapter>()
+    private val favoriteVivaAdapter by inject<FavoriteVivaAdapter>()
+    private val favoriteViewModel by inject<FavoriteViewModel>()
 
 
     override fun onCreateView(
@@ -70,20 +70,6 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        favoriteHeadlineAdapter = FavoriteHeadlineAdapter()
-        favoriteDetikAdapter = FavoriteDetikAdapter()
-        favoriteBusinessAdapter = FavoriteBusinessAdapter()
-        favoriteEntertainmentAdapter = FavoriteEntertainmentAdapter()
-        favoriteGeneralAdapter = FavoriteGeneralAdapter()
-        favoriteHealthAdapter = FavoriteHealthAdapter()
-        favoriteKapanlagiAdapter = FavoriteKapanlagiAdapter()
-        favoriteScienceAdapter = FavoriteScienceAdapter()
-        favoriteSportsAdapter = FavoriteSportsAdapter()
-        favoriteTechnologyAdapter = FavoriteTechnologyAdapter()
-        favoriteVivaAdapter = FavoriteVivaAdapter()
-        favoriteSuaraAdapter = FavoriteSuaraAdapter()
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        favoriteViewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
         showRvBusiness()
         showRvEntertainment()
         showRvGeneral()
@@ -99,7 +85,6 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun showRvBusiness() {
-        favoriteBusinessAdapter.notifyDataSetChanged()
         binding.apply {
             rvBusiness.apply {
                 layoutManager =
@@ -117,7 +102,6 @@ class FavoriteFragment : Fragment() {
                         emptyListBusiness.visibility = View.GONE
                     }
                     false.loadingExtension(shimmerBusiness, rvBusiness)
-                    notifyDataSetChanged()
                 }
                 setOnItemClickCallback(object : FavoriteBusinessAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: ArticleBusiness) {

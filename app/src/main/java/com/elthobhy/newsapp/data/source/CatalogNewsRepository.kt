@@ -623,5 +623,4 @@ class CatalogNewsRepository private constructor(
     override fun getDetailTechnologyNews(content: String): LiveData<ArticleTechnology> =
         localData.getDetailTechnology(content)
 
-
 }

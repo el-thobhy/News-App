@@ -14,27 +14,23 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.suara.SuaraViewModel
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 class SuaraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySuaraBinding
-    private lateinit var suaraViewModel: SuaraViewModel
-    private lateinit var suaraAdapter: SuaraAdapter
+    private val suaraViewModel by inject<SuaraViewModel>()
+    private val suaraAdapter by inject<SuaraAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySuaraBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance(this)
-        suaraViewModel = ViewModelProvider(this,factory)[SuaraViewModel::class.java]
-        suaraAdapter = SuaraAdapter()
         setContentView(binding.root)
         showRvSuara()
         initActionBar()
     }
 
     private fun showRvSuara() {
-        suaraAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmerSuara,rvSuara)
             rvSuara.apply {
@@ -48,7 +44,6 @@ class SuaraActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerSuara,rvSuara)
                         Status.SUCCESS->{
                             listArticle.data?.let { suaraAdapter.setList(it) }
-                            suaraAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerSuara,rvSuara)
                         }
                         Status.ERROR->{

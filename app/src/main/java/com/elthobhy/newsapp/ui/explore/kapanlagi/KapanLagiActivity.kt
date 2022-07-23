@@ -14,27 +14,23 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.kapanlagi.KapanlagiViewModel
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 class KapanLagiActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityKapanLagiBinding
-    private lateinit var kapanlagiViewModel: KapanlagiViewModel
-    private lateinit var kapanlagiAdapter: KapanlagiAdapter
+    private val kapanlagiViewModel by inject<KapanlagiViewModel>()
+    private val kapanlagiAdapter by inject<KapanlagiAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityKapanLagiBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance(this)
-        kapanlagiViewModel = ViewModelProvider(this,factory)[KapanlagiViewModel::class.java]
-        kapanlagiAdapter = KapanlagiAdapter()
         setContentView(binding.root)
         showRvKapanlagi()
         initActionBar()
     }
 
     private fun showRvKapanlagi() {
-        kapanlagiAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmerKapanlagi,rvKapanlagi)
             rvKapanlagi.apply {
@@ -48,7 +44,6 @@ class KapanLagiActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerKapanlagi,rvKapanlagi)
                         Status.SUCCESS->{
                             listArticle.data?.let { kapanlagiAdapter.setList(it) }
-                            kapanlagiAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerKapanlagi,rvKapanlagi)
                         }
                         Status.ERROR->{

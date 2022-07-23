@@ -19,23 +19,20 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
 import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
+import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
 
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding as FragmentHomeBinding
-    private lateinit var adapterHeadline: HeadlineAdapter
-    private lateinit var headlineViewModel: HeadlineViewModel
+    private val adapterHeadline by inject<HeadlineAdapter>()
+    private val headlineViewModel by inject<HeadlineViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        headlineViewModel = ViewModelProvider(this,factory)[HeadlineViewModel::class.java]
-        adapterHeadline = HeadlineAdapter()
         showRvHeadline()
         onClick()
         return binding.root

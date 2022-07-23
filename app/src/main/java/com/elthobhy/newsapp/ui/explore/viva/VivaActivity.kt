@@ -13,28 +13,24 @@ import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.utils.loadingExtension
 import com.elthobhy.newsapp.utils.vo.Status
-import com.elthobhy.newsapp.viewmodel.ViewModelFactory
 import com.elthobhy.newsapp.viewmodel.viva.VivaViewModel
+import org.koin.android.ext.android.inject
 
 class VivaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVivaBinding
-    private lateinit var vivaViewModel: VivaViewModel
-    private lateinit var vivaAdapter: VivaAdapter
+    private val vivaViewModel by inject<VivaViewModel>()
+    private val vivaAdapter by inject<VivaAdapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVivaBinding.inflate(layoutInflater)
-        val factory = ViewModelFactory.getInstance(this)
-        vivaViewModel = ViewModelProvider(this, factory)[VivaViewModel::class.java]
-        vivaAdapter = VivaAdapter()
         setContentView(binding.root)
         showRvViva()
         initActionBar()
     }
 
     private fun showRvViva() {
-        vivaAdapter.notifyDataSetChanged()
         binding.apply {
             true.loadingExtension(shimmerViva, rvViva)
             rvViva.apply {
@@ -48,7 +44,6 @@ class VivaActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerViva,rvViva)
                         Status.SUCCESS->{
                             listArticle.data?.let { vivaAdapter.setList(it) }
-                            vivaAdapter.notifyDataSetChanged()
                             false.loadingExtension(shimmerViva,rvViva)
                         }
                         Status.ERROR->{

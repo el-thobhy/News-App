@@ -10,7 +10,7 @@ import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
 import com.elthobhy.newsapp.databinding.ItemEverythingBinding
 
-class SportAdapter: RecyclerView.Adapter<SportAdapter.SportViewHolder>() {
+class SportsAdapter: RecyclerView.Adapter<SportsAdapter.SportViewHolder>() {
     private var list = ArrayList<ArticleSports>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 

@@ -27,10 +27,11 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.viewmodel.*
 import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel by inject<DetailViewModel>()
     private val listKey = arrayListOf(
         Constants.BUSINESS,
         Constants.ENTERTAINMENT,
@@ -50,8 +51,6 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val factory = ViewModelFactory.getInstance(this)
-        detailViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
         for (key in listKey) {
             showDetail(key)
         }

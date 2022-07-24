@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
@@ -44,15 +45,18 @@ class SuaraActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerSuara,rvSuara)
                         Status.SUCCESS->{
                             listArticle.data?.let { suaraAdapter.setList(it) }
+                            imageErrorSuara.visibility = View.GONE
                             false.loadingExtension(shimmerSuara,rvSuara)
                         }
                         Status.ERROR->{
+                            imageErrorSuara.visibility = View.VISIBLE
                             false.loadingExtension(shimmerSuara,rvSuara)
                         }
                     }
+                }else{
+                    imageErrorSuara.visibility = View.VISIBLE
+                    false.loadingExtension(shimmerSuara, rvSuara)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerSuara, rvSuara)
             }
         }
         suaraAdapter.setOnItemClickCallback(object : SuaraAdapter.OnItemClickCallback{

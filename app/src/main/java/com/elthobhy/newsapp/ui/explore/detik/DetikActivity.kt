@@ -2,6 +2,7 @@ package com.elthobhy.newsapp.ui.explore.detik
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,14 +44,18 @@ class DetikActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerDetik,rvDetik)
                         Status.SUCCESS->{
                             listArticle.data?.let { detikAdapter.setList(it) }
+                            imageErrorDetik.visibility = View.GONE
                             false.loadingExtension(shimmerDetik,rvDetik)
                         }
                         Status.ERROR->{
+                            imageErrorDetik.visibility = View.VISIBLE
                             false.loadingExtension(shimmerDetik,rvDetik)
                         }
                     }
+                }else{
+                    imageErrorDetik.visibility = View.VISIBLE
+                    false.loadingExtension(shimmerDetik, rvDetik)
                 }
-                false.loadingExtension(shimmerDetik, rvDetik)
             }
         }
 

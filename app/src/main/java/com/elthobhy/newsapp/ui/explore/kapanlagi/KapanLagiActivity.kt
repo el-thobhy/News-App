@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
@@ -44,15 +45,18 @@ class KapanLagiActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerKapanlagi,rvKapanlagi)
                         Status.SUCCESS->{
                             listArticle.data?.let { kapanlagiAdapter.setList(it) }
+                            imageErrorKapanlagi.visibility = View.GONE
                             false.loadingExtension(shimmerKapanlagi,rvKapanlagi)
                         }
                         Status.ERROR->{
+                            imageErrorKapanlagi.visibility = View.VISIBLE
                             false.loadingExtension(shimmerKapanlagi,rvKapanlagi)
                         }
                     }
+                }else{
+                    imageErrorKapanlagi.visibility = View.VISIBLE
+                    false.loadingExtension(shimmerKapanlagi, rvKapanlagi)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerKapanlagi, rvKapanlagi)
             }
         }
         kapanlagiAdapter.setOnItemClickCallback(object :KapanlagiAdapter.OnItemClickCallback{

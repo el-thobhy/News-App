@@ -94,16 +94,18 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerBusiness,rvBusiness)
                         Status.SUCCESS->{
                             listArticle.data?.let { adapterBusiness.setList(it) }
-                            adapterBusiness.notifyDataSetChanged()
-                            Log.e("business", "showRvHeadline: ${listArticle.data}",)
+                            imageErrorBusiness.visibility = View.GONE
                             false.loadingExtension(shimmerBusiness,rvBusiness)
                         }
                         Status.ERROR->{
+                            imageErrorBusiness.visibility = View.VISIBLE
                             false.loadingExtension(shimmerBusiness,rvBusiness)
                         }
                     }
+                }else{
+                    imageErrorBusiness.visibility = View.VISIBLE
+                    false.loadingExtension(shimmerBusiness, rvBusiness)
                 }
-                false.loadingExtension(shimmerBusiness, rvBusiness)
             }
         }
         adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
@@ -172,15 +174,18 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerEntertainment,rvEntertainment)
                         Status.SUCCESS->{
                             listArticle.data?.let { entertainmentAdapter.setList(it) }
+                            imageErrorEntertainment.visibility = View.GONE
                             false.loadingExtension(shimmerEntertainment,rvEntertainment)
                         }
                         Status.ERROR->{
+                            imageErrorEntertainment.visibility = View.VISIBLE
                             false.loadingExtension(shimmerEntertainment,rvEntertainment)
                         }
                     }
+                }else{
+                    imageErrorEntertainment.visibility = View.GONE
+                    false.loadingExtension(shimmerEntertainment, rvEntertainment)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerEntertainment, rvEntertainment)
             }
         }
         entertainmentAdapter.setOnClickCallback(object : EntertainmentAdapter.OnItemClickCallback {
@@ -206,15 +211,19 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerGeneral,rvGeneral)
                         Status.SUCCESS->{
                             listArticle.data?.let { generalAdapter.setList(it) }
+                            imageErrorGeneral.visibility = View.GONE
                             false.loadingExtension(shimmerGeneral,rvGeneral)
                         }
                         Status.ERROR->{
+                            imageErrorGeneral.visibility = View.VISIBLE
                             false.loadingExtension(shimmerGeneral,rvGeneral)
                         }
                     }
+                }else{
+                    imageErrorGeneral.visibility = View.GONE
+                    false.loadingExtension(shimmerGeneral, rvGeneral)
+
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerGeneral, rvGeneral)
             }
         }
         generalAdapter.setOnClickCallback(object : GeneralAdapter.OnItemClickCallback {
@@ -240,15 +249,19 @@ class CategoryFragment : Fragment() {
                         Status.LOADING -> true.loadingExtension(shimmerHealth,rvHealth)
                         Status.SUCCESS->{
                             listArticle.data?.let { healthAdapter.setList(it) }
+                            imageErrorHealth.visibility = View.GONE
                             false.loadingExtension(shimmerHealth,rvHealth)
                         }
                         Status.ERROR->{
+                            imageErrorHealth.visibility = View.VISIBLE
                             false.loadingExtension(shimmerHealth,rvHealth)
                         }
                     }
+                }else{
+                    imageErrorHealth.visibility = View.GONE
+                    false.loadingExtension(shimmerHealth, rvHealth)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerHealth, rvHealth)
+
             }
         }
         healthAdapter.setOnClickCallback(object : HealthAdapter.OnItemClickCallback {
@@ -273,16 +286,20 @@ class CategoryFragment : Fragment() {
                     when(listArticle.status){
                         Status.LOADING -> true.loadingExtension(shimmerScience,rvScience)
                         Status.SUCCESS->{
+                            imageErrorScience.visibility = View.GONE
                             listArticle.data?.let { scienceAdapter.setList(it) }
                             false.loadingExtension(shimmerScience,rvScience)
                         }
                         Status.ERROR->{
+                            imageErrorScience.visibility = View.VISIBLE
                             false.loadingExtension(shimmerScience,rvScience)
                         }
                     }
+                }else{
+                    imageErrorScience.visibility = View.GONE
+                    false.loadingExtension(shimmerScience, rvScience)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerScience, rvScience)
+
             }
         }
         scienceAdapter.setOnClickCallback(object : ScienceAdapter.OnItemClickCallback {
@@ -307,16 +324,20 @@ class CategoryFragment : Fragment() {
                     when(listArticle.status){
                         Status.LOADING -> true.loadingExtension(shimmerSport,rvSport)
                         Status.SUCCESS->{
+                            imageErrorSports.visibility = View.GONE
                             listArticle.data?.let { sportsAdapter.setList(it) }
                             false.loadingExtension(shimmerSport,rvSport)
                         }
                         Status.ERROR->{
+                            imageErrorSports.visibility = View.VISIBLE
                             false.loadingExtension(shimmerSport,rvSport)
                         }
                     }
+                }else {
+                    imageErrorSports.visibility = View.GONE
+                    false.loadingExtension(shimmerSport, rvSport)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerSport, rvSport)
+
             }
         }
         sportsAdapter.setOnClickCallback(object : SportsAdapter.OnItemClickCallback {
@@ -341,16 +362,20 @@ class CategoryFragment : Fragment() {
                     when(listArticle.status){
                         Status.LOADING -> true.loadingExtension(shimmerTechnology,rvTechnology)
                         Status.SUCCESS->{
+                            imageErrorTechnology.visibility = View.GONE
                             listArticle.data?.let { technologyAdapter.setList(it) }
                             false.loadingExtension(shimmerTechnology,rvTechnology)
                         }
                         Status.ERROR->{
+                            imageErrorTechnology.visibility = View.VISIBLE
                             false.loadingExtension(shimmerTechnology,rvTechnology)
                         }
                     }
+                }else{
+                    imageErrorTechnology.visibility = View.GONE
+                    false.loadingExtension(shimmerTechnology, rvTechnology)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerTechnology, rvTechnology)
+
             }
         }
         technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {

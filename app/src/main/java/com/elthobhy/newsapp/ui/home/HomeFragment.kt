@@ -72,14 +72,18 @@ class HomeFragment : Fragment() {
                         Status.SUCCESS->{
                             listArticle.data?.let { adapterHeadline.setList(it) }
                             adapterHeadline.notifyDataSetChanged()
+                            imageErrorHeadline.visibility = View.GONE
                             false.loadingExtension(shimmerHeadline,rvTopHeadlines)
                         }
                         Status.ERROR->{
+                            imageErrorHeadline.visibility = View.VISIBLE
                             false.loadingExtension(shimmerHeadline,rvTopHeadlines)
                         }
                     }
+                }else{
+                    false.loadingExtension(shimmerHeadline, rvTopHeadlines)
+                    imageErrorHeadline.visibility = View.VISIBLE
                 }
-                false.loadingExtension(shimmerHeadline, rvTopHeadlines)
             }
         }
 

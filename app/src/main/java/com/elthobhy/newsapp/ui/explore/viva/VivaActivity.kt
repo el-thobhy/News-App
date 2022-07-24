@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.newsapp.R
@@ -44,15 +45,18 @@ class VivaActivity : AppCompatActivity() {
                         Status.LOADING -> true.loadingExtension(shimmerViva,rvViva)
                         Status.SUCCESS->{
                             listArticle.data?.let { vivaAdapter.setList(it) }
+                            imageErrorViva.visibility = View.GONE
                             false.loadingExtension(shimmerViva,rvViva)
                         }
                         Status.ERROR->{
+                            imageErrorViva.visibility = View.VISIBLE
                             false.loadingExtension(shimmerViva,rvViva)
                         }
                     }
+                }else{
+                    imageErrorViva.visibility = View.VISIBLE
+                    false.loadingExtension(shimmerViva, rvViva)
                 }
-                Log.e("debug", "showRvHeadline: $listArticle",)
-                false.loadingExtension(shimmerViva, rvViva)
             }
         }
         vivaAdapter.setOnItemClickCallback(object : VivaAdapter.OnItemClickCallback {

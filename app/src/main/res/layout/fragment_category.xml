@@ -46,6 +46,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_business"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:visibility="gone"
+                android:layout_marginEnd="20dp"
+                android:padding="30dp"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_business"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,6 +96,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_entertainment"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="30dp"
+                android:visibility="gone"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_entertainment"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,6 +146,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_general"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:padding="30dp"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_general"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,6 +196,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_health"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:padding="30dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_health"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -201,6 +245,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_science"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="30dp"
+                android:visibility="gone"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_science"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -241,6 +296,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_sports"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:padding="30dp"
+                android:visibility="gone"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_sport"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -280,6 +346,17 @@
                 android:layout_height="wrap_content">
                 <include layout="@layout/shimmer_everything"/>
             </com.facebook.shimmer.ShimmerFrameLayout>
+            <ImageView
+                android:id="@+id/image_error_technology"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="gone"
+                android:padding="30dp"
+                android:src="@drawable/image_error"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_technology"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

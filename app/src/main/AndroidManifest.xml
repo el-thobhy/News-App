@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
             android:name=".ui.explore.detik.DetikActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

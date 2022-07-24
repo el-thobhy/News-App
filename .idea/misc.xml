@@ -10,6 +10,7 @@
         <entry key="..\:/Users/Hp/AndroidStudioProjects/NewsApp2/app/src/main/res/layout/fragment_favorite.xml" value="0.1" />
         <entry key="..\:/Users/Hp/AndroidStudioProjects/NewsApp2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_go.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_splash_image.xml" value="0.1425" />
         <entry key="app/src/main/res/drawable/content_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_baseline_bookmark_border_24.xml" value="0.1655" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/activity_kapan_lagi.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_okezone.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_suara.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_tvone.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_viva.xml" value="0.19583333333333333" />

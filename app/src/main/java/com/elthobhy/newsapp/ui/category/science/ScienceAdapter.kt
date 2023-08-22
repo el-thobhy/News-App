@@ -34,11 +34,6 @@ class ScienceAdapter: RecyclerView.Adapter<ScienceAdapter.ScienceViewHolder>() {
         fun bind(article: ArticleScience) {
             val binding = ItemEverythingBinding.bind(itemView)
             binding.apply {
-                Glide.with(itemView)
-                    .load(article.urlToImage)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.color.white)
-                    .into(imageEverything)
                 tvTitle.text = article.title
                 tvSource.text = article.source?.name
                 tvDate.text = article.publishedAt

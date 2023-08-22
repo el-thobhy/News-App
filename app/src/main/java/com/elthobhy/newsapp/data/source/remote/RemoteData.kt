@@ -36,7 +36,7 @@ class RemoteData private constructor(){
                 ) {
                     if(response.isSuccessful){
                         headlineResponse.postValue(ApiResponse.success(response.body()?.articles as List<ArticlesItem>))
-                        Log.d("tesdebug", "onResponse: $")
+                        Log.d("tesdebug", "onResponse: ${response.body()}")
                     }
                     EspressoIdlingResource.decrement()
                 }
@@ -94,7 +94,7 @@ class RemoteData private constructor(){
     fun getVivaNews(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
         val vivaResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
-        ApiConfig.getApiServeice().getDomainNews("viva.co.id")
+        ApiConfig.getApiServeice().getDomainNews("google.com")
             .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
                     call: Call<ResponseCatalog<ArticlesItem>>,

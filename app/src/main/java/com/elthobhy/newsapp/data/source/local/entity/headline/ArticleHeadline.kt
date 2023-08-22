@@ -17,10 +17,9 @@ data class ArticleHeadline(
     @ColumnInfo(name = "author")
     val author: String? =null,
 
-    @PrimaryKey
-    @Nullable
+
     @ColumnInfo(name = "content")
-    val content: String,
+    val content: String? = null,
 
     @ColumnInfo(name = "description")
     val description: String? =null,
@@ -28,8 +27,9 @@ data class ArticleHeadline(
     @Embedded
     var source: Source? =null,
 
+    @PrimaryKey
     @ColumnInfo(name = "title")
-    val title: String? =null,
+    val title: String,
 
     @ColumnInfo(name = "url")
     val url: String? =null,

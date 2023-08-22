@@ -1,5 +1,6 @@
 package com.elthobhy.newsapp.data.source
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.elthobhy.newsapp.data.source.remote.response.vo.ApiResponse
@@ -10,7 +11,7 @@ import com.elthobhy.newsapp.utils.vo.Resource
 abstract class NetworkBoundResource<ResultType, RequestType>(private val executors: AppExecutors) {
     private val  result = MediatorLiveData<Resource<ResultType>>()
     init{
-        result.value = Resource.loading(null)
+//        result.value = Resource.loading(null)
 
         val dbSource = loadFromDB()
 
@@ -39,10 +40,11 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val executo
             when(response.statusNetwork){
                 StatusResponseNetwork.SUCCESS ->
                     executors.diskIO().execute{
-                        response.body?.let { saveCallResult(it) }
+                        saveCallResult(response.body)
                         executors.mainThread().execute{
                             result.addSource(loadFromDB()){newData->
                                 result.value = Resource.success(newData)
+                                Log.e("NBR", "fetchFromNetwork: ${result.value}" )
                             }
                         }
                     }
@@ -63,7 +65,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val executo
 
     protected open fun onFetchFailed() {}
 
-    abstract fun saveCallResult(data: RequestType)
+    abstract fun saveCallResult(data: RequestType?)
 
     protected abstract fun createCall(): LiveData<ApiResponse<RequestType>>
 

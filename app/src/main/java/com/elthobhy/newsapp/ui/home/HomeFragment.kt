@@ -2,6 +2,7 @@ package com.elthobhy.newsapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,7 @@ class HomeFragment : Fragment() {
                     when(listArticle.status){
                         Status.LOADING -> true.loadingExtension(shimmerHeadline,rvTopHeadlines)
                         Status.SUCCESS->{
+                            Log.d("tag", "showRvHeadline: ${listArticle.data}")
                             listArticle.data?.let { adapterHeadline.setList(it) }
                             adapterHeadline.notifyDataSetChanged()
                             imageErrorHeadline.visibility = View.GONE
@@ -100,6 +102,7 @@ class HomeFragment : Fragment() {
         val intentDetail = Intent(activity,DetailActivity::class.java)
         intentDetail.putExtra(Constants.TOP_HEADLINE,data)
         startActivity(intentDetail)
+        Log.e("dataHeadlineDetail", "showDetailData: $data" )
     }
 
 

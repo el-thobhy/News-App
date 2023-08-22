@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
+import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
@@ -24,7 +24,6 @@ import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnolog
 import com.elthobhy.newsapp.data.source.local.entity.viva.ArticleViva
 import com.elthobhy.newsapp.databinding.ActivityDetailBinding
 import com.elthobhy.newsapp.utils.Constants
-import com.elthobhy.newsapp.viewmodel.*
 import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
@@ -228,9 +227,9 @@ class DetailActivity : AppCompatActivity() {
     private fun showDetail(key: String) {
         when (key) {
             Constants.BUSINESS -> {
-                val data = intent?.getParcelableExtra<ArticleBusiness>(Constants.BUSINESS)
-                if (data != null) {
-                    detailViewModel.getBusinessNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleBusiness>(Constants.BUSINESS)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getBusinessNews(data).observe(this){
                         setActionButton(business = it ,
                             health = null, entertainment = null,
                             headline = null, general = null, science = null,
@@ -242,9 +241,9 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
             Constants.ENTERTAINMENT -> {
-                val data = intent?.getParcelableExtra<ArticleEntertainment>(Constants.ENTERTAINMENT)
-                if (data != null) {
-                    detailViewModel.getEntertainment(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleEntertainment>(Constants.ENTERTAINMENT)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getEntertainment(data).observe(this){
                         displayDetail(it)
                         setActionButton(entertainment = it,business = null,
                             health = null,
@@ -256,9 +255,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.GENERAL -> {
-                val data = intent?.getParcelableExtra<ArticleGeneral>(Constants.GENERAL)
-                if (data != null) {
-                    detailViewModel.getGeneralNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleGeneral>(Constants.GENERAL)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getGeneralNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = it,science = null,
                             sports = null, technology = null, viva = null, detik = null,
@@ -269,9 +268,9 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
             Constants.HEALTH -> {
-                val data = intent?.getParcelableExtra<ArticleHealth>(Constants.HEALTH)
-                if (data != null) {
-                    detailViewModel.getHealthNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleHealth>(Constants.HEALTH)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getHealthNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = null, detik = null,
@@ -282,9 +281,9 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
             Constants.SCIENCE -> {
-                val data = intent?.getParcelableExtra<ArticleScience>(Constants.SCIENCE)
-                if (data != null) {
-                    detailViewModel.getScienceNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleScience>(Constants.SCIENCE)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getScienceNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = it,
                             sports = null, technology = null, viva = null, detik = null,
@@ -295,9 +294,9 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
             Constants.SPORTS -> {
-                val data = intent?.getParcelableExtra<ArticleSports>(Constants.SPORTS)
-                if (data != null) {
-                    detailViewModel.getSportsNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleSports>(Constants.SPORTS)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getSportsNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = it, technology = null, viva = null, detik = null,
@@ -309,9 +308,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.TECHNOLOGY -> {
-                val data = intent?.getParcelableExtra<ArticleTechnology>(Constants.TECHNOLOGY)
-                if (data != null) {
-                    detailViewModel.getTechnologyNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleTechnology>(Constants.TECHNOLOGY)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getTechnologyNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = it, viva = null, detik = null,
@@ -323,9 +322,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.VIVA -> {
-                val data = intent?.getParcelableExtra<ArticleViva>(Constants.VIVA)
-                if (data != null) {
-                    detailViewModel.getVivaNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleViva>(Constants.VIVA)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getVivaNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = it, detik = null,
@@ -338,9 +337,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.SUARA -> {
-                val data = intent?.getParcelableExtra<ArticleSuara>(Constants.SUARA)
-                if (data != null) {
-                    detailViewModel.getSuaraNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleSuara>(Constants.SUARA)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getSuaraNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = null, detik = null,
@@ -354,8 +353,8 @@ class DetailActivity : AppCompatActivity() {
             }
             Constants.DETIK -> {
                 val data = intent?.getParcelableExtra<ArticleDetik>(Constants.DETIK)
-                if (data != null) {
-                    detailViewModel.getDetikNews(data.content).observe(this){
+                data?.title?.let { s ->
+                    detailViewModel.getDetikNews(s).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = null, detik = it,
@@ -368,9 +367,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.KAPAN_LAGI -> {
-                val data = intent?.getParcelableExtra<ArticleKapanlagi>(Constants.KAPAN_LAGI)
-                if (data != null) {
-                    detailViewModel.getKapanlagiNews(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleKapanlagi>(Constants.KAPAN_LAGI)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getKapanlagiNews(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = null, detik = null,
@@ -383,9 +382,9 @@ class DetailActivity : AppCompatActivity() {
 
             }
             Constants.TOP_HEADLINE -> {
-                val data = intent?.getParcelableExtra<ArticleHeadline>(Constants.TOP_HEADLINE)
-                if (data != null) {
-                    detailViewModel.getHeadline(data.content).observe(this){
+                val dataIntent = intent?.getParcelableExtra<ArticleHeadline>(Constants.TOP_HEADLINE)
+                dataIntent?.title?.let { data ->
+                    detailViewModel.getHeadline(data).observe(this){
                         displayDetail(it)
                         setActionButton(general = null,science = null,
                             sports = null, technology = null, viva = null, detik = null,
@@ -404,11 +403,16 @@ class DetailActivity : AppCompatActivity() {
         when (article) {
             is ArticleKapanlagi -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -419,11 +423,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleSuara -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -434,11 +443,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleDetik -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -449,11 +463,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleViva -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -464,11 +483,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleTechnology -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -479,11 +503,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleSports -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -494,11 +523,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleScience -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -509,11 +543,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleGeneral -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -524,11 +563,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleEntertainment -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -539,11 +583,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleBusiness -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -554,11 +603,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleHeadline -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt
@@ -569,11 +623,16 @@ class DetailActivity : AppCompatActivity() {
             }
             is ArticleHealth -> {
                 binding.apply {
-                    Glide.with(this@DetailActivity)
-                        .load(article.urlToImage)
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_baseline_broken_image_24)
-                        .into(imageNews)
+                    if(article.urlToImage.isNullOrEmpty()){
+                        imageNews.visibility=View.GONE
+                    }else{
+                        Glide.with(this@DetailActivity)
+                            .load(article.urlToImage)
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.drawable.ic_baseline_broken_image_24)
+                            .into(imageNews)
+                    }
+
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
                     dateNews.text = article.publishedAt

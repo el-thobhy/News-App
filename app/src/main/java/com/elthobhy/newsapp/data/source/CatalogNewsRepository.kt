@@ -1,5 +1,6 @@
 package com.elthobhy.newsapp.data.source
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.elthobhy.newsapp.data.source.local.LocalData
 import com.elthobhy.newsapp.data.source.local.entity.*
@@ -49,28 +50,27 @@ class CatalogNewsRepository private constructor(
     override fun getTopHeadlines(): LiveData<Resource<List<ArticleHeadline>>> {
         return object : NetworkBoundResource<List<ArticleHeadline>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleHeadline>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleHeadline>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleHeadline(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleHeadline(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if (article != null) {
+                            listNews.add(article)
+                        }
+                        Log.e("Cnr", "saveCallResult: $listNews" )
                     }
                 }
                 localData.insertArticlesHeadline(listNews)
@@ -88,28 +88,26 @@ class CatalogNewsRepository private constructor(
     override fun getDetikNews(): LiveData<Resource<List<ArticleDetik>>> {
         return object : NetworkBoundResource<List<ArticleDetik>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleDetik>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleDetik>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleDetik(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleDetik(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesDetik(listNews)
@@ -128,28 +126,26 @@ class CatalogNewsRepository private constructor(
     override fun getVivaNews(): LiveData<Resource<List<ArticleViva>>> {
         return object : NetworkBoundResource<List<ArticleViva>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleViva>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleViva>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleViva(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleViva(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesViva(listNews)
@@ -167,28 +163,26 @@ class CatalogNewsRepository private constructor(
     override fun getKapanlagiNews(): LiveData<Resource<List<ArticleKapanlagi>>> {
         return object : NetworkBoundResource<List<ArticleKapanlagi>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleKapanlagi>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleKapanlagi>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleKapanlagi(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleKapanlagi(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesKapanlagi(listNews)
@@ -206,28 +200,26 @@ class CatalogNewsRepository private constructor(
     override fun getSuaraNews(): LiveData<Resource<List<ArticleSuara>>> {
         return object : NetworkBoundResource<List<ArticleSuara>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleSuara>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleSuara>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleSuara(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleSuara(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesSuara(listNews)
@@ -245,28 +237,26 @@ class CatalogNewsRepository private constructor(
     override fun getBusinessNews(): LiveData<Resource<List<ArticleBusiness>>> {
         return object : NetworkBoundResource<List<ArticleBusiness>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleBusiness>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleBusiness>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleBusiness(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleBusiness(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesBusiness(listNews)
@@ -284,28 +274,26 @@ class CatalogNewsRepository private constructor(
     override fun getEntertainmentNews(): LiveData<Resource<List<ArticleEntertainment>>> {
         return object : NetworkBoundResource<List<ArticleEntertainment>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleEntertainment>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleEntertainment>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleEntertainment(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleEntertainment(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesEntertainment(listNews)
@@ -323,28 +311,26 @@ class CatalogNewsRepository private constructor(
     override fun getGeneralNews(): LiveData<Resource<List<ArticleGeneral>>> {
         return object : NetworkBoundResource<List<ArticleGeneral>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleGeneral>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleGeneral>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleGeneral(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleGeneral(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesGeneral(listNews)
@@ -362,28 +348,26 @@ class CatalogNewsRepository private constructor(
     override fun getHealthNews(): LiveData<Resource<List<ArticleHealth>>> {
         return object : NetworkBoundResource<List<ArticleHealth>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleHealth>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleHealth>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleHealth(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleHealth(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesHealth(listNews)
@@ -401,28 +385,26 @@ class CatalogNewsRepository private constructor(
     override fun getScienceNews(): LiveData<Resource<List<ArticleScience>>> {
         return object : NetworkBoundResource<List<ArticleScience>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleScience>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleScience>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleScience(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleScience(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesScience(listNews)
@@ -440,28 +422,26 @@ class CatalogNewsRepository private constructor(
     override fun getSportsNews(): LiveData<Resource<List<ArticleSports>>> {
         return object : NetworkBoundResource<List<ArticleSports>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleSports>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleSports>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleSports(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleSports(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesSports(listNews)
@@ -479,28 +459,26 @@ class CatalogNewsRepository private constructor(
     override fun getTechnologyNews(): LiveData<Resource<List<ArticleTechnology>>> {
         return object : NetworkBoundResource<List<ArticleTechnology>, List<ArticlesItem>>(appExecutors){
             override fun shouldFetch(data: List<ArticleTechnology>?): Boolean =
-                data == null || data.isEmpty()
+                true
 
-            override fun saveCallResult(data: List<ArticlesItem>) {
+            override fun saveCallResult(data: List<ArticlesItem>?) {
                 val listNews = ArrayList<ArticleTechnology>()
-                for(response in data){
-                    val article = response.author?.let {
-                        response.publishedAt?.let { it1 ->
-                            response.content?.let { it2 ->
-                                ArticleTechnology(
-                                    author = it,
-                                    source = Source(name=response.source?.name),
-                                    title = response.title,
-                                    urlToImage = response.urlToImage,
-                                    publishedAt = it1,
-                                    content = it2,
-                                    url = response.url
-                                )
-                            }
+                if (data != null) {
+                    for(response in data){
+                        val article = response.title?.let {
+                            ArticleTechnology(
+                                author = response.author,
+                                source = Source(name=response.source?.name),
+                                title = it,
+                                urlToImage = response.urlToImage,
+                                publishedAt = response.publishedAt,
+                                content = response.content,
+                                url = response.url
+                            )
                         }
-                    }
-                    if(article!=null){
-                        listNews.add(article)
+                        if(article!=null){
+                            listNews.add(article)
+                        }
                     }
                 }
                 localData.insertArticlesTechnology(listNews)

@@ -41,25 +41,27 @@ class HomeFragment : Fragment() {
 
     private fun onClick() {
         binding.apply {
-            detikCom.setOnClickListener {
-                startActivity(Intent(context,DetikActivity::class.java))
-            }
-            tvOne.setOnClickListener {
-                startActivity(Intent(context,KapanLagiActivity::class.java))
-            }
-            vivaCo.setOnClickListener {
-                startActivity(Intent(context,VivaActivity::class.java))
-            }
-            suaraCom.setOnClickListener {
-                startActivity(Intent(context,SuaraActivity::class.java))
-            }
+//            detikCom.setOnClickListener {
+//                startActivity(Intent(context,DetikActivity::class.java))
+//            }
+//            tvOne.setOnClickListener {
+//                startActivity(Intent(context,KapanLagiActivity::class.java))
+//            }
+//            vivaCo.setOnClickListener {
+//                startActivity(Intent(context,VivaActivity::class.java))
+//            }
+//            suaraCom.setOnClickListener {
+//                startActivity(Intent(context,SuaraActivity::class.java))
+//            }
         }
     }
 
     private fun showRvHeadline() {
         adapterHeadline.notifyDataSetChanged()
         binding.apply {
-            true.loadingExtension(shimmerHeadline, rvTopHeadlines)
+//            true.loadingExtension(shimmerHeadline1, rvTopHeadlines)
+//            true.loadingExtension(shimmerHeadline2, rvTopHeadlines)
+//            true.loadingExtension(shimmerHeadline3, rvTopHeadlines)
             rvTopHeadlines.apply {
                 layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
                 setHasFixedSize(true)
@@ -69,21 +71,32 @@ class HomeFragment : Fragment() {
             headlineViewModel.getHeadline().observe(viewLifecycleOwner) { listArticle ->
                 if (listArticle != null) {
                     when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerHeadline,rvTopHeadlines)
+                        Status.LOADING -> {
+                            true.loadingExtension(shimmerHeadline1, rvTopHeadlines)
+                            true.loadingExtension(shimmerHeadline2, rvTopHeadlines)
+                            true.loadingExtension(shimmerHeadline3, rvTopHeadlines)
+                            Log.e("tes", "showRvHeadline: ", )
+                        }
                         Status.SUCCESS->{
                             Log.d("tag", "showRvHeadline: ${listArticle.data}")
                             listArticle.data?.let { adapterHeadline.setList(it) }
                             adapterHeadline.notifyDataSetChanged()
                             imageErrorHeadline.visibility = View.GONE
-                            false.loadingExtension(shimmerHeadline,rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                         }
                         Status.ERROR->{
                             imageErrorHeadline.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerHeadline,rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
+                            false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                         }
                     }
                 }else{
-                    false.loadingExtension(shimmerHeadline, rvTopHeadlines)
+                    false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
+                    false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
+                    false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                     imageErrorHeadline.visibility = View.VISIBLE
                 }
             }

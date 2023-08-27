@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", '"1948928b64da4c6bae13c8aa49afb969"')
+        buildConfigField("String", "API_KEY", '"f990511642dd47378aade1d232d444f2"')
         buildConfigField("String", "BASE_URL", '"https://newsapi.org/v2/"')
     }
 
@@ -60,4 +60,6 @@ dependencies {
     implementation "androidx.room:room-runtime:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
     implementation "io.insert-koin:koin-android:2.2.2"
+    implementation "com.airbnb.android:lottie:5.2.0"
+    implementation 'androidx.browser:browser:1.4.0'
 }

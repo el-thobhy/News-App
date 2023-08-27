@@ -12,35 +12,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
-            android:id="@+id/top_headlines"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/top_headlines"
-            android:textSize="24sp"
-            style="@style/FontColor"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_top_headlines"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_headlines"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="9dp"
             tools:listitem="@layout/item_top_headlines"/>
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_headline"
+            android:id="@+id/shimmer_headline_1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_headlines"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_marginStart="9dp"
             android:layout_height="wrap_content">
             <include layout="@layout/shimmer_list"/>
         </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_headline_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shimmer_headline_1"
+            android:layout_width="match_parent"
+            android:layout_marginStart="9dp"
+            android:layout_height="wrap_content">
+            <include layout="@layout/shimmer_list"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_headline_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shimmer_headline_2"
+            android:layout_width="match_parent"
+            android:layout_marginStart="9dp"
+            android:layout_height="wrap_content">
+            <include layout="@layout/shimmer_list"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <ImageView
             android:id="@+id/image_error_headline"
             android:layout_width="180dp"
@@ -52,7 +62,8 @@
             android:src="@drawable/image_error"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top_headlines"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.appbar.AppBarLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -66,6 +77,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tv_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -93,90 +105,7 @@
                     style="@style/FontColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="20dp"/>
-                <LinearLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_discover"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:weightSum="100"
-                    android:padding="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp">
-                    <LinearLayout
-                        android:id="@+id/detik_com"
-                        android:orientation="vertical"
-                        android:layout_weight="25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/detik_png"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingTop="5dp"
-                            android:text="@string/detik"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/tv_one"
-                        android:orientation="vertical"
-                        android:layout_weight="25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/kapanlagi"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingTop="5dp"
-                            android:text="@string/kapanlagi"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/viva_co"
-                        android:orientation="vertical"
-                        android:layout_weight="25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/viva"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingTop="5dp"
-                            android:gravity="center"
-                            android:text="@string/viva"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/suara_com"
-                        android:orientation="vertical"
-                        android:layout_weight="25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/suara"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:paddingTop="5dp"
-                            android:text="@string/suara"/>
-                    </LinearLayout>
 
-                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

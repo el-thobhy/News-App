@@ -14,12 +14,27 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/image_news"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="200dp"
-                android:src="@drawable/ic_baseline_broken_image_24"/>
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/image_news"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"
+                    tools:src="@tools:sample/avatars"/>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie"
+                    app:lottie_autoPlay="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"
+                    app:lottie_fileName="no_data_available.json"
+                    android:layout_width="match_parent"
+                    android:layout_height="203dp"/>
+            </RelativeLayout>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

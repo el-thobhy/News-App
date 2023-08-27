@@ -13,57 +13,79 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:cardCornerRadius="20dp"
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
+
         <ImageView
             android:id="@+id/image_top_headline"
-            android:layout_width="100dp"
-            android:layout_height="110dp"
-            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="203dp"
             android:background="@drawable/content_bg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:clipToOutline="true"
-            tools:src="@tools:sample/avatars"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="@string/item_top_headlines"
-            tools:targetApi="s"/>
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_fileName="no_data_available.json"
+            android:layout_width="match_parent"
+            android:layout_height="203dp"/>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/tv_title_top_headlines"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:maxLines="2"
         style="@style/FontColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        app:layout_constraintTop_toTopOf="@id/card_image"
-        app:layout_constraintStart_toEndOf="@id/card_image"
-        app:layout_constraintBottom_toTopOf="@id/tv_source_name"/>
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/lorem_ipsum"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/card_image"
+        app:layout_constraintStart_toStartOf="@id/tv_source_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_source_name" />
+
     <TextView
         android:id="@+id/tv_source_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_light"
         style="@style/FontColor"
+        android:layout_marginTop="12dp"
         android:text="@string/source"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_top_headlines"
-        app:layout_constraintStart_toStartOf="@id/tv_title_top_headlines"
-        app:layout_constraintBottom_toTopOf="@id/tv_date_news"/>
+        app:layout_constraintTop_toBottomOf="@id/card_image"
+        app:layout_constraintStart_toStartOf="@id/card_image"
+        app:layout_constraintBottom_toTopOf="@id/tv_title_top_headlines"/>
 
     <TextView
         android:id="@+id/tv_date_news"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_medium"
+        android:fontFamily="@font/poppins_light"
         style="@style/FontColor"
-        app:layout_constraintTop_toBottomOf="@id/tv_source_name"
-        app:layout_constraintStart_toStartOf="@id/tv_source_name"
-        app:layout_constraintBottom_toBottomOf="@id/card_image"/>
+        android:layout_marginStart="12dp"
+        android:text="@string/publish_at"
+        app:layout_constraintTop_toTopOf="@id/tv_source_name"
+        app:layout_constraintStart_toEndOf="@id/tv_source_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_source_name"/>
+    <TextView
+        android:id="@+id/test"
+        app:layout_constraintTop_toTopOf="@id/tv_date_news"
+        app:layout_constraintBottom_toBottomOf="@id/tv_date_news"
+        app:layout_constraintStart_toEndOf="@id/tv_date_news"
+        android:layout_marginStart="12dp"
+        android:fontFamily="@font/poppins_light"
+        style="@style/FontColor"
+        android:text="test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

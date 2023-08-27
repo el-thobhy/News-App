@@ -9,9 +9,12 @@ import com.facebook.shimmer.ShimmerFrameLayout
 fun Boolean.loadingExtension(shimmer: ShimmerFrameLayout?, rv: RecyclerView?) {
     if (this) {
         shimmer?.visibility = View.VISIBLE
+        rv?.visibility = View.GONE
+    }
+    else {
+        shimmer?.visibility = View.GONE
         rv?.visibility = View.VISIBLE
     }
-    else shimmer?.visibility = View.GONE
 }
 
 fun Boolean.loadingDetail(progressBar: ProgressBar?, shimmer: ShimmerFrameLayout?){

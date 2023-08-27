@@ -28,7 +28,7 @@ class RemoteData private constructor(){
     fun getTopHeadlines(): LiveData<ApiResponse<List<ArticlesItem>>>{
         EspressoIdlingResource.increment()
         val headlineResponse = MutableLiveData<ApiResponse<List<ArticlesItem>>>()
-        ApiConfig.getApiServeice().getTopHeadlines("id")
+        ApiConfig.getApiServeice().getTopHeadlines("indonesia")
             .enqueue(object : Callback<ResponseCatalog<ArticlesItem>>{
                 override fun onResponse(
                     call: Call<ResponseCatalog<ArticlesItem>>,

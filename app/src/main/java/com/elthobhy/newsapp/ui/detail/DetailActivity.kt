@@ -2,11 +2,14 @@ package com.elthobhy.newsapp.ui.detail
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.browser.customtabs.CustomTabsIntent
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
@@ -27,6 +30,9 @@ import com.elthobhy.newsapp.utils.Constants
 import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -58,10 +64,10 @@ class DetailActivity : AppCompatActivity() {
 
     private fun onClick(url: String?) {
         binding.goToLink.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(url)
-            startActivity(intent)
+            val intent = CustomTabsIntent.Builder().build()
+            intent.launchUrl(this,Uri.parse(url))
         }
+
     }
 
     private fun setActionButton(
@@ -399,6 +405,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+
     private fun displayDetail(article: Parcelable?) {
         when (article) {
             is ArticleKapanlagi -> {
@@ -604,8 +611,11 @@ class DetailActivity : AppCompatActivity() {
             is ArticleHeadline -> {
                 binding.apply {
                     if(article.urlToImage.isNullOrEmpty()){
+                        lottie.visibility=View.VISIBLE
                         imageNews.visibility=View.GONE
                     }else{
+                        lottie.visibility=View.GONE
+                        imageNews.visibility=View.VISIBLE
                         Glide.with(this@DetailActivity)
                             .load(article.urlToImage)
                             .transition(DrawableTransitionOptions.withCrossFade())
@@ -615,7 +625,13 @@ class DetailActivity : AppCompatActivity() {
 
                     titleNews.text = article.title
                     sourceNews.text = article.source?.name
-                    dateNews.text = article.publishedAt
+                    val secondApiFormat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                    } else {
+                        TODO("VERSION.SDK_INT < O")
+                    }
+                    val time = LocalDate.parse(article.publishedAt, secondApiFormat)
+                    dateNews.text = time.toString()
                     contentNews.text = article.content
                     onClick(article.url)
                     setBookmarkedState(article.bookmarked)

@@ -8,9 +8,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("top-headlines?apiKey=${BuildConfig.API_KEY}")
+    @GET("everything?apiKey=${BuildConfig.API_KEY}")
     fun getTopHeadlines(
-        @Query("country") country: String
+        @Query("q") country: String
     ): Call<ResponseCatalog<ArticlesItem>>
 
     @GET("everything?apiKey=${BuildConfig.API_KEY}")

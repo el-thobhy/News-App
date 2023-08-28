@@ -23,7 +23,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_height="match_parent"
                     android:scaleType="center"
-                    tools:src="@tools:sample/avatars"/>
+                    tools:src="@tools:sample/avatars"
+                    android:contentDescription="@string/image_news" />
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottie"
                     app:lottie_autoPlay="true"
@@ -87,7 +88,8 @@
                     app:layout_constraintBottom_toBottomOf="@id/title_news"
                     android:layout_marginEnd="20dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/floating_action_button" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
         <TextView

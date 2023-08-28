@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
+import com.elthobhy.core.data.source.local.entity.headline.ArticleHeadlineEntity
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
 
 class FavoriteHeadlineAdapter: RecyclerView.Adapter<FavoriteHeadlineAdapter.FavoriteViewHolder>() {
-    private val list = ArrayList<ArticleHeadline>()
+    private val list = ArrayList<ArticleHeadlineEntity>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,12 +27,12 @@ class FavoriteHeadlineAdapter: RecyclerView.Adapter<FavoriteHeadlineAdapter.Favo
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ArticleHeadline)
+        fun onItemClicked(data: ArticleHeadlineEntity)
     }
 
     inner class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
-        fun bind(entity: ArticleHeadline) {
+        fun bind(entity: ArticleHeadlineEntity) {
             binding.apply {
                 Glide.with(itemView)
                     .load(entity.urlToImage)
@@ -57,7 +57,7 @@ class FavoriteHeadlineAdapter: RecyclerView.Adapter<FavoriteHeadlineAdapter.Favo
         return list.size
     }
 
-    fun setList(entity: List<ArticleHeadline>) {
+    fun setList(entity: List<ArticleHeadlineEntity>) {
         list.clear()
         list.addAll(entity)
         notifyDataSetChanged()

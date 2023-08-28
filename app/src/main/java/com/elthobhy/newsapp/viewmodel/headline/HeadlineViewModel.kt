@@ -2,12 +2,13 @@ package com.elthobhy.newsapp.viewmodel.headline
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.elthobhy.newsapp.data.source.CatalogNewsRepository
-import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
-import com.elthobhy.newsapp.utils.vo.Resource
+import androidx.lifecycle.asLiveData
+import com.elthobhy.core.domain.model.Domain
+import com.elthobhy.core.domain.usecase.UseCase
+import com.elthobhy.core.utils.vo.Resource
 
-class HeadlineViewModel(private val catalogRepo: CatalogNewsRepository): ViewModel() {
+class HeadlineViewModel(private val useCase: UseCase): ViewModel() {
 
-    fun getHeadline(): LiveData<Resource<List<ArticleHeadline>>> =
-        catalogRepo.getTopHeadlines()
+    fun getHeadline(): LiveData<Resource<List<Domain>>> =
+        useCase.getHeadline().asLiveData()
 }

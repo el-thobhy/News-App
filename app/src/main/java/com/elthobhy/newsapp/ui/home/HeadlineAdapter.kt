@@ -1,7 +1,6 @@
 package com.elthobhy.newsapp.ui.home
 
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,14 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.elthobhy.core.domain.model.Domain
 import com.elthobhy.newsapp.R
-import com.elthobhy.newsapp.data.source.local.entity.headline.ArticleHeadline
 import com.elthobhy.newsapp.databinding.ItemTopHeadlinesBinding
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(){
-    private val list = ArrayList<ArticleHeadline>()
+    private val list = ArrayList<Domain>()
     private lateinit var onItemClickCallback: OnItemClickCallback
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,13 +30,13 @@ class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(
     }
 
     interface OnItemClickCallback{
-        fun onItemClicked(data: ArticleHeadline)
+        fun onItemClicked(data: Domain)
     }
 
     inner class HeadlineViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ItemTopHeadlinesBinding.bind(itemView)
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(headlineEntity: ArticleHeadline) {
+        fun bind(headlineEntity: Domain) {
             binding.apply {
                 if(headlineEntity.urlToImage.isNullOrEmpty()){
                     imageTopHeadline.visibility=View.GONE
@@ -92,7 +90,7 @@ class HeadlineAdapter: RecyclerView.Adapter<HeadlineAdapter.HeadlineViewHolder>(
     override fun getItemCount(): Int {
         return  list.size
     }
-    fun setList(headlineEntity: List<ArticleHeadline>){
+    fun setList(headlineEntity: List<Domain>){
         list.addAll(headlineEntity)
         notifyDataSetChanged()
     }

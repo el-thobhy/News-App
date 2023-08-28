@@ -3,7 +3,12 @@ package com.elthobhy.newsapp
 import android.app.Application
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.elthobhy.newsapp.di.*
+import com.elthobhy.core.di.databaseModule
+import com.elthobhy.core.di.networking
+import com.elthobhy.core.di.repositoryModule
+import com.elthobhy.newsapp.di.adapterModule
+import com.elthobhy.newsapp.di.useCase
+import com.elthobhy.newsapp.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +26,8 @@ class MyApp: Application() {
                 databaseModule,
                 repositoryModule,
                 viewModelModule,
-                adapterModule
+                adapterModule,
+                useCase
             )
         }
     }

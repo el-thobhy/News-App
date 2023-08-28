@@ -2,388 +2,133 @@ package com.elthobhy.newsapp.ui.category
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.elthobhy.newsapp.data.source.local.entity.business.ArticleBusiness
-import com.elthobhy.newsapp.data.source.local.entity.entertainment.ArticleEntertainment
-import com.elthobhy.newsapp.data.source.local.entity.general.ArticleGeneral
-import com.elthobhy.newsapp.data.source.local.entity.health.ArticleHealth
-import com.elthobhy.newsapp.data.source.local.entity.science.ArticleScience
-import com.elthobhy.newsapp.data.source.local.entity.sports.ArticleSports
-import com.elthobhy.newsapp.data.source.local.entity.technology.ArticleTechnology
+import com.elthobhy.core.domain.model.Domain
+import com.elthobhy.core.utils.Constants
+import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
-import com.elthobhy.newsapp.ui.category.business.BusinessAdapter
-import com.elthobhy.newsapp.ui.category.entertainment.EntertainmentAdapter
-import com.elthobhy.newsapp.ui.category.general.GeneralAdapter
-import com.elthobhy.newsapp.ui.category.health.HealthAdapter
-import com.elthobhy.newsapp.ui.category.science.ScienceAdapter
-import com.elthobhy.newsapp.ui.category.sport.SportsAdapter
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.ui.detail.DetailActivity
-import com.elthobhy.newsapp.utils.Constants
-import com.elthobhy.newsapp.utils.loadingExtension
-import com.elthobhy.newsapp.utils.vo.Status
-import com.elthobhy.newsapp.viewmodel.*
-import com.elthobhy.newsapp.viewmodel.business.BusinessViewModel
-import com.elthobhy.newsapp.viewmodel.entertainment.EntertainmentViewModel
-import com.elthobhy.newsapp.viewmodel.general.GeneralViewModel
-import com.elthobhy.newsapp.viewmodel.health.HealthViewModel
-import com.elthobhy.newsapp.viewmodel.science.ScienceViewModel
-import com.elthobhy.newsapp.viewmodel.sports.SportViewModel
-import com.elthobhy.newsapp.viewmodel.technology.TechnologyViewModel
-import com.facebook.shimmer.ShimmerFrameLayout
+import com.elthobhy.newsapp.viewmodel.search.SearchViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.android.inject
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding as FragmentCategoryBinding
-    private val adapterBusiness by inject<BusinessAdapter>()
-    private val entertainmentAdapter by inject<EntertainmentAdapter>()
-    private val generalAdapter by inject<GeneralAdapter>()
-    private val healthAdapter by inject<HealthAdapter>()
-    private val scienceAdapter by inject<ScienceAdapter>()
-    private val sportsAdapter by inject<SportsAdapter>()
+    private val searchViewModel by inject<SearchViewModel>()
     private val technologyAdapter by inject<TechnologyAdapter>()
-    private val businessViewModel by inject<BusinessViewModel>()
-    private val entertainmentViewModel by inject<EntertainmentViewModel>()
-    private val generalViewModel by inject<GeneralViewModel>()
-    private val healthViewModel by inject<HealthViewModel>()
-    private val scienceViewModel by inject<ScienceViewModel>()
-    private val sportsViewModel by inject<SportViewModel>()
-    private val technologyViewModel by inject<TechnologyViewModel>()
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-
-        binding.apply {
-            showRvBusiness(rvBusiness, shimmerBusiness)
-            showRvEntertainment(rvEntertainment, shimmerEntertainment)
-            showRvGeneral(rvGeneral, shimmerGeneral)
-            showRvHealth(rvHealth, shimmerHealth)
-            showRvScience(rvScience, shimmerScience)
-            showRvSports(rvSport, shimmerSport)
-            showRvTechnology(rvTechnology, shimmerTechnology)
-        }
-
+        searchView = binding.searchView
+        searchList()
+        showRv()
         return binding.root
     }
 
-    private fun showRvBusiness(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = adapterBusiness
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.apply{
+            false.loadingExtension(shimmerTechnology1, rvTechnology)
+            false.loadingExtension(shimmerTechnology2, rvTechnology)
+        }
+    }
+
+    private fun showRv() {
+        with(binding.rvTechnology){
+            layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            setHasFixedSize(true)
+            adapter = technologyAdapter
+        }
+        technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback{
+            override fun onClicked(data: Domain) {
+                showDetailData(data)
             }
-            businessViewModel.getBusinessNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerBusiness,rvBusiness)
-                        Status.SUCCESS->{
-                            listArticle.data?.let { adapterBusiness.setList(it) }
-                            imageErrorBusiness.visibility = View.GONE
-                            false.loadingExtension(shimmerBusiness,rvBusiness)
-                        }
-                        Status.ERROR->{
-                            imageErrorBusiness.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerBusiness,rvBusiness)
-                        }
+
+        })
+    }
+
+    private fun showDetailData(data: Domain) {
+        val intentDetail = Intent(activity, DetailActivity::class.java)
+        intentDetail.putExtra(Constants.TECHNOLOGY, data)
+        startActivity(intentDetail)
+    }
+
+    private fun searchList() {
+        binding.apply {
+            tvIndoNews.visibility=View.VISIBLE
+            card.visibility=View.VISIBLE
+            card1.visibility=View.VISIBLE
+            card2.visibility=View.VISIBLE
+            card3.visibility=View.VISIBLE
+        }
+        searchViewModel.SearchResult.observe(viewLifecycleOwner, observerSearch)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return if(!p0.isNullOrEmpty()){
+                    searchViewModel.queryChannel.value = p0
+                    binding.apply {
+                        tvIndoNews.visibility=View.GONE
+                        card.visibility=View.GONE
+                        card1.visibility=View.GONE
+                        card2.visibility=View.GONE
+                        card3.visibility=View.GONE
+                        true.loadingExtension(shimmerTechnology1,rvTechnology)
+                        true.loadingExtension(shimmerTechnology2,rvTechnology)
+
                     }
+                    true
                 }else{
-                    imageErrorBusiness.visibility = View.VISIBLE
-                    false.loadingExtension(shimmerBusiness, rvBusiness)
-                }
-            }
-        }
-        adapterBusiness.setOnClickCallback(object : BusinessAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleBusiness) {
-                showDetailData(data, Constants.BUSINESS)
-            }
-
-        })
-    }
-
-    private fun showDetailData(data: Parcelable, key: String) {
-        when (key) {
-            Constants.BUSINESS -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.BUSINESS, data)
-                startActivity(intentDetail)
-            }
-            Constants.ENTERTAINMENT -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.ENTERTAINMENT, data)
-                startActivity(intentDetail)
-            }
-            Constants.GENERAL -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.GENERAL, data)
-                startActivity(intentDetail)
-            }
-            Constants.HEALTH -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.HEALTH, data)
-                startActivity(intentDetail)
-            }
-            Constants.SCIENCE -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.SCIENCE, data)
-                startActivity(intentDetail)
-            }
-            Constants.SPORTS -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.SPORTS, data)
-                startActivity(intentDetail)
-            }
-            Constants.TECHNOLOGY -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(Constants.TECHNOLOGY, data)
-                startActivity(intentDetail)
-            }
-            else -> {
-                Log.e("else", "showDetailData: ")
-            }
-        }
-    }
-
-    private fun showRvEntertainment(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = entertainmentAdapter
-            }
-            entertainmentViewModel.getEntertainment().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerEntertainment,rvEntertainment)
-                        Status.SUCCESS->{
-                            listArticle.data?.let { entertainmentAdapter.setList(it) }
-                            imageErrorEntertainment.visibility = View.GONE
-                            false.loadingExtension(shimmerEntertainment,rvEntertainment)
-                        }
-                        Status.ERROR->{
-                            imageErrorEntertainment.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerEntertainment,rvEntertainment)
-                        }
+                    binding.apply {
+                        false.loadingExtension(shimmerTechnology1,rvTechnology)
+                        false.loadingExtension(shimmerTechnology2,rvTechnology)
                     }
-                }else{
-                    imageErrorEntertainment.visibility = View.GONE
-                    false.loadingExtension(shimmerEntertainment, rvEntertainment)
+                    true
                 }
             }
-        }
-        entertainmentAdapter.setOnClickCallback(object : EntertainmentAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleEntertainment) {
-                showDetailData(data, Constants.ENTERTAINMENT)
-            }
-
         })
+        searchView.setOnCloseListener {
+            binding.apply {
+                false.loadingExtension(shimmerTechnology1, rvTechnology)
+                false.loadingExtension(shimmerTechnology2, rvTechnology)
+                rvTechnology.visibility = View.GONE
+                tvIndoNews.visibility=View.VISIBLE
+                card.visibility=View.VISIBLE
+                card1.visibility=View.VISIBLE
+                card2.visibility=View.VISIBLE
+                card3.visibility=View.VISIBLE
+            }
+            false
+        }
     }
 
-    private fun showRvGeneral(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
+    private val observerSearch = Observer<List<Domain>> {data->
         binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = generalAdapter
-            }
-            generalViewModel.getGeneralNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerGeneral,rvGeneral)
-                        Status.SUCCESS->{
-                            listArticle.data?.let { generalAdapter.setList(it) }
-                            imageErrorGeneral.visibility = View.GONE
-                            false.loadingExtension(shimmerGeneral,rvGeneral)
-                        }
-                        Status.ERROR->{
-                            imageErrorGeneral.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerGeneral,rvGeneral)
-                        }
-                    }
-                }else{
-                    imageErrorGeneral.visibility = View.GONE
-                    false.loadingExtension(shimmerGeneral, rvGeneral)
-
-                }
-            }
+            false.loadingExtension(shimmerTechnology1,rvTechnology)
+            false.loadingExtension(shimmerTechnology2,rvTechnology)
+            technologyAdapter.submitList(data)
+            Log.e("hasil", "tesHasil: $data" )
         }
-        generalAdapter.setOnClickCallback(object : GeneralAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleGeneral) {
-                showDetailData(data, Constants.GENERAL)
-            }
-
-        })
-    }
-
-    private fun showRvHealth(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = healthAdapter
-            }
-            healthViewModel.getHealthNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerHealth,rvHealth)
-                        Status.SUCCESS->{
-                            listArticle.data?.let { healthAdapter.setList(it) }
-                            imageErrorHealth.visibility = View.GONE
-                            false.loadingExtension(shimmerHealth,rvHealth)
-                        }
-                        Status.ERROR->{
-                            imageErrorHealth.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerHealth,rvHealth)
-                        }
-                    }
-                }else{
-                    imageErrorHealth.visibility = View.GONE
-                    false.loadingExtension(shimmerHealth, rvHealth)
-                }
-
-            }
-        }
-        healthAdapter.setOnClickCallback(object : HealthAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleHealth) {
-                showDetailData(data, Constants.HEALTH)
-            }
-
-        })
-    }
-
-    private fun showRvScience(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = scienceAdapter
-            }
-            scienceViewModel.getScienceNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerScience,rvScience)
-                        Status.SUCCESS->{
-                            imageErrorScience.visibility = View.GONE
-                            listArticle.data?.let { scienceAdapter.setList(it) }
-                            false.loadingExtension(shimmerScience,rvScience)
-                        }
-                        Status.ERROR->{
-                            imageErrorScience.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerScience,rvScience)
-                        }
-                    }
-                }else{
-                    imageErrorScience.visibility = View.GONE
-                    false.loadingExtension(shimmerScience, rvScience)
-                }
-
-            }
-        }
-        scienceAdapter.setOnClickCallback(object : ScienceAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleScience) {
-                showDetailData(data, Constants.SCIENCE)
-            }
-
-        })
-    }
-
-    private fun showRvSports(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = sportsAdapter
-            }
-            sportsViewModel.getSportsNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerSport,rvSport)
-                        Status.SUCCESS->{
-                            imageErrorSports.visibility = View.GONE
-                            listArticle.data?.let { sportsAdapter.setList(it) }
-                            false.loadingExtension(shimmerSport,rvSport)
-                        }
-                        Status.ERROR->{
-                            imageErrorSports.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerSport,rvSport)
-                        }
-                    }
-                }else {
-                    imageErrorSports.visibility = View.GONE
-                    false.loadingExtension(shimmerSport, rvSport)
-                }
-
-            }
-        }
-        sportsAdapter.setOnClickCallback(object : SportsAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleSports) {
-                showDetailData(data, Constants.SPORTS)
-            }
-
-        })
-    }
-
-    private fun showRvTechnology(recyclerView: RecyclerView, shimmer: ShimmerFrameLayout) {
-        binding.apply {
-            true.loadingExtension(shimmer, recyclerView)
-            recyclerView.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                setHasFixedSize(true)
-                adapter = technologyAdapter
-            }
-            technologyViewModel.getTechnologyNews().observe(viewLifecycleOwner) { listArticle ->
-                if (listArticle != null) {
-                    when(listArticle.status){
-                        Status.LOADING -> true.loadingExtension(shimmerTechnology,rvTechnology)
-                        Status.SUCCESS->{
-                            imageErrorTechnology.visibility = View.GONE
-                            listArticle.data?.let { technologyAdapter.setList(it) }
-                            false.loadingExtension(shimmerTechnology,rvTechnology)
-                        }
-                        Status.ERROR->{
-                            imageErrorTechnology.visibility = View.VISIBLE
-                            false.loadingExtension(shimmerTechnology,rvTechnology)
-                        }
-                    }
-                }else{
-                    imageErrorTechnology.visibility = View.GONE
-                    false.loadingExtension(shimmerTechnology, rvTechnology)
-                }
-
-            }
-        }
-        technologyAdapter.setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {
-            override fun onClicked(data: ArticleTechnology) {
-                showDetailData(data, Constants.TECHNOLOGY)
-            }
-
-        })
     }
 
     override fun onDestroy() {

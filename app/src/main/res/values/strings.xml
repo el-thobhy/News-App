@@ -38,4 +38,10 @@
     <string name="news">News</string>
     <string name="app">App</string>
     <string name="publish_at">Publish At</string>
+    <string name="image_news">Image News</string>
+    <string name="floating_action_button">Floating Action Button</string>
+    <string name="search_by_title">Search by Title</string>
+    <string name="image_detik">Image Detik</string>
+    <string name="liputan_6">Liputan 6</string>
+    <string name="indonesian_s_news">Indonesian\'s News</string>
 </resources>

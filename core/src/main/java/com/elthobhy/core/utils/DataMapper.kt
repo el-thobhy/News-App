@@ -48,6 +48,10 @@ object DataMapper {
                 publishedAt = it.publishedAt,
                 content = it.content,
                 url = it.url,
+                detik = it.detik,
+                suara = it.suara,
+                kapanlagi = it.kapanlagi,
+                liputan = it.liputan,
                 bookmarked = it.bookmarked
             )
             out.add(list)
@@ -63,6 +67,10 @@ object DataMapper {
             publishedAt = input.publishedAt,
             content = input.content,
             url = input.url,
+            detik = input.detik,
+            suara = input.suara,
+            kapanlagi = input.kapanlagi,
+            liputan = input.liputan,
             bookmarked = input.bookmarked
         )
     }
@@ -75,6 +83,10 @@ object DataMapper {
             publishedAt = input.publishedAt,
             content = input.content,
             url = input.url,
+            detik = input.detik,
+            suara = input.suara,
+            kapanlagi = input.kapanlagi,
+            liputan = input.liputan,
             bookmarked = input.bookmarked
         )
     }

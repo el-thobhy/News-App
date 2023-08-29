@@ -23,7 +23,7 @@ class CatalogNewsRepository(
     override fun getTopHeadlines(): Flow<Resource<List<Domain>>> {
         return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
             override fun shouldFetch(data: List<Domain>?): Boolean =
-                true
+                data.isNullOrEmpty()
 
             override suspend fun saveCallResult(data: List<ArticlesItem>) {
                 val dataMap = DataMapper.mapResponseToEntity(data,
@@ -53,7 +53,7 @@ class CatalogNewsRepository(
     ): Flow<Resource<List<Domain>>> {
         return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
             override fun shouldFetch(data: List<Domain>?): Boolean =
-                true
+                data.isNullOrEmpty()
 
             override suspend fun saveCallResult(data: List<ArticlesItem>) {
                 val dataMap = DataMapper.mapResponseToEntity(data, detik, suara, kapanlagi, liputan)

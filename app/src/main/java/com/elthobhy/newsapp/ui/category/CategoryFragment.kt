@@ -158,6 +158,11 @@ class CategoryFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.rvTechnology.visibility = View.GONE
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

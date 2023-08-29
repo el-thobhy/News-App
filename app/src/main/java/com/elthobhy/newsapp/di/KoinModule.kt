@@ -8,6 +8,7 @@ import com.elthobhy.newsapp.ui.home.HeadlineAdapter
 import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
 import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
+import com.elthobhy.newsapp.viewmodel.indonesianews.IndonesiaNewsViewModel
 import com.elthobhy.newsapp.viewmodel.search.SearchViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -20,6 +21,7 @@ val viewModelModule = module{
     single { DetailViewModel(get()) }
     single { FavoriteViewModel(get()) }
     single { SearchViewModel(get()) }
+    single { IndonesiaNewsViewModel(get()) }
 }
 
 val useCase = module {

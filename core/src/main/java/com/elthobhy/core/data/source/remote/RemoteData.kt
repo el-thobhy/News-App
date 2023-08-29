@@ -1,5 +1,6 @@
 package com.elthobhy.core.data.source.remote
 
+import android.util.Log
 import com.elthobhy.core.data.source.remote.network.ApiConfig
 import com.elthobhy.core.data.source.remote.response.ArticlesItem
 import com.elthobhy.core.data.source.remote.response.vo.ApiResponse
@@ -25,20 +26,22 @@ class RemoteData {
             }
         }.flowOn(Dispatchers.IO)
     }
-    suspend fun getSearch(q: String): Flow<ApiResponse<List<ArticlesItem>>>{
+
+    suspend fun getIndonesianNews(news: String): Flow<ApiResponse<List<ArticlesItem>>>{
         return flow{
             try {
-                val response = ApiConfig.getApiServeice().getSearch(q)
+                val response = ApiConfig.getApiServeice().getIndonesiaNews(news)
                 val list = response.articles
                 if(list?.isNotEmpty()==true){
                     emit(ApiResponse.Success(list))
+                    Log.e("remote", "getIndonesianNews: $list" )
                 }else{
                     emit(ApiResponse.Empty)
                 }
             }catch (e: Exception){
                 emit(ApiResponse.Error(e.message.toString()))
+                Log.e("tes", "getIndonesianNews: ${e.message}" )
             }
         }.flowOn(Dispatchers.IO)
     }
-
 }

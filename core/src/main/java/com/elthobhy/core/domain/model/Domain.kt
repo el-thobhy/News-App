@@ -15,4 +15,8 @@ class Domain(
     val url: String? =null,
     val urlToImage: String? =null,
     var bookmarked: Boolean = false,
+    var detik:Boolean = false,
+    var suara:Boolean = false,
+    var kapanlagi:Boolean = false,
+    var liputan:Boolean = false
 ):Parcelable

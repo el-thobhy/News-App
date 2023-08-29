@@ -41,4 +41,16 @@ data class ArticleHeadlineEntity(
 
     @ColumnInfo(name = "bookmarked")
     var bookmarked: Boolean = false,
+
+    @ColumnInfo(name = "detik")
+    var detik: Boolean = false,
+
+    @ColumnInfo(name = "suara")
+    var suara: Boolean = false,
+
+    @ColumnInfo(name = "kapanlagi")
+    var kapanlagi: Boolean = false,
+
+    @ColumnInfo(name = "liputan")
+    var liputan: Boolean = false,
 ) : Parcelable

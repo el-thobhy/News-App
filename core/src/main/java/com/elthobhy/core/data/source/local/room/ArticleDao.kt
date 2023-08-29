@@ -19,8 +19,23 @@ interface ArticleDao {
     @Query("SELECT * FROM article_entities")
     fun getArticlesHeadline(): Flow<List<ArticleHeadlineEntity>>
 
+    @Query("SELECT * FROM article_entities")
+    fun getAllIndonesiaNews(): Flow<List<ArticleHeadlineEntity>>
+
+    @Query("SELECT * FROM article_entities WHERE detik = 1")
+    fun getDetikNews(): Flow<List<ArticleHeadlineEntity>>
+
+    @Query("SELECT * FROM article_entities WHERE suara = 1")
+    fun getSuaraNews(): Flow<List<ArticleHeadlineEntity>>
+
+    @Query("SELECT * FROM article_entities WHERE kapanlagi = 1")
+    fun getKapanlagiNews(): Flow<List<ArticleHeadlineEntity>>
+
+    @Query("SELECT * FROM article_entities WHERE liputan = 1")
+    fun getLiputanNews(): Flow<List<ArticleHeadlineEntity>>
+
     @Query("SELECT * FROM article_entities WHERE bookmarked = 1")
-    fun getBookmarkedHeadline(): LiveData<List<ArticleHeadlineEntity>>
+    fun getBookmarkedHeadline(): Flow<List<ArticleHeadlineEntity>>
 
     @Query("SELECT * FROM article_entities WHERE title = :title")
     fun getDetailHeadline(title: String): LiveData<ArticleHeadlineEntity>

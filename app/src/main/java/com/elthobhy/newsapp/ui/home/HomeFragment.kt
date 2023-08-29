@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.core.domain.model.Domain
 import com.elthobhy.core.utils.Constants
 import com.elthobhy.core.utils.loadingExtension
+import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
@@ -45,13 +46,13 @@ class HomeFragment : Fragment() {
             headlineViewModel.getHeadline().observe(viewLifecycleOwner) { listArticle ->
                 if (listArticle != null) {
                     when(listArticle.status){
-                        com.elthobhy.core.utils.vo.Status.LOADING -> {
+                        Status.LOADING -> {
                             true.loadingExtension(shimmerHeadline1, rvTopHeadlines)
                             true.loadingExtension(shimmerHeadline2, rvTopHeadlines)
                             true.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                             Log.e("tes", "showRvHeadline: ")
                         }
-                        com.elthobhy.core.utils.vo.Status.SUCCESS->{
+                        Status.SUCCESS->{
                             Log.d("tag", "showRvHeadline: ${listArticle.data}")
                             listArticle.data?.let { adapterHeadline.setList(it) }
                             adapterHeadline.notifyDataSetChanged()
@@ -60,8 +61,9 @@ class HomeFragment : Fragment() {
                             false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                         }
-                        com.elthobhy.core.utils.vo.Status.ERROR->{
+                        Status.ERROR->{
                             imageErrorHeadline.visibility = View.VISIBLE
+                            Log.e("headline", "showRvHeadline: ${listArticle.message}" )
                             false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline3, rvTopHeadlines)

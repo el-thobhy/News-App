@@ -16,7 +16,16 @@ class LocalData private constructor(private val articleDao: ArticleDao){
             }
     }
     fun getAllArticleHeadline(): Flow<List<ArticleHeadlineEntity>> = articleDao.getArticlesHeadline()
-    suspend fun insertArticlesHeadline(article: List<ArticleHeadlineEntity>) = articleDao.insertArticleHeadline(article)
+
+    fun getAllIndonesiaNews(): Flow<List<ArticleHeadlineEntity>> = articleDao.getDetikNews()
+    fun getDetikNews(): Flow<List<ArticleHeadlineEntity>> = articleDao.getDetikNews()
+    fun getSuaraNews(): Flow<List<ArticleHeadlineEntity>> = articleDao.getSuaraNews()
+    fun getKapanlagiNews(): Flow<List<ArticleHeadlineEntity>> = articleDao.getKapanlagiNews()
+    fun getLiputanNews(): Flow<List<ArticleHeadlineEntity>> = articleDao.getLiputanNews()
+
+    suspend fun insertArticlesHeadline(article: List<ArticleHeadlineEntity>) {
+        articleDao.insertArticleHeadline(article)
+    }
     fun getSearch(q: String): Flow<List<ArticleHeadlineEntity>> = articleDao.getSearch(q)
 
     fun setFavoriteHeadline(article: ArticleHeadlineEntity, newState: Boolean) {
@@ -24,7 +33,7 @@ class LocalData private constructor(private val articleDao: ArticleDao){
         articleDao.updateArticleHeadline(article)
     }
 
-    fun getAllFavoritesHeadline(): LiveData<List<ArticleHeadlineEntity>> = articleDao.getBookmarkedHeadline()
+    fun getAllFavoritesHeadline(): Flow<List<ArticleHeadlineEntity>> = articleDao.getBookmarkedHeadline()
     
     fun getDetailHeadline(content: String): LiveData<ArticleHeadlineEntity> = articleDao.getDetailHeadline(content)
 }

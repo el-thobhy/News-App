@@ -1,8 +1,11 @@
 package com.elthobhy.newsapp.viewmodel.favorite
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.elthobhy.core.data.source.CatalogNewsRepository
+import androidx.lifecycle.asLiveData
+import com.elthobhy.core.domain.model.Domain
+import com.elthobhy.core.domain.usecase.UseCase
 
-class FavoriteViewModel(private val catalogRepo: CatalogNewsRepository) : ViewModel() {
-//    fun getFavoriteHeadline(): LiveData<List<Domain>> = catalogRepo.getFavoritesHeadline()
+class FavoriteViewModel(private val catalogRepo: UseCase) : ViewModel() {
+    fun getFavoriteHeadline(): LiveData<List<Domain>> = catalogRepo.getFavorite().asLiveData()
 }

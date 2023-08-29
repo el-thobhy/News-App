@@ -7,10 +7,10 @@ import com.elthobhy.core.domain.usecase.UseCase
 
 class DetailViewModel(private val useCase: UseCase) :
     ViewModel() {
-//    fun setBookmarkedHeadline(article: Domain) {
-//        val newState = !article.bookmarked
-//        catalogRepo.setFavoriteHeadline(article, newState)
-//    }
+    fun setBookmarkedHeadline(article: Domain) {
+        val newState = !article.bookmarked
+        useCase.setFavoriteHeadline(article, newState)
+    }
 
     fun getHeadline(content: String): LiveData<Domain> =
         useCase.getDetail(content)

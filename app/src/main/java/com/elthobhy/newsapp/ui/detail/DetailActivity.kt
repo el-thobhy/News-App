@@ -24,7 +24,8 @@ class DetailActivity : AppCompatActivity() {
     private val detailViewModel by inject<DetailViewModel>()
     private val listKey = arrayListOf(
         Constants.TOP_HEADLINE,
-        Constants.TECHNOLOGY
+        Constants.SEARCH,
+        Constants.TO_DETAIL
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setActionButton(
-        headline: Domain?,
+        headline: Domain,
     ) {
         binding.bookmark.setOnClickListener {
             setBookmark(
@@ -56,19 +57,15 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setBookmark(
-        headline: Domain?,
+        headline: Domain,
     ) {
-            if(headline!= null)  {
-                if (headline.bookmarked) {
-                    showSnackBar("${headline.title} Removed from favorite")
-                } else {
-                    showSnackBar("${headline.title} Added to favorite")
-                }
-//                detailViewModel.setBookmarkedHeadline(headline)
-            }
-            else{
-                Log.e("bookmark", "setBookmark: semua null", )
-            }
+        if (headline.bookmarked) {
+            showSnackBar("${headline.title} Removed from favorite")
+        } else {
+            showSnackBar("${headline.title} Added to favorite")
+        }
+        detailViewModel.setBookmarkedHeadline(headline)
+        Log.e("log", "setBookmark: ${headline.bookmarked}" )
     }
     private fun showSnackBar(msg: String) {
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
@@ -86,22 +83,23 @@ class DetailActivity : AppCompatActivity() {
     private fun showDetail(key: String) {
         when (key) {
             Constants.TOP_HEADLINE -> {
-                val dataIntent = intent?.getParcelableExtra<Domain>(Constants.TOP_HEADLINE)
-                dataIntent?.title?.let { data ->
-                    detailViewModel.getHeadline(data).observe(this){
-                        displayDetail(it)
-                        setActionButton(headline = it)
-                    }
-                }
+                getData(listKey[0])
             }
-            Constants.TECHNOLOGY -> {
-                val dataIntent = intent?.getParcelableExtra<Domain>(Constants.TECHNOLOGY)
-                dataIntent?.title?.let { data ->
-                    detailViewModel.getHeadline(data).observe(this){
-                        displayDetail(it)
-                        setActionButton(headline = it)
-                    }
-                }
+            Constants.SEARCH -> {
+                getData(listKey[1])
+            }
+            Constants.TO_DETAIL -> {
+                getData(listKey[2])
+            }
+        }
+    }
+
+    private fun getData(key: String) {
+        val dataIntent = intent?.getParcelableExtra<Domain>(key)
+        if (dataIntent != null) {
+            detailViewModel.getHeadline(dataIntent.title).observe(this){
+                displayDetail(it)
+                setActionButton(it)
             }
         }
     }

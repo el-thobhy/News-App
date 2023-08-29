@@ -6,7 +6,13 @@ import com.elthobhy.core.data.source.remote.response.ArticlesItem
 import com.elthobhy.core.domain.model.Domain
 
 object DataMapper {
-    fun mapResponseToEntity(input: List<ArticlesItem>): List<ArticleHeadlineEntity>{
+    fun mapResponseToEntity(
+        input: List<ArticlesItem>,
+        detik: Boolean,
+        suara: Boolean,
+        kapanlagi: Boolean,
+        liputan: Boolean
+    ): List<ArticleHeadlineEntity>{
         val out = ArrayList<ArticleHeadlineEntity>()
         input.map{
             val list = it.title?.let { it1 ->
@@ -17,7 +23,12 @@ object DataMapper {
                     urlToImage = it.urlToImage,
                     publishedAt = it.publishedAt,
                     content = it.content,
-                    url = it.url
+                    url = it.url,
+                    detik = detik,
+                    suara = suara,
+                    kapanlagi = kapanlagi,
+                    liputan = liputan,
+                    bookmarked = false
                 )
             }
             if (list != null) {
@@ -36,7 +47,8 @@ object DataMapper {
                 urlToImage = it.urlToImage,
                 publishedAt = it.publishedAt,
                 content = it.content,
-                url = it.url
+                url = it.url,
+                bookmarked = it.bookmarked
             )
             out.add(list)
         }
@@ -50,7 +62,20 @@ object DataMapper {
             urlToImage = input.urlToImage,
             publishedAt = input.publishedAt,
             content = input.content,
-            url = input.url
+            url = input.url,
+            bookmarked = input.bookmarked
+        )
+    }
+    fun domainToEntity(input: Domain): ArticleHeadlineEntity {
+        return ArticleHeadlineEntity(
+            author = input.author,
+            source = Source(name = input.source?.name),
+            title = input.title,
+            urlToImage = input.urlToImage,
+            publishedAt = input.publishedAt,
+            content = input.content,
+            url = input.url,
+            bookmarked = input.bookmarked
         )
     }
 }

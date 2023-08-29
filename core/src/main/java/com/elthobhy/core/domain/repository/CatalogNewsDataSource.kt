@@ -8,7 +8,15 @@ import kotlinx.coroutines.flow.Flow
 interface CatalogNewsDataSource {
     fun getTopHeadlines(): Flow<Resource<List<Domain>>>
     fun getSearch(q: String): Flow<List<Domain>>
+    fun getIndonesiaNews(
+        news: String,
+        detik: Boolean,
+        suara: Boolean,
+        kapanlagi: Boolean,
+        liputan: Boolean
+    ): Flow<Resource<List<Domain>>>
 
     fun getDetailTopHeadlines(content: String): LiveData<Domain>
-
+    fun setBookmark(article: Domain, state: Boolean)
+    fun getFavorite(): Flow<List<Domain>>
 }

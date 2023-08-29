@@ -2,17 +2,19 @@ package com.elthobhy.newsapp.ui.favorite
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elthobhy.core.data.source.local.entity.headline.ArticleHeadlineEntity
+import com.elthobhy.core.domain.model.Domain
+import com.elthobhy.core.utils.Constants
+import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.newsapp.databinding.FragmentFavoriteBinding
+import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.ui.detail.DetailActivity
-import com.elthobhy.newsapp.ui.favorite.adapter.headline.FavoriteHeadlineAdapter
 import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
 import org.koin.android.ext.android.inject
 
@@ -20,7 +22,7 @@ class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding as FragmentFavoriteBinding
-    private val favoriteHeadlineAdapter by inject<FavoriteHeadlineAdapter>()
+    private val favoriteHeadlineAdapter by inject<TechnologyAdapter>()
     private val favoriteViewModel by inject<FavoriteViewModel>()
 
 
@@ -42,96 +44,39 @@ class FavoriteFragment : Fragment() {
         binding.apply {
             rvHeadline.apply {
                 layoutManager =
-                    LinearLayoutManager(activity, GridLayoutManager.HORIZONTAL, false)
+                    LinearLayoutManager(activity, GridLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
                 adapter = favoriteHeadlineAdapter
             }
             favoriteHeadlineAdapter.apply {
-                /*favoriteViewModel.getFavoriteHeadline().observe(viewLifecycleOwner) {
-                    setList(it)
+                favoriteViewModel.getFavoriteHeadline().observe(viewLifecycleOwner) {
+                    Log.e("dataFavorite", "showRvHeadline: $it" )
+                    submitList(it)
                     if (it.isEmpty()) {
-                        false.loadingExtension(shimmerBusiness, rvBusiness)
+                        false.loadingExtension(shimmerHeadline, rvHeadline)
+                        false.loadingExtension(shimmerHeadline1, rvHeadline)
                         emptyListHeadline.visibility = View.VISIBLE
                     }else{
                         emptyListHeadline.visibility = View.GONE
                     }
 
                     false.loadingExtension(shimmerHeadline, rvHeadline)
+                    false.loadingExtension(shimmerHeadline1, rvHeadline)
                     notifyDataSetChanged()
-                }*/
-                setOnItemClickCallback(object : FavoriteHeadlineAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: ArticleHeadlineEntity) {
-                        showDetailData(data, com.elthobhy.core.utils.Constants.TOP_HEADLINE)
+                }
+                setOnClickCallback(object : TechnologyAdapter.OnItemClickCallback {
+                    override fun onClicked(data: Domain) {
+                        showDetailData(data)
                     }
                 })
             }
         }
     }
 
-    private fun showDetailData(data: Parcelable, key: String) {
-        when (key) {
-            com.elthobhy.core.utils.Constants.BUSINESS -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.BUSINESS, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.ENTERTAINMENT -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.ENTERTAINMENT, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.GENERAL -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.GENERAL, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.HEALTH -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.HEALTH, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.SCIENCE -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.SCIENCE, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.SPORTS -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.SPORTS, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.TECHNOLOGY -> {
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.TECHNOLOGY, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.DETIK ->{
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.DETIK, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.TOP_HEADLINE->{
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.TOP_HEADLINE, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.SUARA->{
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.SUARA, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.KAPAN_LAGI->{
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.KAPAN_LAGI, data)
-                startActivity(intentDetail)
-            }
-            com.elthobhy.core.utils.Constants.VIVA->{
-                val intentDetail = Intent(activity, DetailActivity::class.java)
-                intentDetail.putExtra(com.elthobhy.core.utils.Constants.VIVA, data)
-                startActivity(intentDetail)
-            }
-
-        }
+    private fun showDetailData(data: Domain) {
+        val intentDetail = Intent(activity, DetailActivity::class.java)
+        intentDetail.putExtra(Constants.TO_DETAIL, data)
+        startActivity(intentDetail)
     }
 
     override fun onDestroy() {

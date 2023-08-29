@@ -18,15 +18,20 @@ class CatalogNewsRepository(
     private val remoteData: RemoteData,
     private val localData: LocalData,
     private val appExecutors: AppExecutors
-): CatalogNewsDataSource {
+) : CatalogNewsDataSource {
 
     override fun getTopHeadlines(): Flow<Resource<List<Domain>>> {
-        return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors){
+        return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
             override fun shouldFetch(data: List<Domain>?): Boolean =
                 true
 
             override suspend fun saveCallResult(data: List<ArticlesItem>) {
-                val dataMap = DataMapper.mapResponseToEntity(data)
+                val dataMap = DataMapper.mapResponseToEntity(data,
+                    detik = false,
+                    suara = false,
+                    kapanlagi = false,
+                    liputan = false
+                )
                 localData.insertArticlesHeadline(dataMap)
             }
 
@@ -39,13 +44,56 @@ class CatalogNewsRepository(
         }.asFlow()
     }
 
+    override fun getIndonesiaNews(
+        news: String,
+        detik: Boolean,
+        suara: Boolean,
+        kapanlagi: Boolean,
+        liputan: Boolean,
+    ): Flow<Resource<List<Domain>>> {
+        return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
+            override fun shouldFetch(data: List<Domain>?): Boolean =
+                true
+
+            override suspend fun saveCallResult(data: List<ArticlesItem>) {
+                val dataMap = DataMapper.mapResponseToEntity(data, detik, suara, kapanlagi, liputan)
+                localData.insertArticlesHeadline(dataMap)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<List<ArticlesItem>>> =
+                remoteData.getIndonesianNews(news)
+
+            override fun loadFromDB(): Flow<List<Domain>> {
+                return when{
+                    detik -> localData.getDetikNews().map { DataMapper.mapEntityToDomain(it) }
+                    suara -> localData.getSuaraNews().map { DataMapper.mapEntityToDomain(it) }
+                    kapanlagi -> localData.getKapanlagiNews().map { DataMapper.mapEntityToDomain(it) }
+                    liputan -> localData.getLiputanNews().map { DataMapper.mapEntityToDomain(it) }
+                    else -> localData.getAllIndonesiaNews().map { DataMapper.mapEntityToDomain(it) }
+                }
+            }
+
+
+        }.asFlow()
+    }
+
+
     override fun getSearch(q: String): Flow<List<Domain>> {
         return localData.getSearch(q).map { DataMapper.mapEntityToDomain(it) }
     }
 
 
-
-
     override fun getDetailTopHeadlines(content: String): LiveData<Domain> =
         localData.getDetailHeadline(content).map { DataMapper.itemEntityToDomain(it) }
+
+    override fun setBookmark(article: Domain, state: Boolean) {
+        val data = DataMapper.domainToEntity(article)
+        appExecutors.diskIO().execute{localData.setFavoriteHeadline(data,state)}
+    }
+
+    override fun getFavorite(): Flow<List<Domain>> {
+        return localData.getAllFavoritesHeadline().map { DataMapper.mapEntityToDomain(it) }
+    }
+
+
 }

@@ -16,6 +16,7 @@ import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.newsapp.databinding.FragmentCategoryBinding
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
 import com.elthobhy.newsapp.ui.detail.DetailActivity
+import com.elthobhy.newsapp.ui.detik.DetikActivity
 import com.elthobhy.newsapp.viewmodel.search.SearchViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -39,7 +40,33 @@ class CategoryFragment : Fragment() {
         searchView = binding.searchView
         searchList()
         showRv()
+        onClick()
         return binding.root
+    }
+
+    private fun onClick() {
+        binding.apply {
+            card.setOnClickListener {
+                val intent = Intent(activity,DetikActivity::class.java)
+                intent.putExtra(Constants.DETIK,"detik.com")
+                startActivity(intent)
+            }
+            card1.setOnClickListener {
+                val intent = Intent(activity,DetikActivity::class.java)
+                intent.putExtra(Constants.SUARA,"suara.com")
+                startActivity(intent)
+            }
+            card2.setOnClickListener {
+                val intent = Intent(activity,DetikActivity::class.java)
+                intent.putExtra(Constants.KAPAN_LAGI,"kapanlagi.com")
+                startActivity(intent)
+            }
+            card3.setOnClickListener {
+                val intent = Intent(activity,DetikActivity::class.java)
+                intent.putExtra(Constants.LIPUTAN,"liputan6.com")
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +93,7 @@ class CategoryFragment : Fragment() {
 
     private fun showDetailData(data: Domain) {
         val intentDetail = Intent(activity, DetailActivity::class.java)
-        intentDetail.putExtra(Constants.TECHNOLOGY, data)
+        intentDetail.putExtra(Constants.SEARCH, data)
         startActivity(intentDetail)
     }
 

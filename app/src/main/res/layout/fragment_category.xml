@@ -1,169 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="20dp"
-    tools:context=".ui.category.CategoryFragment">
-
+    android:fitsSystemWindows="true"
+    android:paddingTop="16dp"
+    tools:context=".ui.category.CategoryFragment"
+    style="@style/Theme.MaterialComponents.NoActionBar">
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
         app:elevation="0dp"
-        android:backgroundTint="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:id="@+id/toolbar_frame"
+        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:backgroundTint="@android:color/transparent"
+            android:layout_height="wrap_content"
+            style="@style/Background"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:toolbarId="@+id/toolbar">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tv_top"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_view"
-                android:background="@drawable/item_bg"
-                android:layout_width="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_height="?attr/actionBarSize"
-                android:hint="@string/search_by_title"
-                android:textColor="@color/black"
-                android:textColorHint="@android:color/darker_gray" />
-        </FrameLayout>
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:background="@drawable/item_bg"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:hint="@string/search_by_title"
+                    android:textColor="@color/black"
+                    android:textColorHint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/tvIndoNews"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:layout_constraintBottom_toTopOf="@id/card"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="16sp"
+                    android:text="@string/indonesian_s_news"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card"
+                    app:layout_constraintTop_toBottomOf="@id/tvIndoNews"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/card_1"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="16dp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/imageDetik"
+                        android:src="@drawable/detik_png"
+                        android:layout_width="160dp"
+                        android:contentDescription="@string/image_detik"
+                        android:layout_height="50dp"/>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_1"
+                    app:layout_constraintTop_toTopOf="@id/card"
+                    app:layout_constraintBottom_toBottomOf="@id/card"
+                    app:layout_constraintStart_toEndOf="@id/card"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:cardCornerRadius="16dp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/suara"
+                        android:padding="12dp"
+                        android:contentDescription="@string/suara"
+                        android:src="@drawable/suara"
+                        android:layout_width="160dp"
+                        android:layout_height="50dp"/>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_2"
+                    app:layout_constraintTop_toBottomOf="@id/card"
+                    app:layout_constraintStart_toStartOf="@id/card"
+                    app:layout_constraintEnd_toEndOf="@id/card"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="16dp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/kapanLagi"
+                        android:padding="12dp"
+                        android:contentDescription="@string/suara"
+                        android:src="@drawable/kapanlagi"
+                        android:layout_width="160dp"
+                        android:layout_height="50dp"/>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_3"
+                    app:layout_constraintTop_toBottomOf="@id/card_1"
+                    app:layout_constraintStart_toStartOf="@id/card_1"
+                    app:layout_constraintEnd_toEndOf="@id/card_1"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="16dp"
+                    android:background="@drawable/item_bg"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/liputan6"
+                        android:padding="12dp"
+                        android:contentDescription="@string/liputan_6"
+                        android:src="@drawable/liputan"
+                        android:layout_width="160dp"
+                        android:layout_height="50dp"/>
+                </androidx.cardview.widget.CardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_technology"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="20dp"
-        tools:itemCount="5"
-        android:layout_marginEnd="20dp"
-        tools:listitem="@layout/item_top_headlines"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_technology_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="wrap_content">
-        <include layout="@layout/shimmer_everything"/>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        <TextView
+            android:id="@+id/tv_recent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/recent_search"
+            android:paddingTop="16dp"
+            android:layout_marginStart="32dp"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"
+            android:visibility="visible"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie"
+            app:layout_constraintTop_toBottomOf="@id/tv_recent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            app:lottie_fileName="no_data_available.json"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            android:layout_width="300dp"
+            android:layout_height="200dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_technology"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_recent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            tools:listitem="@layout/item_top_headlines" />
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_technology_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shimmer_technology_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="wrap_content">
-        <include layout="@layout/shimmer_everything"/>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_technology_1"
+            app:layout_constraintStart_toStartOf="@id/rv_technology"
+            app:layout_constraintTop_toBottomOf="@id/tv_recent"
+            app:layout_constraintEnd_toEndOf="@id/rv_technology"
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content">
+            <include layout="@layout/shimmer_everything"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <TextView
-        android:id="@+id/tvIndoNews"
-        app:layout_constraintTop_toBottomOf="@id/appbar_layout"
-        app:layout_constraintBottom_toTopOf="@id/card"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="16sp"
-        android:text="@string/indonesian_s_news"
-        android:fontFamily="@font/poppins_bold"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_technology_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/shimmer_technology_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content">
+            <include layout="@layout/shimmer_everything"/>
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card"
-        app:layout_constraintTop_toBottomOf="@id/tvIndoNews"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/card_1"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageDetik"
-            android:src="@drawable/detik_png"
-            android:layout_width="160dp"
-            android:contentDescription="@string/image_detik"
-            android:layout_height="50dp"/>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_1"
-        app:layout_constraintTop_toTopOf="@id/card"
-        app:layout_constraintBottom_toBottomOf="@id/card"
-        app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cardCornerRadius="16dp"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/suara"
-            android:padding="12dp"
-            android:contentDescription="@string/suara"
-            android:src="@drawable/suara"
-            android:layout_width="160dp"
-            android:layout_height="50dp"/>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_2"
-        app:layout_constraintTop_toBottomOf="@id/card"
-        app:layout_constraintStart_toStartOf="@id/card"
-        app:layout_constraintEnd_toEndOf="@id/card"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/kapanLagi"
-            android:padding="12dp"
-            android:contentDescription="@string/suara"
-            android:src="@drawable/kapanlagi"
-            android:layout_width="160dp"
-            android:layout_height="50dp"/>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_3"
-        app:layout_constraintTop_toBottomOf="@id/card_1"
-        app:layout_constraintStart_toStartOf="@id/card_1"
-        app:layout_constraintEnd_toEndOf="@id/card_1"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp"
-        android:background="@drawable/item_bg"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/liputan6"
-            android:padding="12dp"
-            android:contentDescription="@string/liputan_6"
-            android:src="@drawable/liputan"
-            android:layout_width="160dp"
-            android:layout_height="50dp"/>
-    </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

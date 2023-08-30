@@ -82,17 +82,14 @@ class TechnologyAdapter: ListAdapter<Domain, TechnologyAdapter.TechnologyViewHol
         val secondApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val time = LocalDateTime.parse(date, secondApiFormat)
         val timeNow= LocalDateTime.now()
-        var timeCount: String?
-        if(timeNow.dayOfMonth == time.dayOfMonth && timeNow.year == time.year && timeNow.month == time.month){
-            timeCount = "${timeNow.hour - time.hour}hour ago"
-        }
-        else if (timeNow.dayOfMonth != time.dayOfMonth && timeNow.month == time.month && timeNow.year == time.year){
-            timeCount = "${timeNow.dayOfMonth - time.dayOfMonth} days ago"
-        }
-        else if (timeNow.month != time.month && timeNow.year == time.year){
-            timeCount = "${timeNow.month.value - time.month.value} months ago"
+        val timeCount: String = if(timeNow.dayOfMonth == time.dayOfMonth && timeNow.year == time.year && timeNow.month == time.month){
+            "${timeNow.hour - time.hour}hour ago"
+        } else if (timeNow.dayOfMonth != time.dayOfMonth && timeNow.month == time.month && timeNow.year == time.year){
+            "${timeNow.dayOfMonth - time.dayOfMonth} days ago"
+        } else if (timeNow.month != time.month && timeNow.year == time.year){
+            "${timeNow.month.value - time.month.value} months ago"
         }else{
-            timeCount = "${timeNow.year - time.year} years ago"
+            "${timeNow.year - time.year} years ago"
         }
         return timeCount
     }

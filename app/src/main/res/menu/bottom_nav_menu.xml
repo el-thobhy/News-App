@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/kategoriFragment"
-        android:icon="@drawable/ic_baseline_category_24"
-        android:title="@string/kategori"/>
+        android:icon="@drawable/baseline_search_24"
+        android:title="@string/search"/>
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
@@ -11,5 +11,5 @@
     <item
         android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="@string/favorite"/>
+        android:title="@string/bookmark"/>
 </menu>

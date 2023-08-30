@@ -74,6 +74,12 @@ class CategoryFragment : Fragment() {
         binding.apply{
             false.loadingExtension(shimmerTechnology1, rvTechnology)
             false.loadingExtension(shimmerTechnology2, rvTechnology)
+            if(technologyAdapter.currentList.isEmpty()){
+                lottie.visibility=View.VISIBLE
+            }
+            else{
+                lottie.visibility=View.GONE
+            }
         }
     }
 
@@ -120,6 +126,7 @@ class CategoryFragment : Fragment() {
                         card1.visibility=View.GONE
                         card2.visibility=View.GONE
                         card3.visibility=View.GONE
+                        tvRecent.visibility=View.GONE
                         true.loadingExtension(shimmerTechnology1,rvTechnology)
                         true.loadingExtension(shimmerTechnology2,rvTechnology)
 
@@ -138,12 +145,12 @@ class CategoryFragment : Fragment() {
             binding.apply {
                 false.loadingExtension(shimmerTechnology1, rvTechnology)
                 false.loadingExtension(shimmerTechnology2, rvTechnology)
-                rvTechnology.visibility = View.GONE
                 tvIndoNews.visibility=View.VISIBLE
                 card.visibility=View.VISIBLE
                 card1.visibility=View.VISIBLE
                 card2.visibility=View.VISIBLE
                 card3.visibility=View.VISIBLE
+                tvRecent.visibility=View.VISIBLE
             }
             false
         }
@@ -156,11 +163,6 @@ class CategoryFragment : Fragment() {
             technologyAdapter.submitList(data)
             Log.e("hasil", "tesHasil: $data" )
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.rvTechnology.visibility = View.GONE
     }
 
     override fun onDestroy() {

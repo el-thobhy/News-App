@@ -3,10 +3,12 @@ package com.elthobhy.newsapp.ui.detik
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elthobhy.core.domain.model.Domain
 import com.elthobhy.core.utils.Constants
+import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.databinding.ActivityIndonesiaNewsBinding
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
@@ -58,12 +60,14 @@ class DetikActivity : AppCompatActivity() {
                     getData(
                         detik, detik = true, suara = false, kapanlagi = false, liputan = false
                     )
+                    newsDomain.text=detik
                 }
 
                 suara == "suara.com" -> {
                     getData(
                         suara, detik = false, suara = true, kapanlagi = false, liputan = false
                     )
+                    newsDomain.text=suara
                 }
 
                 kapanLagi == "kapanlagi.com" -> {
@@ -74,6 +78,7 @@ class DetikActivity : AppCompatActivity() {
                         kapanlagi = true,
                         liputan = false
                     )
+                    newsDomain.text=kapanLagi
                 }
 
                 liputan == "liputan6.com" -> {
@@ -84,6 +89,7 @@ class DetikActivity : AppCompatActivity() {
                         kapanlagi = false,
                         liputan = true
                     )
+                    newsDomain.text=liputan
                 }
             }
         }
@@ -99,13 +105,27 @@ class DetikActivity : AppCompatActivity() {
         viewModel.getIndonesianNews(key, detik, suara, kapanlagi, liputan)
             .observe(this@DetikActivity) { data ->
                 when (data.status) {
-                    Status.LOADING -> {}
+                    Status.LOADING -> {
+                        binding.apply {
+                            true.loadingExtension(shimmerTechnology1,rvDetik)
+                            true.loadingExtension(shimmerTechnology2,rvDetik)
+                        }
+                    }
                     Status.SUCCESS -> {
+                        binding.apply {
+                            false.loadingExtension(shimmerTechnology1,rvDetik)
+                            false.loadingExtension(shimmerTechnology2,rvDetik)
+                        }
                         adapterList.submitList(data.data)
                         Log.e("detik", "onGetData: ${data.data}")
                     }
 
                     Status.ERROR -> {
+                        binding.apply {
+                            lottie.visibility= View.VISIBLE
+                            errorMessage.visibility=View.VISIBLE
+                            errorMessage.text=data.message
+                        }
                     }
                 }
             }

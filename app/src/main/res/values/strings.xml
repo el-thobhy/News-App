@@ -44,4 +44,9 @@
     <string name="image_detik">Image Detik</string>
     <string name="liputan_6">Liputan 6</string>
     <string name="indonesian_s_news">Indonesian\'s News</string>
+    <string name="recent_search">Recent Search</string>
+    <string name="error">error</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="domain_news">Domain News</string>
+    <string name="search">Search</string>
 </resources>

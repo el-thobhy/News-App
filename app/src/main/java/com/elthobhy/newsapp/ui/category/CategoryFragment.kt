@@ -129,6 +129,7 @@ class CategoryFragment : Fragment() {
                         tvRecent.visibility=View.GONE
                         true.loadingExtension(shimmerTechnology1,rvTechnology)
                         true.loadingExtension(shimmerTechnology2,rvTechnology)
+                        lottie.visibility=View.GONE
 
                     }
                     true

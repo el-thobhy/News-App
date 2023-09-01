@@ -13,20 +13,28 @@ android {
     defaultConfig {
         applicationId "com.elthobhy.newsapp"
         minSdk 24
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        targetSdk 33
+        versionCode 5
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        ndk{
+            debugSymbolLevel = 'SYMBOL_TABLE'
+        }
     }
 
     buildTypes {
         release {
+            ndk{
+                debugSymbolLevel = 'SYMBOL_TABLE'
+            }
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            ndk{
+                debugSymbolLevel = 'SYMBOL_TABLE'
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

@@ -13,15 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
-            android:name=".ui.liputan.LiputanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.kapanlagi.KapanLagiActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.suara.SuaraActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.detik.DetikActivity"
             android:exported="false" />
         <activity
@@ -29,18 +20,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.detail.DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.explore.viva.VivaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.explore.kapanlagi.KapanLagiActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.explore.suara.SuaraActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.explore.detik.DetikActivity"
             android:exported="false" />
         <activity
             android:name=".ui.splash.SplashActivity"

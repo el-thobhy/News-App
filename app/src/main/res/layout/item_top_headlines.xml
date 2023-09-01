@@ -84,7 +84,7 @@
         android:layout_marginStart="12dp"
         android:fontFamily="@font/poppins_light"
         style="@style/FontColor"
-        android:text="test"
+        android:text="@string/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

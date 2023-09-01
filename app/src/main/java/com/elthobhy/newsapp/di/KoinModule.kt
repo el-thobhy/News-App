@@ -3,7 +3,6 @@ package com.elthobhy.newsapp.di
 import com.elthobhy.core.domain.usecase.RepositoryInteract
 import com.elthobhy.core.domain.usecase.UseCase
 import com.elthobhy.newsapp.ui.category.technology.TechnologyAdapter
-import com.elthobhy.newsapp.ui.favorite.adapter.headline.FavoriteHeadlineAdapter
 import com.elthobhy.newsapp.ui.home.HeadlineAdapter
 import com.elthobhy.newsapp.viewmodel.detail.DetailViewModel
 import com.elthobhy.newsapp.viewmodel.favorite.FavoriteViewModel
@@ -31,5 +30,4 @@ val useCase = module {
 val adapterModule = module {
     factory { HeadlineAdapter() }
     factory { TechnologyAdapter() }
-    factory { FavoriteHeadlineAdapter() }
 }

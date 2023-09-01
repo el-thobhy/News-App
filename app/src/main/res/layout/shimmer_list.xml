@@ -20,7 +20,6 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/image_top_headline"
                 android:layout_width="match_parent"
                 android:layout_height="203dp"
                 android:background="@drawable/content_bg"

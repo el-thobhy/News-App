@@ -9,15 +9,18 @@ import com.elthobhy.core.di.repositoryModule
 import com.elthobhy.newsapp.di.adapterModule
 import com.elthobhy.newsapp.di.useCase
 import com.elthobhy.newsapp.di.viewModelModule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 class MyApp: Application() {
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     override fun onCreate() {
         super.onCreate()
-        Log.e(TAG, "onCreate: MyApp", )
+        Log.e(TAG, "onCreate: MyApp" )
         startKoin{
             androidLogger(Level.NONE)
             androidContext(this@MyApp)

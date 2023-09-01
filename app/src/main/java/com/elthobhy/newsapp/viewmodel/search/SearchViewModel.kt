@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 @ExperimentalCoroutinesApi
 class SearchViewModel(private val useCase: UseCase): ViewModel() {
     val queryChannel = MutableStateFlow("")
-    val SearchResult = queryChannel
+    val searchResult = queryChannel
         .debounce(300)
         .distinctUntilChanged()
         .filter {

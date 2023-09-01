@@ -113,7 +113,7 @@ class CategoryFragment : Fragment() {
             card2.visibility=View.VISIBLE
             card3.visibility=View.VISIBLE
         }
-        searchViewModel.SearchResult.observe(viewLifecycleOwner, observerSearch)
+        searchViewModel.searchResult.observe(viewLifecycleOwner, observerSearch)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true

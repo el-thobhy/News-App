@@ -5,33 +5,40 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:paddingTop="16dp"
-    tools:context=".ui.category.CategoryFragment"
-    style="@style/Theme.MaterialComponents.NoActionBar">
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    tools:context=".ui.category.CategoryFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         app:elevation="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         android:fitsSystemWindows="true"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Background"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tv_top"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:backgroundTint="@android:color/transparent"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary" />
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"/>
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_view"
@@ -44,7 +51,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:hint="@string/search_by_title"
                     android:textColor="@color/black"
-                    android:textColorHint="@android:color/darker_gray" />
+                    android:textColorHint="#838080" />
 
                 <TextView
                     android:id="@+id/tvIndoNews"
@@ -56,6 +63,8 @@
                     android:textSize="16sp"
                     android:text="@string/indonesian_s_news"
                     android:fontFamily="@font/poppins_bold"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <androidx.cardview.widget.CardView
@@ -139,6 +148,8 @@
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -149,6 +160,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/recent_search"
             android:paddingTop="16dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:layout_marginStart="32dp"
             android:textAlignment="textStart"
             android:textSize="16sp"
@@ -172,6 +185,8 @@
             android:id="@+id/rv_technology"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_recent"
             app:layout_constraintBottom_toBottomOf="parent"

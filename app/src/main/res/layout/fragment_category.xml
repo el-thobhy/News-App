@@ -176,7 +176,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_recent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="16dp"
+            android:layout_marginTop="100dp"
             app:lottie_fileName="no_data_available.json"
             android:visibility="gone"
             app:lottie_autoPlay="true"

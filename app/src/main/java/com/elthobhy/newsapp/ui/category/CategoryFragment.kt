@@ -76,9 +76,11 @@ class CategoryFragment : Fragment() {
             false.loadingExtension(shimmerTechnology2, rvTechnology)
             if(technologyAdapter.currentList.isEmpty()){
                 lottie.visibility=View.VISIBLE
+                rvTechnology.visibility=View.GONE
             }
             else{
                 lottie.visibility=View.GONE
+                rvTechnology.visibility=View.VISIBLE
             }
         }
     }

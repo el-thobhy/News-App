@@ -6,7 +6,7 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 
-fun Boolean.loadingExtension(shimmer: ShimmerFrameLayout?, rv: RecyclerView?) {
+fun Boolean.loadingExtension(shimmer: ShimmerFrameLayout?, rv: RecyclerView?=null) {
     if (this) {
         shimmer?.visibility = View.VISIBLE
         rv?.visibility = View.GONE

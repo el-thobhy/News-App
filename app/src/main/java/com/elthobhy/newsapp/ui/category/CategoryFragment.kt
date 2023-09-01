@@ -137,8 +137,9 @@ class CategoryFragment : Fragment() {
                     true
                 }else{
                     binding.apply {
-                        false.loadingExtension(shimmerTechnology1,rvTechnology)
-                        false.loadingExtension(shimmerTechnology2,rvTechnology)
+                        false.loadingExtension(shimmerTechnology1)
+                        false.loadingExtension(shimmerTechnology2)
+                        lottie.visibility=View.VISIBLE
                     }
                     true
                 }
@@ -146,8 +147,9 @@ class CategoryFragment : Fragment() {
         })
         searchView.setOnCloseListener {
             binding.apply {
-                false.loadingExtension(shimmerTechnology1, rvTechnology)
-                false.loadingExtension(shimmerTechnology2, rvTechnology)
+                false.loadingExtension(shimmerTechnology1)
+                false.loadingExtension(shimmerTechnology2)
+                lottie.visibility=View.VISIBLE
                 tvIndoNews.visibility=View.VISIBLE
                 card.visibility=View.VISIBLE
                 card1.visibility=View.VISIBLE
@@ -161,10 +163,17 @@ class CategoryFragment : Fragment() {
 
     private val observerSearch = Observer<List<Domain>> {data->
         binding.apply {
-            false.loadingExtension(shimmerTechnology1,rvTechnology)
-            false.loadingExtension(shimmerTechnology2,rvTechnology)
-            technologyAdapter.submitList(data)
-            Log.e("hasil", "tesHasil: $data" )
+            if(data.isNotEmpty()){
+                false.loadingExtension(shimmerTechnology1,rvTechnology)
+                false.loadingExtension(shimmerTechnology2,rvTechnology)
+                technologyAdapter.submitList(data)
+                lottie.visibility=View.GONE
+                Log.e("hasil", "tesHasil: $data" )
+            }else{
+                false.loadingExtension(shimmerTechnology1)
+                false.loadingExtension(shimmerTechnology2)
+                lottie.visibility=View.VISIBLE
+            }
         }
     }
 

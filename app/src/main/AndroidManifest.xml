@@ -13,6 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
+            android:name=".ui.auth.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.forgotpassword.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.changepassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.account.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detik.DetikActivity"
             android:exported="false" />
         <activity

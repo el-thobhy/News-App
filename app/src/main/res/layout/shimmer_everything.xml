@@ -22,7 +22,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="203dp"
-                android:background="@drawable/content_bg"
+                android:background="@drawable/shimmer_bg"
                 android:contentDescription="@string/item_top_headlines"
                 android:scaleType="centerCrop"
                 android:src="@drawable/shimmer_bg" />

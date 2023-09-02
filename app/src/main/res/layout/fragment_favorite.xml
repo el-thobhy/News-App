@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="20dp"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.favorite.FavoriteFragment">
 
@@ -25,7 +24,6 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/bookmark"
                 android:textSize="24sp"
-                style="@style/FontColor"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"/>
             <androidx.recyclerview.widget.RecyclerView
@@ -86,7 +84,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/anda_belum_punya_favorite"
-                    style="@style/FontColor"
                     android:gravity="center"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins_medium"

@@ -5,29 +5,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
     tools:context=".ui.category.CategoryFragment">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         app:elevation="0dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
         android:fitsSystemWindows="true"
+        style="@style/Background"
         android:layout_height="wrap_content">
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tv_top"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <androidx.appcompat.widget.Toolbar
@@ -36,12 +29,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_width="match_parent"
                     android:paddingTop="16dp"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/white"
-                    android:backgroundTint="@color/white"/>
+                    android:layout_height="?attr/actionBarSize"/>
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search_view"
+                    style="@style/BackgroundItem"
                     android:background="@drawable/item_bg"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -64,8 +56,6 @@
                     android:textSize="16sp"
                     android:text="@string/indonesian_s_news"
                     android:fontFamily="@font/poppins_bold"
-                    android:background="@color/white"
-                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <androidx.cardview.widget.CardView
@@ -149,8 +139,7 @@
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
+        style="@style/Background"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -161,8 +150,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/recent_search"
             android:paddingTop="16dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
             android:layout_marginStart="32dp"
             android:textAlignment="textStart"
             android:textSize="16sp"
@@ -186,8 +173,7 @@
             android:id="@+id/rv_technology"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            style="@style/Background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_recent"
             app:layout_constraintBottom_toBottomOf="parent"

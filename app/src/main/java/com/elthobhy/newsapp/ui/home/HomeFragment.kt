@@ -6,16 +6,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.elthobhy.core.domain.model.Domain
 import com.elthobhy.core.utils.Constants
 import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
+import com.elthobhy.newsapp.ui.account.UserActivity
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
@@ -24,6 +29,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding as FragmentHomeBinding
     private val adapterHeadline by inject<HeadlineAdapter>()
     private val headlineViewModel by inject<HeadlineViewModel>()
+    private var firebaseUser: FirebaseUser? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +37,44 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater,container,false)
         showRvHeadline()
+
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        getDataUser()
+        onClick()
         return binding.root
+    }
+
+    private fun onClick() {
+        binding.ivUser.setOnClickListener{
+            startActivity(Intent(context,UserActivity::class.java))
+        }
+    }
+
+    private fun getDataUser() {
+        val uid = firebaseUser?.uid
+        if (uid != null) {
+            headlineViewModel.getDataUser(uid).observe(viewLifecycleOwner){
+                when(it.status){
+                    Status.SUCCESS -> {
+                        binding.apply {
+                            tvWelcome.text = getString(R.string.welcome) +" " +it.data?.nameUser
+                            Glide.with(this@HomeFragment)
+                                .load(it.data?.avatarUser)
+                                .placeholder(android.R.color.darker_gray)
+                                .into(ivUser)
+                        }
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(
+                            context,
+                            it.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    Status.LOADING -> {}
+                }
+            }
+        }
     }
 
 

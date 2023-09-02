@@ -2,13 +2,14 @@ package com.elthobhy.core.di
 
 import androidx.room.Room
 import com.elthobhy.core.BuildConfig
-import com.elthobhy.core.data.source.CatalogNewsRepository
 import com.elthobhy.core.data.source.local.LocalData
 import com.elthobhy.core.data.source.local.room.ArticleDatabase
 import com.elthobhy.core.data.source.remote.RemoteData
 import com.elthobhy.core.data.source.remote.network.ApiService
 import com.elthobhy.core.domain.repository.CatalogNewsDataSource
 import com.elthobhy.core.utils.AppExecutors
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -43,8 +44,21 @@ val databaseModule = module {
     factory { get<ArticleDatabase>().articleDao() }
 }
 val repositoryModule = module {
-    single { RemoteData() }
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val user =
+        FirebaseDatabase.getInstance("https://news-app-9b6f9-default-rtdb.asia-southeast1.firebasedatabase.app/")
+            .getReference(
+                "users"
+            )
+
+    single { RemoteData(firebaseAuth, user) }
     single { LocalData.getInstace(get()) }
-    single<CatalogNewsDataSource> { CatalogNewsRepository(get(),get(),get()) }
+    single<CatalogNewsDataSource> {
+        com.elthobhy.core.data.source.CatalogNewsRepository(
+            get(),
+            get(),
+            get()
+        )
+    }
     single { AppExecutors() }
 }

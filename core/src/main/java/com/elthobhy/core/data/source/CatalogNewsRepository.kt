@@ -24,7 +24,7 @@ class CatalogNewsRepository(
 ) : CatalogNewsDataSource {
 
     override fun getTopHeadlines(): Flow<Resource<List<Domain>>> {
-        return object : com.elthobhy.core.data.source.NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
+        return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
             override fun shouldFetch(data: List<Domain>?): Boolean =
                 data.isNullOrEmpty()
 
@@ -54,7 +54,7 @@ class CatalogNewsRepository(
         kapanlagi: Boolean,
         liputan: Boolean,
     ): Flow<Resource<List<Domain>>> {
-        return object : com.elthobhy.core.data.source.NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
+        return object : NetworkBoundResource<List<Domain>, List<ArticlesItem>>(appExecutors) {
             override fun shouldFetch(data: List<Domain>?): Boolean =
                 data.isNullOrEmpty()
 

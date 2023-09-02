@@ -7,8 +7,11 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.elthobhy.core.R
+import com.elthobhy.core.utils.dialogError
+import com.elthobhy.core.utils.dialogLoading
 import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.databinding.ActivityLoginBinding
 import com.elthobhy.newsapp.ui.MainActivity
@@ -26,12 +29,14 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val loginViewModel by inject<LoginViewModel>()
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        dialog= dialogLoading(this)
         initGoogleSignIn()
         onClick()
     }
@@ -57,7 +62,9 @@ class LoginActivity : AppCompatActivity() {
                     if (name != null && email != null) {
                         loginViewModel.loginWithGoogle(name, email, credential).observe(this) {
                             when (it.status) {
+                                Status.LOADING -> { dialog.show() }
                                 Status.SUCCESS -> {
+                                    dialog.dismiss()
                                     startActivity(
                                         Intent(
                                             this@LoginActivity,
@@ -67,8 +74,9 @@ class LoginActivity : AppCompatActivity() {
                                     Log.e("berhasil login google", ": ${it.message}" )
                                     finishAffinity()
                                 }
-                                Status.LOADING -> {}
                                 Status.ERROR -> {
+                                    dialog.dismiss()
+                                    dialogError(it.message,this).show()
                                     Toast.makeText(
                                         this@LoginActivity,
                                         it.message,
@@ -98,12 +106,15 @@ class LoginActivity : AppCompatActivity() {
                 if (validationCheck(email, pass)) {
                     loginViewModel.login(email, pass).observe(this@LoginActivity) {
                         when (it.status) {
+                            Status.LOADING -> { dialog.show() }
                             Status.SUCCESS -> {
+                                dialog.dismiss()
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 finishAffinity()
                             }
-                            Status.LOADING -> {}
                             Status.ERROR -> {
+                                dialog.dismiss()
+                                dialogError(it.message,this@LoginActivity).show()
                                 Toast.makeText(
                                     this@LoginActivity,
                                     it.message,

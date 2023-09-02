@@ -2,4 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="web_client_id">401704586436-k1l1l8rtsgcnfs1aiiua4dl9apovel6r.apps.googleusercontent.com</string>
+
+    <string name="empty">Empty</string>
+    <string name="error">Error</string>
 </resources>

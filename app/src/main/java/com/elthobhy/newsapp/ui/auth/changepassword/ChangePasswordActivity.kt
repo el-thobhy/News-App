@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.elthobhy.core.utils.dialogError
+import com.elthobhy.core.utils.dialogLoading
 import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.databinding.ActivityChangePasswordBinding
 import com.elthobhy.newsapp.ui.account.UserActivity
@@ -21,6 +24,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
     private var currentUser: FirebaseUser? = null
     private val changePasswordViewModel by inject<ChangePasswordViewModel>()
+    private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         currentUser = FirebaseAuth.getInstance().currentUser
+        dialog= dialogLoading(this)
         onClick()
     }
 
@@ -57,7 +62,9 @@ class ChangePasswordActivity : AppCompatActivity() {
     private fun changePass(newPass: String, credential: AuthCredential) {
             changePasswordViewModel.changePassword(newPass, credential).observe(this){
                 when (it.status) {
+                    Status.LOADING -> { dialog.show() }
                     Status.SUCCESS -> {
+                        dialog.dismiss()
                         Toast.makeText(
                             this@ChangePasswordActivity,
                             "Success",
@@ -71,8 +78,9 @@ class ChangePasswordActivity : AppCompatActivity() {
                         )
                         finishAffinity()
                     }
-                    Status.LOADING -> {}
                     Status.ERROR -> {
+                        dialog.dismiss()
+                        dialogError(it.message,this).show()
                         Toast.makeText(
                             this@ChangePasswordActivity,
                             it.message,

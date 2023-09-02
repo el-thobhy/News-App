@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.elthobhy.core.utils.dialogError
+import com.elthobhy.core.utils.dialogLoading
 import com.elthobhy.core.utils.vo.Status
 import com.elthobhy.newsapp.databinding.ActivityRegisterBinding
 import com.elthobhy.newsapp.ui.auth.login.LoginActivity
@@ -15,12 +18,14 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private val registerViewModel by inject<RegisterViewModel>()
+    private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        dialog= dialogLoading(this)
         onClick()
     }
 
@@ -35,7 +40,12 @@ class RegisterActivity : AppCompatActivity() {
                 if (checkValidation(email, pass, confirmPass)) {
                     registerViewModel.register(name, email, pass).observe(this@RegisterActivity) {
                         when (it.status) {
+                            Status.LOADING -> {
+                                dialog.show()
+                                binding.pbRegister.visibility = View.VISIBLE
+                            }
                             Status.SUCCESS -> {
+                                dialog.dismiss()
                                 binding.pbRegister.visibility = View.GONE
                                 Toast.makeText(
                                     this@RegisterActivity,
@@ -50,10 +60,9 @@ class RegisterActivity : AppCompatActivity() {
                                 )
                                 finishAffinity()
                             }
-                            Status.LOADING -> {
-                                binding.pbRegister.visibility = View.VISIBLE
-                            }
                             Status.ERROR -> {
+                                dialog.dismiss()
+                                dialogError(it.message,this@RegisterActivity).show()
                                 binding.pbRegister.visibility = View.GONE
                                 Toast.makeText(
                                     this@RegisterActivity,

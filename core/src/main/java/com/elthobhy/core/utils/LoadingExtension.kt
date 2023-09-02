@@ -1,9 +1,12 @@
 package com.elthobhy.core.utils
 
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
+import com.elthobhy.core.databinding.DialogAnimationLayoutBinding
 import com.facebook.shimmer.ShimmerFrameLayout
 
 fun Boolean.loadingExtension(shimmer: ShimmerFrameLayout?, rv: RecyclerView?=null) {
@@ -16,13 +19,28 @@ fun Boolean.loadingExtension(shimmer: ShimmerFrameLayout?, rv: RecyclerView?=nul
         rv?.visibility = View.VISIBLE
     }
 }
-
-fun Boolean.loadingDetail(progressBar: ProgressBar?, shimmer: ShimmerFrameLayout?){
-    if (this) {
-        progressBar?.visibility = View.VISIBLE
-        shimmer?.visibility = View.VISIBLE
-    } else {
-        progressBar?.visibility = View.GONE
-        shimmer?.visibility = View.GONE
-    }
+fun showDialogAnimation(context: Context, state: String, message: String? = null, animation: String): AlertDialog{
+    val dialogView = DialogAnimationLayoutBinding.inflate(LayoutInflater.from(context))
+    dialogView.animationLottie.setAnimation(animation)
+    dialogView.tvMessage.text = message
+    dialogView.tvEmpty.text = state
+    val alert = AlertDialog
+        .Builder(context)
+        .setView(dialogView.root)
+        .setCancelable(true)
+        .create()
+    alert.window?.decorView?.setBackgroundResource(android.R.color.transparent)
+    return alert
 }
+
+fun dialogLoading(context: Context) = showDialogAnimation(
+    context = context,
+    state = "Please Wait",
+    animation = "status_loading.json"
+)
+fun dialogError(e: String?, context: Context) =
+    showDialogAnimation(
+        context = context,
+        message = e,
+        state = "Error",
+        animation = "status_error.json")

@@ -12,6 +12,7 @@ import com.elthobhy.core.domain.model.Domain
 import com.elthobhy.core.utils.Constants
 import com.elthobhy.core.utils.loadingExtension
 import com.elthobhy.core.utils.vo.Status
+import com.elthobhy.newsapp.R
 import com.elthobhy.newsapp.databinding.FragmentHomeBinding
 import com.elthobhy.newsapp.ui.detail.DetailActivity
 import com.elthobhy.newsapp.viewmodel.headline.HeadlineViewModel
@@ -57,12 +58,15 @@ class HomeFragment : Fragment() {
                             listArticle.data?.let { adapterHeadline.setList(it) }
                             adapterHeadline.notifyDataSetChanged()
                             imageErrorHeadline.visibility = View.GONE
+                            errorMessage.visibility=View.GONE
                             false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                         }
                         Status.ERROR->{
                             imageErrorHeadline.visibility = View.VISIBLE
+                            errorMessage.text=listArticle.message
+                            errorMessage.visibility=View.VISIBLE
                             Log.e("headline", "showRvHeadline: ${listArticle.message}" )
                             false.loadingExtension(shimmerHeadline1, rvTopHeadlines)
                             false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
@@ -74,6 +78,8 @@ class HomeFragment : Fragment() {
                     false.loadingExtension(shimmerHeadline2, rvTopHeadlines)
                     false.loadingExtension(shimmerHeadline3, rvTopHeadlines)
                     imageErrorHeadline.visibility = View.VISIBLE
+                    errorMessage.visibility=View.VISIBLE
+                    errorMessage.text= getString(R.string.list_is_null)
                 }
             }
         }

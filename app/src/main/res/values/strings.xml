@@ -30,4 +30,6 @@
     <string name="splash">Splash</string>
     <string name="category">Category</string>
     <string name="test">test</string>
+    <string name="error_message">Error Message</string>
+    <string name="list_is_null">List Is Null</string>
 </resources>

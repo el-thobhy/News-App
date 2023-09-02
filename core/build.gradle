@@ -19,6 +19,8 @@ android {
 
         buildConfigField("String", "API_KEY", '"1948928b64da4c6bae13c8aa49afb969"')
         buildConfigField("String", "BASE_URL", '"https://newsapi.org/v2/"')
+        buildConfigField("String", "CERTIFICATE_PINNER", '"sha256/FEzVOUp4dF3gI0ZVPRJhFbSJVXR+uQmMH65xhs1glH4="')
+        buildConfigField("String", "HOSTNAME", '"newsapi.org"')
     }
 
     buildTypes {

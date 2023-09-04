@@ -26,12 +26,5 @@ News App is a news app designed to give users quick and easy access to breaking 
 - Deployment
 
 ## Screenshot
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/spalsh.png" alt="splash" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/login.png" alt="login" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/home.png" alt="home" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/bookmark.png" alt="bookmark" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/search.png" alt="search view" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/account.png" alt="account page" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/detail.png" alt="detail page" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/suara.png" alt="Kapanlagi news page" width="200"/> 
-<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/browser%20view.png" alt="Browser" width="200"/> 
+<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/spalsh.png" alt="splash" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/login.png" alt="login" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/home.png" alt="home" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/bookmark.png" alt="bookmark" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/search.png" alt="search view" width="200"/> 
+<img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/account.png" alt="account page" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/detail.png" alt="detail page" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/suara.png" alt="Kapanlagi news page" width="200"/> <img src="https://github.com/el-thobhy/News-App/blob/master/screenshot/browser%20view.png" alt="Browser" width="200"/> 
